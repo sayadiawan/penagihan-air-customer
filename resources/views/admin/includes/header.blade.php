@@ -34,14 +34,13 @@
                         continue;
                     }
                   @endphp
-                  <option value="{{ url('/admin/' . $submenu->link_menus) }}"
-                    {{ isSelected($submenu->link_menus, request()->segment(2)) }}>{{ $submenu->name_menus }}
+                  <option value="{{ url($submenu->link_menus) }}"
+                    {{ isSelected($submenu->link_menus, request()->segment(1)) }}>{{ $submenu->name_menus }}
                   </option>
                 @endforeach
               </optgroup>
             @else
-              <option value="{{ url('/admin/' . $menu->link_menus) }}"
-                {{ isSelected($menu->link_menus, request()->segment(2)) }}>
+              <option value="{{ url($menu->link_menus) }}" {{ isSelected($menu->link_menus, request()->segment(1)) }}>
                 {{ $menu->name_menus }}</option>
             @endif
           @endforeach
@@ -282,7 +281,7 @@
 
         <ul class="dropdown-menu dropdown-menu-end">
           <li>
-            <a class="dropdown-item" href="{{ url('/admin/user-profile-account') }}">
+            <a class="dropdown-item" href="{{ url('/user-profile-account') }}">
               <div class="d-flex">
                 <div class="flex-shrink-0 me-3">
                   <div class="avatar avatar-online">

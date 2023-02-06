@@ -5,7 +5,7 @@
 <head>
   @include('admin.includes.meta')
 
-  <title>Mapsline | @yield('title')</title>
+  <title>Penagihan Air | @yield('title')</title>
 
   @stack('before-style')
   @include('admin.includes.style')

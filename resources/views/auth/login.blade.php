@@ -15,12 +15,12 @@
       content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
     />
 
-    <title>Mapsline | Login</title>
+    <title>Penagihan Air | Login</title>
 
     <meta name="description" content="" />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="{{ asset('admin-assets/assets/img/icons/brands/mapsline.png') }}" />
+    <link rel="icon" type="image/x-icon" href="{{ asset('admin-assets/assets/img/icons/brands/save-water.png') }}" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -65,13 +65,13 @@
               <div class="app-brand justify-content-center">
                 <a href="{{ route('login') }}" class="app-brand-link gap-2">
                   <span class="app-brand-logo demo">
-                    <img src="{{ asset('admin-assets/assets/img/icons/brands/mapsline.png') }}" style="width: 180px; height: 70px" alt="" />
+                    <img src="{{ asset('admin-assets/assets/img/icons/brands/save-water.png') }}" style="width: 128px; height: 128px" alt="" />
                   </span>
                 </a>
               </div>
               <!-- /Logo -->
-              <h4 class="mb-2">Welcome to Mapsline! 👋</h4>
-              <p class="mb-4">Please sign-in to your account!</p>
+              <h4 class="mb-2">Selamat Datang! 👋</h4>
+              <p class="mb-4">Silahkan masukkan username dan password Anda!</p>
 
               <form class="mb-3" action="{{ route('login') }}" method="POST" id="form">
                 @csrf

@@ -134,7 +134,7 @@
               $.ajax({
                 type: 'ajax',
                 method: 'get',
-                url: '/admin/roles/delete/' + kode,
+                url: '/roles/delete/' + kode,
                 async: true,
                 dataType: 'json',
                 success: function(response) {

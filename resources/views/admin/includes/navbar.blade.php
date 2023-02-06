@@ -10,7 +10,7 @@
 
       </span>
 
-      <span class="app-brand-text demo menu-text fw-bolder ms-2">Penagihan Air</span>
+      <span class="app-brand-text demo menu-text fw-bolder ms-2">Air <br> Anda</span>
     </a>
 
     <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto">
@@ -21,6 +21,7 @@
   <div class="menu-inner-shadow"></div>
 
   <ul class="menu-inner py-1">
+
     {{-- get module menu --}}
     @foreach ($menus as $menu)
       @php
@@ -33,7 +34,7 @@
       @endphp
 
       @if ($menu->menus->count() > 0)
-        <li class="menu-item  menu-sub-parent">
+        <li class="menu-item menu-sub-parent">
           <a href="javascript:void(0)" class="menu-link menu-toggle">
             <i class="menu-icon {{ $menu->icon_menus }}"></i>
             <div data-i18n="{{ $menu->name_menus }}">{{ $menu->name_menus }}</div>
@@ -41,7 +42,7 @@
 
           <ul class="menu-sub">
             <li class="menu-item {{ activeMenu($menu->link_menus) }}">
-              <a href="/admin/{{ $menu->link_menus }}" class="menu-link">
+              <a href="/{{ $menu->link_menus }}" class="menu-link">
                 <div data-i18n="{{ $menu->name_menus }}">Dashboard {{ $menu->name_menus }}</div>
               </a>
             </li>
@@ -57,7 +58,7 @@
               @endphp
 
               <li class="menu-item {{ activeMenu($submenu->link_menus) }}">
-                <a href="/admin/{{ $submenu->link_menus }}" class="menu-link">
+                <a href="/{{ $submenu->link_menus }}" class="menu-link">
                   <div data-i18n="{{ $submenu->name_menus }}">{{ $submenu->name_menus }}</div>
                 </a>
               </li>
@@ -66,7 +67,7 @@
         </li>
       @else
         <li class="menu-item {{ activeMenu($menu->link_menus) }}">
-          <a href="/admin/{{ $menu->link_menus }}" class="menu-link">
+          <a href="/{{ $menu->link_menus }}" class="menu-link">
             <i class="menu-icon {{ $menu->icon_menus }}"></i>
             <div data-i18n="{{ $menu->name_menus }}">{{ $menu->name_menus }}</div>
           </a>

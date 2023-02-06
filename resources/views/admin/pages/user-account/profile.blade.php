@@ -23,12 +23,12 @@
       <div class="col-md-12">
         <ul class="nav nav-pills flex-column flex-md-row mb-3">
           <li class="nav-item">
-            <a class="nav-link active" href="{{ url('/admin/user-profile-account') }}"><i class="bx bx-user me-1"></i>
+            <a class="nav-link active" href="{{ url('/user-profile-account') }}"><i class="bx bx-user me-1"></i>
               Account</a>
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" href="{{ url('/admin/user-password-account') }}"><i class="bx bx-lock me-1"></i>
+            <a class="nav-link" href="{{ url('/user-password-account') }}"><i class="bx bx-lock me-1"></i>
               Password</a>
           </li>
         </ul>

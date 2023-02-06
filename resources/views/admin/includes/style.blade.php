@@ -1,5 +1,5 @@
 <!-- Favicon -->
-<link rel="icon" type="image/x-icon" href="{{ asset('admin-assets/assets/img/icons/brands/mapsline.png') }}" />
+<link rel="icon" type="image/x-icon" href="{{ asset('admin-assets/assets/img/icons/brands/quality.png') }}" />
 
 <!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com" />

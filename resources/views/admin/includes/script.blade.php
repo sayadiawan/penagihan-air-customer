@@ -73,15 +73,16 @@
     });
 
     // check active sub parent menu
+    // check active sub parent menu
     var listItems = $('.layout-menu ul li.menu-sub-parent ul.menu-sub .menu-item');
 
     //Loop the listitems and check to see if any are active.
     $.each(listItems, function(key, litem) {
       if ($(litem).hasClass('active')) {
-        $(this).parent().parent().addClass('active open');
+        $(this).parent().parent().addClass('active');
         return false;
       } else {
-        $(this).parent().parent().removeClass('active open');
+        $(this).parent().parent().removeClass('active');
       }
     })
   });

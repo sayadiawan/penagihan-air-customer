@@ -5,41 +5,14 @@ use Illuminate\Support\Facades\Auth;
 
 use UniSharp\LaravelFilemanager\Lfm;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Web\HomeController;
-use App\Http\Controllers\Admin\AreaController;
+use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\MenuController;
-use App\Http\Controllers\Admin\PostController;
-use App\Http\Controllers\Admin\ResiController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\Admin\AgentController;
-use App\Http\Controllers\Web\PostageController;
-
-
-use App\Http\Controllers\Admin\DriverController;
-use App\Http\Controllers\Web\OrderLogController;
-use App\Http\Controllers\Admin\ServiceController;
-use App\Http\Controllers\Admin\VoucherController;
-use App\Http\Controllers\Web\SubscriberController;
-use App\Http\Controllers\Admin\AreaAgentController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\UserAccountController;
-use App\Http\Controllers\Admin\KodeTrackingController;
-use App\Http\Controllers\Admin\RequestPickupController;
-use App\Http\Controllers\Admin\RoutePriceLocalController;
-use App\Http\Controllers\Admin\BannerInformationController;
-use App\Http\Controllers\Admin\DataPickupDriverController;
-use App\Http\Controllers\Admin\UpdateDataTrackingController;
 use App\Http\Controllers\Admin\UserMenuAuthorizationController;
-use App\Http\Controllers\Admin\RoutePriceInternationalController;
-use App\Http\Controllers\Web\AreaController as WebAreaController;
-use App\Http\Controllers\Web\ResiController as WebResiController;
-use App\Http\Controllers\Admin\InputResiDomestikMapslineController;
-use App\Http\Controllers\Admin\InputResiInternasionalMapslineController;
-use App\Http\Controllers\Admin\InputResiDomestikLayananLainnyaController;
-use App\Http\Controllers\Admin\InputResiInternasionalLayananLainnyaController;
-use App\Http\Controllers\Admin\ResiRequestPickupController;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,19 +26,15 @@ use App\Http\Controllers\Admin\ResiRequestPickupController;
 */
 
 // Auth::routes();
-Auth::routes(['home' => false]);
+Auth::routes();
 
-//Public Routes
 Route::get('/login', [LoginController::class, 'showLoginForm']);
 Route::post('/login', [LoginController::class, 'login'])->name('login');
-Route::get('/', [HomeController::class, 'index'])->name('/');
 
-Route::get('/', [HomeController::class, 'index']);
-
-//Admin Routes
-Route::middleware(['web'])->prefix('admin')->group(function () {
-  Route::get('/', [App\Http\Controllers\Admin\HomeController::class, 'index'])->name('admin');
-  Route::get('/home', [App\Http\Controllers\Admin\HomeController::class, 'index'])->name('home');
+Route::group(['middleware' => ['web']], function () {
+  Route::post('logout', [LoginController::class, 'logout'])->name('logout');
+  Route::get('/', [HomeController::class, 'index'])->name('home');
+  Route::get('/home', [HomeController::class, 'index']);
 
   Route::group(['prefix' => 'web-filemanager'], function () {
     \UniSharp\LaravelFilemanager\Lfm::routes();

@@ -66,7 +66,7 @@
               @foreach ($data as $menu)
                 @php
                   $id_menu = get_menu_id('roles');
-
+                  
                   //selalu bisa
                   $detailButton = '<a class="" href="' . route('menus.show', $menu->id_menus) . '">Detail</a>';
                   $editButton = '';
@@ -101,7 +101,7 @@
                     @foreach ($menu->menus as $submenu)
                       @php
                         $id_menus = get_menu_id('roles');
-
+                        
                         //selalu bisa
                         $detailButton = '<a class="" href="' . route('menus.show', $submenu->id_menus) . '">Detail</a>';
                         $editButton = '';
@@ -216,7 +216,7 @@
               $.ajax({
                 type: 'ajax',
                 method: 'get',
-                url: '/admin/menus/delete/' + kode,
+                url: '/menus/delete/' + kode,
                 async: true,
                 dataType: 'json',
                 success: function(response) {

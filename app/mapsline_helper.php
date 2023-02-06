@@ -374,7 +374,7 @@ if (!function_exists('activeMenu')) {
   {
     $active = '';
 
-    if (Request::is(Request::segment(1) . '/' . $uri . '/*') || Request::is(Request::segment(1) . '/' . $uri) || Request::is('/admin/' . $uri . '*')) {
+    if (Request::is(Request::segment(1) . '/' . $uri . '/*') || Request::is(Request::segment(1) . '/' . $uri) || Request::is($uri . '*')) {
       $active = 'active';
     }
 
