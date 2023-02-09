@@ -1,18 +1,17 @@
 <?php
 
-use App\Models\Resi;
-use Illuminate\Support\Facades\Auth;
-
-use UniSharp\LaravelFilemanager\Lfm;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\MenuController;
+use App\Http\Controllers\Admin\ProfileCompanyController;
 use App\Http\Controllers\Admin\RoleController;
-use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\UserAccountController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\UserMenuAuthorizationController;
+use App\Http\Controllers\Auth\LoginController;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+use UniSharp\LaravelFilemanager\Lfm;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,7 +22,7 @@ use App\Http\Controllers\Admin\UserMenuAuthorizationController;
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
-*/
+ */
 
 // Auth::routes();
 Auth::routes();
@@ -70,5 +69,16 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('/user-profile-account/{id}', [UserAccountController::class, 'storeUserProfileAccount']);
     Route::get('/user-password-account', [UserAccountController::class, 'userPasswordAccount']);
     Route::post('/user-password-account/{id}', [UserAccountController::class, 'storeUserPasswordAccount']);
+
+    // MASTER DATA
+    // ROUTE COMPANY PROFILE
+    Route::get('/profile-company', [ProfileCompanyController::class, 'companyProfileAccount']);
+    Route::post('/profile-company', [ProfileCompanyController::class, 'storeCompanyProfileAccount']);
+
+    Route::get('/profile-company/bank-account', [ProfileCompanyController::class, 'companyBankAccount']);
+    Route::post('/profile-company/bank-account', [ProfileCompanyController::class, 'storeCompanyBankAccount']);
+
+    Route::get('/profile-company/contact-detail-account', [ProfileCompanyController::class, 'companyContactDetailAccount']);
+    Route::post('/profile-company/contact-detail-account', [ProfileCompanyController::class, 'storeCompanyContactDetailAccount']);
   });
 });

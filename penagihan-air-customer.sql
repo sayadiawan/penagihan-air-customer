@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 06 Feb 2023 pada 16.17
+-- Waktu pembuatan: 09 Feb 2023 pada 12.59
 -- Versi server: 10.4.25-MariaDB
 -- Versi PHP: 7.4.30
 
@@ -65,6 +65,7 @@ CREATE TABLE `menus` (
 --
 
 INSERT INTO `menus` (`id_menus`, `upid_menus`, `code_menus`, `name_menus`, `link_menus`, `description_menus`, `icon_menus`, `action_menus`, `created_at`, `updated_at`, `deleted_at`) VALUES
+('32d2e1a8-ec96-44c7-885c-21f456b085ff', '9a7773d3-d090-4586-86eb-4a8c3804d199', 'MDPA', 'Data Profile Company', 'profile-company', 'Menu ini berisikan data area seperti contoh profile area dengan nama RW atau Rukun Warga bahkan bisa mengacu komplek', 'fas fa-chalkboard-teacher', 'create,read,update,delete,list', '2023-02-09 06:27:00', '2023-02-09 16:32:24', NULL),
 ('51bebdc8-28df-4159-8fe4-7833c493431e', '0', 'MOD', 'Data  Menu', 'menus', 'Data menus sistem', 'fa fa-list', 'create,read,update,delete,list,export,import', '2022-10-15 15:02:00', NULL, NULL),
 ('618019ac-8035-40e1-9bac-d747bb406145', '92b34539-1fc4-48d4-a97e-c5c9ec3e6d05', 'PRIV', 'Role Akses', 'roles', 'Digunakan untuk mengatur hak akses pengguna', 'fa fa-cog', 'create,update,delete,read,detail,list,roles', '2022-10-15 15:02:00', NULL, NULL),
 ('92b34539-1fc4-48d4-a97e-c5c9ec3e6d05', '0', 'USM', 'User Management', 'user-management', '', 'fa fa-users', 'read,list', '2022-10-15 15:02:00', NULL, NULL),
@@ -133,6 +134,78 @@ CREATE TABLE `personal_access_tokens` (
 -- --------------------------------------------------------
 
 --
+-- Struktur dari tabel `profile_companys`
+--
+
+CREATE TABLE `profile_companys` (
+  `id_profile_companys` char(36) NOT NULL,
+  `name_profile_companys` varchar(100) DEFAULT NULL,
+  `penanggungjawab_profile_companys` char(36) DEFAULT NULL,
+  `logo_profile_companys` text DEFAULT NULL,
+  `type_kop_profile_companys` enum('IMAGE','TEXT') NOT NULL DEFAULT 'TEXT',
+  `kop_image_profile_companys` text DEFAULT NULL,
+  `kop_text_profile_companys` text DEFAULT NULL,
+  `address_profile_companys` text DEFAULT NULL,
+  `kelurahan_profile_companys` varchar(100) DEFAULT NULL,
+  `kecamataan_profile_companys` varchar(100) DEFAULT NULL,
+  `kota_profile_companys` varchar(100) DEFAULT NULL,
+  `provinsi_profile_companys` varchar(100) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `profile_companys`
+--
+
+INSERT INTO `profile_companys` (`id_profile_companys`, `name_profile_companys`, `penanggungjawab_profile_companys`, `logo_profile_companys`, `type_kop_profile_companys`, `kop_image_profile_companys`, `kop_text_profile_companys`, `address_profile_companys`, `kelurahan_profile_companys`, `kecamataan_profile_companys`, `kota_profile_companys`, `provinsi_profile_companys`, `created_at`, `updated_at`, `deleted_at`) VALUES
+('7a9355b5-f8aa-4d47-8d75-f58e98dd9d1a', NULL, NULL, NULL, 'TEXT', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-02-09 11:58:05', '2023-02-09 18:58:05', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `profile_company_banks`
+--
+
+CREATE TABLE `profile_company_banks` (
+  `id_profile_company_banks` char(36) NOT NULL,
+  `profile_companys_id` char(36) NOT NULL,
+  `bankname_profile_company_banks` varchar(100) NOT NULL,
+  `accountname_profile_company_banks` varchar(100) NOT NULL,
+  `accountnumber_profile_company_banks` varchar(100) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `profile_company_banks`
+--
+
+INSERT INTO `profile_company_banks` (`id_profile_company_banks`, `profile_companys_id`, `bankname_profile_company_banks`, `accountname_profile_company_banks`, `accountnumber_profile_company_banks`, `created_at`, `updated_at`, `deleted_at`) VALUES
+('18215764-46fa-41cf-b5fa-23126d55955f', '7a9355b5-f8aa-4d47-8d75-f58e98dd9d1a', 'BCA', 'Budi', '01234567', '2023-02-09 11:58:05', '2023-02-09 18:58:05', NULL),
+('6202e225-f4ea-4a57-b414-75f04d55c0ae', '7a9355b5-f8aa-4d47-8d75-f58e98dd9d1a', 'mandiri', 'Duki', '3123333', '2023-02-09 11:58:05', '2023-02-09 18:58:05', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `profile_company_contact_details`
+--
+
+CREATE TABLE `profile_company_contact_details` (
+  `id_profile_company_contact_details` char(36) NOT NULL,
+  `profile_companys_id` char(36) NOT NULL,
+  `name_profile_company_contact_details` varchar(100) NOT NULL,
+  `phone_profile_company_contact_details` varchar(16) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Struktur dari tabel `roles`
 --
 
@@ -184,7 +257,25 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `username`, `phone`, `email_verified_at`, `password`, `avatar`, `avatar_originalfile`, `avatar_originalmimetype`, `avatar_mimetype`, `remember_token`, `roles_id`, `is_publish`, `created_at`, `updated_at`, `deleted_at`) VALUES
-('ce6c6103-7ccc-4e17-b453-8415b3d9908b', 'Super Admin', 'pinginresign@gmail.com', 'superadmin', '081362867034', NULL, '$2y$10$RwDwoFpzc99JpZvho0eBpuqzuBe2dzNHB58DkUP3YljGQkWfRGtXK', 'user-avatar/6FPJPXUQxUYPdDQhupyNF3mVopbeFzi1Tsx2eRle.jpg', 'ef33fed70e6c8dae21bb97087f0bdd1e--happy-things-nerdy-things.jpg', 'jpg', 'image/jpeg', 'ewDaIezae0uTFDa4sZgEUAxs08TOzjHYVo1QchzKV7PbVXEf5n20gQ8JdacV', '8b61213d-9521-40a4-8b17-fda810228b54', 1, NULL, '2022-10-23 06:42:45', NULL);
+('ce6c6103-7ccc-4e17-b453-8415b3d9908b', 'Super Admin', 'pinginresign@gmail.com', 'superadmin', '081362867034', NULL, '$2y$10$RwDwoFpzc99JpZvho0eBpuqzuBe2dzNHB58DkUP3YljGQkWfRGtXK', 'user-avatar/1pdhQoB4ElBmXsKGkomwgg6CZojUDLixB9685r8l.jpg', '32745128.jfif', 'jfif', 'image/jpeg', 'ewDaIezae0uTFDa4sZgEUAxs08TOzjHYVo1QchzKV7PbVXEf5n20gQ8JdacV', '8b61213d-9521-40a4-8b17-fda810228b54', 1, NULL, '2023-02-06 16:04:28', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `user_as_citizen_details`
+--
+
+CREATE TABLE `user_as_citizen_details` (
+  `id_user_as_citizen_details` char(36) NOT NULL,
+  `users_id` char(36) NOT NULL,
+  `norumah_user_as_citizen_details` varchar(50) NOT NULL,
+  `rt_user_as_citizen_details` int(11) NOT NULL,
+  `rw_user_as_citizen_details` int(11) NOT NULL,
+  `address_user_as_citizen_details` text NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -294,6 +385,7 @@ INSERT INTO `user_menu_authorizations` (`id_user_menu_authorizations`, `roles_id
 ('db96cd56-76eb-4f63-88bc-2bda14e3a114', '62cd5d85-4765-4481-b3db-8dc85f2f9061', 'f837425e-3d1a-4bbe-b536-d7ad41a1c7c5', NULL, 0, '2023-01-28 10:13:13', '2023-01-28 17:13:13'),
 ('df2e82d8-1506-42b9-86a9-2934d2227761', '62cd5d85-4765-4481-b3db-8dc85f2f9061', '21a957e8-384e-489a-8b60-313b077b9e0c', NULL, 0, '2023-01-28 10:13:13', '2023-01-28 17:13:13'),
 ('e045b19a-d402-47a8-879c-72aff7f95513', 'f87ee4f8-424e-451e-9304-7730baed289a', '973b4e68-9a0f-4240-81d9-5bdcd70ca415', NULL, 0, '2022-12-19 12:56:38', '2022-12-19 19:56:38'),
+('e585d9d2-8285-4bef-8a44-11a6fc701aae', '8b61213d-9521-40a4-8b17-fda810228b54', '32d2e1a8-ec96-44c7-885c-21f456b085ff', 'create,read,update,delete,list', 1, '2023-02-09 06:27:50', '2023-02-09 13:27:50'),
 ('e5b4699b-9bde-40fa-87a9-1fe8402bb453', 'f87ee4f8-424e-451e-9304-7730baed289a', 'da6f749f-b616-4516-b016-3d9fa75c0909', NULL, 0, '2022-12-19 12:56:38', '2022-12-19 19:56:38'),
 ('e73c536b-8200-4ccc-a872-977e469ccbd1', '8b61213d-9521-40a4-8b17-fda810228b54', '51bebdc8-28df-4159-8fe4-7833c493431e', 'create,update,delete,read,export,import,list', 1, '2021-06-30 23:33:47', '2021-12-16 03:42:45'),
 ('eac3a443-9e56-4b20-8675-923649e46fcb', '62cd5d85-4765-4481-b3db-8dc85f2f9061', '9a7773d3-d090-4586-86eb-4a8c3804d199', NULL, 0, '2023-01-28 10:13:13', '2023-01-28 17:13:13'),
@@ -343,6 +435,24 @@ ALTER TABLE `personal_access_tokens`
   ADD KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`);
 
 --
+-- Indeks untuk tabel `profile_companys`
+--
+ALTER TABLE `profile_companys`
+  ADD PRIMARY KEY (`id_profile_companys`);
+
+--
+-- Indeks untuk tabel `profile_company_banks`
+--
+ALTER TABLE `profile_company_banks`
+  ADD PRIMARY KEY (`id_profile_company_banks`);
+
+--
+-- Indeks untuk tabel `profile_company_contact_details`
+--
+ALTER TABLE `profile_company_contact_details`
+  ADD PRIMARY KEY (`id_profile_company_contact_details`);
+
+--
 -- Indeks untuk tabel `roles`
 --
 ALTER TABLE `roles`
@@ -355,6 +465,12 @@ ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `users_email_unique` (`email`),
   ADD UNIQUE KEY `username` (`username`);
+
+--
+-- Indeks untuk tabel `user_as_citizen_details`
+--
+ALTER TABLE `user_as_citizen_details`
+  ADD PRIMARY KEY (`id_user_as_citizen_details`);
 
 --
 -- Indeks untuk tabel `user_menu_authorizations`
