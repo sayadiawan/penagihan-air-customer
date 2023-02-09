@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Traits\Uuid;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -49,13 +48,8 @@ class User extends Authenticatable
     return $this->belongsTo(Role::class, 'roles_id', 'id_roles')->withDefault();
   }
 
-  public function agent()
+  public function customer()
   {
-    return $this->belongsTo(Agent::class, 'id', 'users_id')->withDefault();
-  }
-
-  public function areaagent()
-  {
-    return $this->belongsTo(AreaAgent::class, 'id', 'users_id')->withDefault();
+    return $this->belongsTo(Customer::class, 'id', 'users_id')->withDefault();
   }
 }

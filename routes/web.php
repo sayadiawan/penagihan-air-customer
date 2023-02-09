@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\MenuController;
@@ -71,7 +72,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('/user-password-account/{id}', [UserAccountController::class, 'storeUserPasswordAccount']);
 
     // MASTER DATA
-    // ROUTE COMPANY PROFILE
+    // Route Company Profile
     Route::get('/profile-company', [ProfileCompanyController::class, 'companyProfileAccount']);
     Route::post('/profile-company', [ProfileCompanyController::class, 'storeCompanyProfileAccount']);
 
@@ -80,5 +81,10 @@ Route::group(['middleware' => ['web']], function () {
 
     Route::get('/profile-company/contact-detail-account', [ProfileCompanyController::class, 'companyContactDetailAccount']);
     Route::post('/profile-company/contact-detail-account', [ProfileCompanyController::class, 'storeCompanyContactDetailAccount']);
+
+    // Route Customer
+    Route::resource("data-customer", CustomerController::class);
+    Route::get('/data-customer-destroy/{id}', [CustomerController::class, 'destroy']);
+    Route::post('/data-customer/get-customers-by-select2', [CustomerController::class, 'getCustomersBySelect2'])->name('data-customer.get-customers-by-select2');
   });
 });

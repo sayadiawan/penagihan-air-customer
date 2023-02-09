@@ -4,7 +4,7 @@
 @endpush
 
 @section('title')
-  Data Pengguna
+  Data Customer
 @endsection
 
 @section('content')
@@ -15,7 +15,7 @@
           <a href="{{ url('home') }}">Dashboard</a>
         </li>
 
-        <li class="breadcrumb-item active">Daftar Pengguna</li>
+        <li class="breadcrumb-item active">Data Customer</li>
       </ol>
     </nav>
 
@@ -24,10 +24,10 @@
       <div class="col-12">
         <div class="card mb-4">
           <div class="card-header d-flex justify-content-between align-items-center">
-            <h5 class="mb-0">Daftar Pengguna</h5>
+            <h5 class="mb-0">Data Customer</h5>
 
             @if (isAccess('create', $get_menu, auth()->user()->roles_id))
-              <a href="{{ route('user.create') }}">
+              <a href="{{ route('data-customer.create') }}">
                 <button type="button" class="btn btn-primary btn-icon-text">
                   <i class="fa fa-plus btn-icon-prepend"></i>
                   Tambah
@@ -38,15 +38,16 @@
 
           <div class="card-body">
             <div class="table-responsive text-nowrap">
-              <table class="table" id="table-daftar-pengguna" style="width: 100%">
+              <table class="table" id="table-daftar-customer" style="width: 100%">
                 <thead>
                   <tr>
                     <th>No</th>
-                    <th>Nama</th>
-                    <th>Username</th>
-                    <th>Phone</th>
-                    <th>Hak Akses</th>
-                    <th>Status</th>
+                    <th>Nama Pelanggan</th>
+                    <th>Username Pelanggan</th>
+                    <th>Telepon Pelanggan</th>
+                    <th>Nomor Rumah</th>
+                    <th>RT/RW</th>
+                    <th>Alamat Lengkap</th>
                     <th>Actions</th>
                   </tr>
                 </thead>
@@ -65,16 +66,15 @@
 @endsection
 
 @push('after-script')
-  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   <script>
     $(function() {
-      var table = $('#table-daftar-pengguna').DataTable({
+      var table = $('#table-daftar-customer').DataTable({
         processing: true,
         serverSide: true,
         stateSave: true,
         responsive: true,
         ajax: {
-          url: "{{ route('user.index') }}",
+          url: "{{ route('data-customer.index') }}",
           type: "GET",
           data: function(d) {
             d.search = $('input[type="search"]').val()
@@ -99,12 +99,16 @@
             name: 'phone'
           },
           {
-            data: 'set_role',
-            name: 'set_role'
+            data: 'no_rumah',
+            name: 'no_rumah'
           },
           {
-            data: 'set_status',
-            name: 'set_status'
+            data: 'rt_rw',
+            name: 'rt_rw'
+          },
+          {
+            data: 'address_customers',
+            name: 'address_customers'
           },
           {
             data: 'action',
@@ -122,54 +126,11 @@
       // datatables responsive
       new $.fn.dataTable.FixedHeader(table);
 
-      //delete
-      $('#table-daftar-pengguna').on('click', '.btn-hapus', function() {
+      // reset password
+      $('#table-daftar-customer').on('click', '.btn-reset', function() {
         var kode = $(this).data('id');
         var nama = $(this).data('nama');
-        swal({
-            title: "Apakah anda yakin?",
-            text: "Untuk menghapus data : " + nama,
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
-          })
-          .then((willDelete) => {
-            if (willDelete) {
-              $.ajax({
-                type: 'ajax',
-                method: 'get',
-                url: '/user-destroy/' + kode,
-                async: true,
-                dataType: 'json',
-                success: function(response) {
-                  if (response.status == true) {
-                    swal({
-                        title: "Success!",
-                        text: "Berhasil Menghapus Data",
-                        icon: "success"
-                      })
-                      .then(function() {
-                        location.reload(true);
-                      });
-                  } else {
-                    swal("Hapus Data Gagal !", {
-                      icon: "warning",
-                    });
-                  }
-                },
-                error: function() {
-                  swal("ERROR", "Hapus Data Gagal.", "error");
-                }
-              });
-            } else {
-              swal("Cancelled", "Hapus Data Dibatalkan.", "error");
-            }
-          });
-      });
-      //soft
-      $('#table-daftar-pengguna').on('click', '.btn-reset', function() {
-        var kode = $(this).data('id');
-        var nama = $(this).data('nama');
+
         swal({
             title: "Apakah anda yakin?",
             text: "Untuk mereset password : " + nama,
@@ -189,7 +150,7 @@
                   if (response == true) {
                     swal({
                         title: "Success!",
-                        text: "Berhasil mereset password Sesuai dengan username",
+                        text: "Berhasil Mereset Password Sesuai dengan Username Pelanggan'",
                         icon: "success"
                       })
                       .then(function() {
@@ -211,11 +172,13 @@
             }
           });
       });
-      //ganti status
-      $('#table-daftar-pengguna').on('click', '.btn-status', function() {
+
+      // aktif atau menonaktifkan pelanggan
+      $('#table-daftar-customer').on('click', '.btn-status', function() {
         var kode = $(this).data('id');
         var nama = $(this).data('nama');
         var set_val = $(this).data('val');
+
         swal({
             title: "Apakah anda yakin?",
             text: "Untuk mengganti status " + nama,
@@ -257,6 +220,54 @@
             }
           });
       });
-    })
+
+      // delete pelanggan
+      $('#table-daftar-customer').on('click', '.btn-hapus', function() {
+        var kode = $(this).data('id');
+        var nama = $(this).data('nama');
+        swal({
+            title: "Apakah anda yakin?",
+            text: "Untuk menghapus data : " + nama,
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+          })
+          .then((willDelete) => {
+            if (willDelete) {
+              $.ajax({
+                type: 'ajax',
+                method: 'get',
+                url: '/data-customer-destroy/' + kode,
+                async: true,
+                dataType: 'json',
+                success: function(response) {
+                  if (response.status == true) {
+                    swal({
+                        title: "Success!",
+                        text: response.pesan,
+                        icon: "success"
+                      })
+                      .then(function() {
+                        table.ajax.reload();
+                      });
+                  } else {
+                    swal("Hapus Data Gagal!", {
+                      icon: "warning",
+                      title: "Failed!",
+                      text: response.pesan,
+                    });
+                  }
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                  var err = eval("(" + jqXHR.responseText + ")");
+                  swal("Error!", err.Message, "error");
+                }
+              });
+            } else {
+              swal("Cancelled", "Hapus Data Dibatalkan.", "error");
+            }
+          });
+      });
+    });
   </script>
 @endpush

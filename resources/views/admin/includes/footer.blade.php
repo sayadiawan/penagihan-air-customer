@@ -7,7 +7,7 @@
       </script>
       , made with ❤️ by
       <a href="#" target="_blank" class="footer-link fw-bolder">
-        Mapsline
+        Penagihan Air Pelanggan
       </a>
     </div>
   </div>

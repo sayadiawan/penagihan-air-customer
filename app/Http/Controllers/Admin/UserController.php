@@ -2,19 +2,17 @@
 
 namespace App\Http\Controllers\Admin;
 
-
-
 use App\Http\Controllers\Controller;
 use App\Models\Role;
 use App\Models\User;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
-use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
+use Yajra\DataTables\Facades\DataTables;
 
 class UserController extends Controller
 {
@@ -126,7 +124,7 @@ class UserController extends Controller
     $rule = [
       'name' => 'required|string|max:100',
       'username' => 'required|string',
-      'email' => 'required|email',
+      'email' => 'required|email:rfc,dns',
       'phone' => 'required|numeric|digits_between:10,12',
       'roles_id' => 'required',
       'is_publish' => 'required',
@@ -191,12 +189,12 @@ class UserController extends Controller
           if ($simpan == true) {
             return response()->json([
               'status' => true,
-              'pesan' => "Data pengguna berhasil disimpan!"
+              'pesan' => "Data pengguna berhasil disimpan!",
             ], 200);
           } else {
             return response()->json([
               'status' => false,
-              'pesan' => "Data pengguna tidak berhasil disimpan!"
+              'pesan' => "Data pengguna tidak berhasil disimpan!",
             ], 200);
           }
         }
@@ -220,7 +218,7 @@ class UserController extends Controller
 
     return view('admin.pages.user.show', [
       'get_data' => $data,
-      'role' => $role
+      'role' => $role,
     ]);
   }
 
@@ -279,12 +277,12 @@ class UserController extends Controller
         if ($simpan == true) {
           return response()->json([
             'status' => true,
-            'pesan' => "Data pengguna berhasil disimpan!"
+            'pesan' => "Data pengguna berhasil disimpan!",
           ], 200);
         } else {
           return response()->json([
             'status' => false,
-            'pesan' => "Data pengguna tidak berhasil disimpan!"
+            'pesan' => "Data pengguna tidak berhasil disimpan!",
           ], 200);
         }
       } catch (\Exception $e) {
@@ -315,8 +313,8 @@ class UserController extends Controller
   //reset password
   public function ResetPass($id)
   {
-    $set = User::find($id);
-    $set->password = Hash::make('mapsline');
+    $set = User::findOrFail($id);
+    $set->password = Hash::make($set->username);
     $set->save();
     return response()->json(true);
   }
@@ -360,7 +358,7 @@ class UserController extends Controller
     foreach ($data as $item) {
       $response[] = array(
         "id" => $item->id,
-        "text" => $item->name
+        "text" => $item->name,
       );
     }
 

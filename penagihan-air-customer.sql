@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 09 Feb 2023 pada 12.59
+-- Waktu pembuatan: 09 Feb 2023 pada 17.07
 -- Versi server: 10.4.25-MariaDB
 -- Versi PHP: 7.4.30
 
@@ -20,6 +20,31 @@ SET time_zone = "+00:00";
 --
 -- Database: `penagihan-air-customer`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `customers`
+--
+
+CREATE TABLE `customers` (
+  `id_customers` char(36) NOT NULL,
+  `users_id` char(36) NOT NULL,
+  `norumah_customers` varchar(50) NOT NULL,
+  `rt_customers` int(11) NOT NULL,
+  `rw_customers` int(11) NOT NULL,
+  `address_customers` text NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `customers`
+--
+
+INSERT INTO `customers` (`id_customers`, `users_id`, `norumah_customers`, `rt_customers`, `rw_customers`, `address_customers`, `created_at`, `updated_at`, `deleted_at`) VALUES
+('7e96a14c-afa4-45d9-a2ba-5b0e2ef905d3', '4c47696f-4508-4025-88c9-b97e03856ada', '30', 5, 5, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Tempus imperdiet nulla malesuada pellentesque elit eget. In iaculis nunc sed augue. Sit amet nisl suscipit adipiscing bibendum est. Netus et malesuada fames ac turpis egestas.', '2023-02-09 16:01:42', '2023-02-09 23:01:42', NULL);
 
 -- --------------------------------------------------------
 
@@ -68,6 +93,7 @@ INSERT INTO `menus` (`id_menus`, `upid_menus`, `code_menus`, `name_menus`, `link
 ('32d2e1a8-ec96-44c7-885c-21f456b085ff', '9a7773d3-d090-4586-86eb-4a8c3804d199', 'MDPA', 'Data Profile Company', 'profile-company', 'Menu ini berisikan data area seperti contoh profile area dengan nama RW atau Rukun Warga bahkan bisa mengacu komplek', 'fas fa-chalkboard-teacher', 'create,read,update,delete,list', '2023-02-09 06:27:00', '2023-02-09 16:32:24', NULL),
 ('51bebdc8-28df-4159-8fe4-7833c493431e', '0', 'MOD', 'Data  Menu', 'menus', 'Data menus sistem', 'fa fa-list', 'create,read,update,delete,list,export,import', '2022-10-15 15:02:00', NULL, NULL),
 ('618019ac-8035-40e1-9bac-d747bb406145', '92b34539-1fc4-48d4-a97e-c5c9ec3e6d05', 'PRIV', 'Role Akses', 'roles', 'Digunakan untuk mengatur hak akses pengguna', 'fa fa-cog', 'create,update,delete,read,detail,list,roles', '2022-10-15 15:02:00', NULL, NULL),
+('7e32dfaa-8113-4829-9f5f-5a0ab29c8468', '9a7773d3-d090-4586-86eb-4a8c3804d199', 'MDDP', 'Data Pelanggan', 'data-customer', 'Berisikan data pelanggan', 'fas fa-users', 'create,read,update,delete,list,reset', '2023-02-09 12:35:33', '2023-02-09 23:06:23', NULL),
 ('92b34539-1fc4-48d4-a97e-c5c9ec3e6d05', '0', 'USM', 'User Management', 'user-management', '', 'fa fa-users', 'read,list', '2022-10-15 15:02:00', NULL, NULL),
 ('9a7773d3-d090-4586-86eb-4a8c3804d199', '0', 'MSD', 'Master Data', 'master-data', '', 'fa fa-cubes', 'list,read', '2022-10-15 15:02:00', NULL, NULL),
 ('d1426653-826a-47aa-9920-d7fc5dab4c05', '0', 'HOME', 'Dashboard', 'home', '', 'fa fa-home', 'list,read', '2022-10-15 15:02:00', NULL, NULL),
@@ -223,6 +249,7 @@ CREATE TABLE `roles` (
 --
 
 INSERT INTO `roles` (`id_roles`, `code_roles`, `name_roles`, `created_at`, `updated_at`, `deleted_at`) VALUES
+('587c9ce1-0ac5-457a-8524-2f69fe161fea', 'CST', 'Customer', '2023-02-09 12:46:25', '2023-02-09 19:46:25', NULL),
 ('8b61213d-9521-40a4-8b17-fda810228b54', 'SAS', 'Super Admin', '2022-10-15 14:51:44', NULL, NULL),
 ('aa9b727c-c4d6-4825-9294-9b1fb6c2eb8d', 'ADM', 'Admin', '2022-10-15 14:51:44', NULL, NULL);
 
@@ -257,25 +284,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `username`, `phone`, `email_verified_at`, `password`, `avatar`, `avatar_originalfile`, `avatar_originalmimetype`, `avatar_mimetype`, `remember_token`, `roles_id`, `is_publish`, `created_at`, `updated_at`, `deleted_at`) VALUES
+('4c47696f-4508-4025-88c9-b97e03856ada', 'Yanto Kopling T', 'rahmadianto018@gmail.com', 'yantokopling', '081362867034', NULL, '$2y$10$j.Uky9UyJkyuF5jWTAdeEuh.oIPUzs9uifDm6dDe.CNNQPvTeNGBq', NULL, NULL, NULL, NULL, NULL, '587c9ce1-0ac5-457a-8524-2f69fe161fea', 1, '2023-02-09 16:01:42', '2023-02-09 16:07:12', NULL),
 ('ce6c6103-7ccc-4e17-b453-8415b3d9908b', 'Super Admin', 'pinginresign@gmail.com', 'superadmin', '081362867034', NULL, '$2y$10$RwDwoFpzc99JpZvho0eBpuqzuBe2dzNHB58DkUP3YljGQkWfRGtXK', 'user-avatar/1pdhQoB4ElBmXsKGkomwgg6CZojUDLixB9685r8l.jpg', '32745128.jfif', 'jfif', 'image/jpeg', 'ewDaIezae0uTFDa4sZgEUAxs08TOzjHYVo1QchzKV7PbVXEf5n20gQ8JdacV', '8b61213d-9521-40a4-8b17-fda810228b54', 1, NULL, '2023-02-06 16:04:28', NULL);
-
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `user_as_citizen_details`
---
-
-CREATE TABLE `user_as_citizen_details` (
-  `id_user_as_citizen_details` char(36) NOT NULL,
-  `users_id` char(36) NOT NULL,
-  `norumah_user_as_citizen_details` varchar(50) NOT NULL,
-  `rt_user_as_citizen_details` int(11) NOT NULL,
-  `rw_user_as_citizen_details` int(11) NOT NULL,
-  `address_user_as_citizen_details` text NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `updated_at` datetime DEFAULT NULL,
-  `deleted_at` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -363,6 +373,7 @@ INSERT INTO `user_menu_authorizations` (`id_user_menu_authorizations`, `roles_id
 ('8e9f5652-aaea-41c5-8c79-fb15fbc48070', '62cd5d85-4765-4481-b3db-8dc85f2f9061', 'da6f749f-b616-4516-b016-3d9fa75c0909', NULL, 0, '2023-01-28 10:13:13', '2023-01-28 17:13:13'),
 ('8ee1b8bc-ee18-4124-8fe2-63e7cea8e534', '62cd5d85-4765-4481-b3db-8dc85f2f9061', '01c0acd5-2e17-460b-be21-d022511249eb', NULL, 0, '2023-01-28 10:13:13', '2023-01-28 17:13:13'),
 ('97e232b7-b969-445b-abec-a578e2405858', '8b61213d-9521-40a4-8b17-fda810228b54', 'f537f8c5-5624-424d-ae9b-2abd9f84bc6e', 'create,read,update,delete,list', 0, '2022-12-11 08:22:23', '2022-12-17 17:35:48'),
+('9bbeb77e-8b21-4133-a3c8-497adc6f2f7c', '8b61213d-9521-40a4-8b17-fda810228b54', '7e32dfaa-8113-4829-9f5f-5a0ab29c8468', 'create,read,update,delete,list,reset', 1, '2023-02-09 12:37:00', '2023-02-09 23:06:57'),
 ('a0660bd1-0a50-4bcc-971f-e1d4bf288608', 'f87ee4f8-424e-451e-9304-7730baed289a', '943a16fa-dd82-4b26-bd35-997dda9f4cc5', NULL, 0, '2022-12-19 12:56:38', '2022-12-19 19:56:38'),
 ('ab7f94ad-eeec-49b8-a0e6-ebaaf9b049e1', '62cd5d85-4765-4481-b3db-8dc85f2f9061', '28bfa6ea-3aa1-404a-abb7-6272ad2d72e2', NULL, 0, '2023-01-28 10:13:13', '2023-01-28 17:13:13'),
 ('af0a1b22-eb63-4ab8-b52d-1f9ed7efdd4c', '8b61213d-9521-40a4-8b17-fda810228b54', '28bfa6ea-3aa1-404a-abb7-6272ad2d72e2', 'create,read,update,delete,list', 0, '2022-12-11 08:22:23', '2022-12-17 17:35:48'),
@@ -399,6 +410,12 @@ INSERT INTO `user_menu_authorizations` (`id_user_menu_authorizations`, `roles_id
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indeks untuk tabel `customers`
+--
+ALTER TABLE `customers`
+  ADD PRIMARY KEY (`id_customers`);
 
 --
 -- Indeks untuk tabel `failed_jobs`
@@ -465,12 +482,6 @@ ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `users_email_unique` (`email`),
   ADD UNIQUE KEY `username` (`username`);
-
---
--- Indeks untuk tabel `user_as_citizen_details`
---
-ALTER TABLE `user_as_citizen_details`
-  ADD PRIMARY KEY (`id_user_as_citizen_details`);
 
 --
 -- Indeks untuk tabel `user_menu_authorizations`
