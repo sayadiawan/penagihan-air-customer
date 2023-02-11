@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 09 Feb 2023 pada 17.07
--- Versi server: 10.4.25-MariaDB
--- Versi PHP: 7.4.30
+-- Generation Time: Feb 11, 2023 at 03:13 PM
+-- Server version: 10.4.22-MariaDB
+-- PHP Version: 7.4.27
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,7 +24,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `customers`
+-- Table structure for table `customers`
 --
 
 CREATE TABLE `customers` (
@@ -40,7 +40,7 @@ CREATE TABLE `customers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `customers`
+-- Dumping data for table `customers`
 --
 
 INSERT INTO `customers` (`id_customers`, `users_id`, `norumah_customers`, `rt_customers`, `rw_customers`, `address_customers`, `created_at`, `updated_at`, `deleted_at`) VALUES
@@ -49,7 +49,7 @@ INSERT INTO `customers` (`id_customers`, `users_id`, `norumah_customers`, `rt_cu
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `failed_jobs`
+-- Table structure for table `failed_jobs`
 --
 
 CREATE TABLE `failed_jobs` (
@@ -68,7 +68,7 @@ CREATE TABLE `failed_jobs` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `menus`
+-- Table structure for table `menus`
 --
 
 CREATE TABLE `menus` (
@@ -86,23 +86,25 @@ CREATE TABLE `menus` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `menus`
+-- Dumping data for table `menus`
 --
 
 INSERT INTO `menus` (`id_menus`, `upid_menus`, `code_menus`, `name_menus`, `link_menus`, `description_menus`, `icon_menus`, `action_menus`, `created_at`, `updated_at`, `deleted_at`) VALUES
+('322bccd2-e2df-4aab-903c-ec7205a9ce1c', '9a7773d3-d090-4586-86eb-4a8c3804d199', 'MDPS', 'Setting Harga', 'price-settings', NULL, 'fas fa-sliders-h', 'create,read,update,delete,list', '2023-02-11 11:35:02', '2023-02-11 18:36:29', NULL),
 ('32d2e1a8-ec96-44c7-885c-21f456b085ff', '9a7773d3-d090-4586-86eb-4a8c3804d199', 'MDPA', 'Data Profile Company', 'profile-company', 'Menu ini berisikan data area seperti contoh profile area dengan nama RW atau Rukun Warga bahkan bisa mengacu komplek', 'fas fa-chalkboard-teacher', 'create,read,update,delete,list', '2023-02-09 06:27:00', '2023-02-09 16:32:24', NULL),
 ('51bebdc8-28df-4159-8fe4-7833c493431e', '0', 'MOD', 'Data  Menu', 'menus', 'Data menus sistem', 'fa fa-list', 'create,read,update,delete,list,export,import', '2022-10-15 15:02:00', NULL, NULL),
 ('618019ac-8035-40e1-9bac-d747bb406145', '92b34539-1fc4-48d4-a97e-c5c9ec3e6d05', 'PRIV', 'Role Akses', 'roles', 'Digunakan untuk mengatur hak akses pengguna', 'fa fa-cog', 'create,update,delete,read,detail,list,roles', '2022-10-15 15:02:00', NULL, NULL),
 ('7e32dfaa-8113-4829-9f5f-5a0ab29c8468', '9a7773d3-d090-4586-86eb-4a8c3804d199', 'MDDP', 'Data Pelanggan', 'data-customer', 'Berisikan data pelanggan', 'fas fa-users', 'create,read,update,delete,list,reset', '2023-02-09 12:35:33', '2023-02-09 23:06:23', NULL),
 ('92b34539-1fc4-48d4-a97e-c5c9ec3e6d05', '0', 'USM', 'User Management', 'user-management', '', 'fa fa-users', 'read,list', '2022-10-15 15:02:00', NULL, NULL),
 ('9a7773d3-d090-4586-86eb-4a8c3804d199', '0', 'MSD', 'Master Data', 'master-data', '', 'fa fa-cubes', 'list,read', '2022-10-15 15:02:00', NULL, NULL),
+('a4b58142-a3d4-45e7-b211-dcc20d007875', '0', 'DTP', 'Data Tagihan Pelanggan', 'data-tagihan-pelanggan', NULL, 'fas fa-hand-holding-usd', 'create,read,update,delete,list', '2023-02-11 10:43:21', '2023-02-11 17:46:35', NULL),
 ('d1426653-826a-47aa-9920-d7fc5dab4c05', '0', 'HOME', 'Dashboard', 'home', '', 'fa fa-home', 'list,read', '2022-10-15 15:02:00', NULL, NULL),
 ('fca27393-2694-49ee-8bae-d457c9f5eaf9', '92b34539-1fc4-48d4-a97e-c5c9ec3e6d05', 'USR', 'Data Pengguna', 'user', '', 'fa fa-user', 'create,read,update,delete,import,export,detail,reset', '2022-10-15 15:02:00', NULL, NULL);
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `migrations`
+-- Table structure for table `migrations`
 --
 
 CREATE TABLE `migrations` (
@@ -112,7 +114,7 @@ CREATE TABLE `migrations` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data untuk tabel `migrations`
+-- Dumping data for table `migrations`
 --
 
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
@@ -130,7 +132,7 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `password_resets`
+-- Table structure for table `password_resets`
 --
 
 CREATE TABLE `password_resets` (
@@ -142,7 +144,7 @@ CREATE TABLE `password_resets` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `personal_access_tokens`
+-- Table structure for table `personal_access_tokens`
 --
 
 CREATE TABLE `personal_access_tokens` (
@@ -160,7 +162,25 @@ CREATE TABLE `personal_access_tokens` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `profile_companys`
+-- Table structure for table `price_settings`
+--
+
+CREATE TABLE `price_settings` (
+  `id_price_settings` char(36) NOT NULL,
+  `minimum_value_per_cubic_price_settings` varchar(16) DEFAULT NULL,
+  `increase_in_price_per_cubic_price_settings` varchar(16) DEFAULT NULL,
+  `type_ref_doc_price_settings` enum('TEXT','LINK') NOT NULL DEFAULT 'TEXT',
+  `ref_doc_price_settings` longtext DEFAULT NULL,
+  `is_active_price_settings` tinyint(4) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `profile_companys`
 --
 
 CREATE TABLE `profile_companys` (
@@ -182,7 +202,7 @@ CREATE TABLE `profile_companys` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `profile_companys`
+-- Dumping data for table `profile_companys`
 --
 
 INSERT INTO `profile_companys` (`id_profile_companys`, `name_profile_companys`, `penanggungjawab_profile_companys`, `logo_profile_companys`, `type_kop_profile_companys`, `kop_image_profile_companys`, `kop_text_profile_companys`, `address_profile_companys`, `kelurahan_profile_companys`, `kecamataan_profile_companys`, `kota_profile_companys`, `provinsi_profile_companys`, `created_at`, `updated_at`, `deleted_at`) VALUES
@@ -191,7 +211,7 @@ INSERT INTO `profile_companys` (`id_profile_companys`, `name_profile_companys`, 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `profile_company_banks`
+-- Table structure for table `profile_company_banks`
 --
 
 CREATE TABLE `profile_company_banks` (
@@ -206,7 +226,7 @@ CREATE TABLE `profile_company_banks` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `profile_company_banks`
+-- Dumping data for table `profile_company_banks`
 --
 
 INSERT INTO `profile_company_banks` (`id_profile_company_banks`, `profile_companys_id`, `bankname_profile_company_banks`, `accountname_profile_company_banks`, `accountnumber_profile_company_banks`, `created_at`, `updated_at`, `deleted_at`) VALUES
@@ -216,7 +236,7 @@ INSERT INTO `profile_company_banks` (`id_profile_company_banks`, `profile_compan
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `profile_company_contact_details`
+-- Table structure for table `profile_company_contact_details`
 --
 
 CREATE TABLE `profile_company_contact_details` (
@@ -232,7 +252,7 @@ CREATE TABLE `profile_company_contact_details` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `roles`
+-- Table structure for table `roles`
 --
 
 CREATE TABLE `roles` (
@@ -245,7 +265,7 @@ CREATE TABLE `roles` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `roles`
+-- Dumping data for table `roles`
 --
 
 INSERT INTO `roles` (`id_roles`, `code_roles`, `name_roles`, `created_at`, `updated_at`, `deleted_at`) VALUES
@@ -256,7 +276,7 @@ INSERT INTO `roles` (`id_roles`, `code_roles`, `name_roles`, `created_at`, `upda
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `users`
+-- Table structure for table `users`
 --
 
 CREATE TABLE `users` (
@@ -280,7 +300,7 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `users`
+-- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `username`, `phone`, `email_verified_at`, `password`, `avatar`, `avatar_originalfile`, `avatar_originalmimetype`, `avatar_mimetype`, `remember_token`, `roles_id`, `is_publish`, `created_at`, `updated_at`, `deleted_at`) VALUES
@@ -290,7 +310,7 @@ INSERT INTO `users` (`id`, `name`, `email`, `username`, `phone`, `email_verified
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `user_menu_authorizations`
+-- Table structure for table `user_menu_authorizations`
 --
 
 CREATE TABLE `user_menu_authorizations` (
@@ -304,7 +324,7 @@ CREATE TABLE `user_menu_authorizations` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `user_menu_authorizations`
+-- Dumping data for table `user_menu_authorizations`
 --
 
 INSERT INTO `user_menu_authorizations` (`id_user_menu_authorizations`, `roles_id`, `menus_id`, `action_user_menu_authorizations`, `publish_user_menu_authorizations`, `created_at`, `updated_at`) VALUES
@@ -363,18 +383,20 @@ INSERT INTO `user_menu_authorizations` (`id_user_menu_authorizations`, `roles_id
 ('721af406-711a-4025-b70c-e69a1b983514', 'f87ee4f8-424e-451e-9304-7730baed289a', '10cf7185-d3b0-4abb-9224-dd08423576b2', 'create,read,update,delete,list', 1, '2022-12-19 12:56:38', '2022-12-19 19:56:38'),
 ('734d181e-228b-45eb-86ca-fb0f003ea5e1', '8b61213d-9521-40a4-8b17-fda810228b54', '4f259f87-40bb-4bf0-b9d7-226413507afa', 'create,read,update,delete,list', 0, '2022-12-11 08:22:23', '2022-12-17 17:35:48'),
 ('76365a7a-8af2-441b-9dd1-1217afce1440', 'f87ee4f8-424e-451e-9304-7730baed289a', 'd1426653-826a-47aa-9920-d7fc5dab4c05', 'read,list', 1, '2022-12-19 12:56:38', '2022-12-19 19:56:38'),
-('766e6848-d97a-48f1-92b8-c7ebac37e0c5', '8b61213d-9521-40a4-8b17-fda810228b54', 'd1426653-826a-47aa-9920-d7fc5dab4c05', 'list', 1, '2021-06-26 10:34:47', '2022-10-22 00:03:24'),
+('766e6848-d97a-48f1-92b8-c7ebac37e0c5', '8b61213d-9521-40a4-8b17-fda810228b54', 'd1426653-826a-47aa-9920-d7fc5dab4c05', 'list,read', 1, '2021-06-26 10:34:47', '2023-02-11 17:45:24'),
 ('77910712-5ead-4a7b-8091-74c526fbb534', '62cd5d85-4765-4481-b3db-8dc85f2f9061', 'c0a55f27-9b79-4c7e-947b-8083a1a5a4c3', NULL, 0, '2023-01-28 10:13:13', '2023-01-28 17:13:13'),
 ('7940711d-1238-4cfc-a697-2864578a359c', '8b61213d-9521-40a4-8b17-fda810228b54', '21a957e8-384e-489a-8b60-313b077b9e0c', 'create,read,update,delete,list', 0, '2022-12-11 08:22:23', '2022-12-17 17:35:48'),
 ('80eabf23-a496-475f-a53f-720ffc54c561', 'f87ee4f8-424e-451e-9304-7730baed289a', 'f537f8c5-5624-424d-ae9b-2abd9f84bc6e', 'create,read,update,delete,list', 1, '2022-12-19 12:56:38', '2022-12-19 19:56:38'),
 ('8647fcf5-d829-4147-9cd6-0fa4ffb28a60', '8b61213d-9521-40a4-8b17-fda810228b54', 'fca27393-2694-49ee-8bae-d457c9f5eaf9', 'list,read,update,delete,detail,create,reset', 1, '2021-06-30 23:33:47', '2021-12-23 07:42:18'),
 ('8a81a9f6-015f-4305-af6e-c55915422f07', 'f87ee4f8-424e-451e-9304-7730baed289a', '51bebdc8-28df-4159-8fe4-7833c493431e', NULL, 0, '2022-12-19 12:56:38', '2022-12-19 19:56:38'),
+('8be8391b-8904-44ff-b5df-5468190555a6', '8b61213d-9521-40a4-8b17-fda810228b54', '322bccd2-e2df-4aab-903c-ec7205a9ce1c', 'create,read,update,delete,list', 1, '2023-02-11 11:35:35', '2023-02-11 18:35:35'),
 ('8cb0cf0f-70c1-4ce3-bbd1-d3d9d98ef382', 'f87ee4f8-424e-451e-9304-7730baed289a', '21a957e8-384e-489a-8b60-313b077b9e0c', NULL, 0, '2022-12-19 12:56:38', '2022-12-19 19:56:38'),
 ('8e9f5652-aaea-41c5-8c79-fb15fbc48070', '62cd5d85-4765-4481-b3db-8dc85f2f9061', 'da6f749f-b616-4516-b016-3d9fa75c0909', NULL, 0, '2023-01-28 10:13:13', '2023-01-28 17:13:13'),
 ('8ee1b8bc-ee18-4124-8fe2-63e7cea8e534', '62cd5d85-4765-4481-b3db-8dc85f2f9061', '01c0acd5-2e17-460b-be21-d022511249eb', NULL, 0, '2023-01-28 10:13:13', '2023-01-28 17:13:13'),
 ('97e232b7-b969-445b-abec-a578e2405858', '8b61213d-9521-40a4-8b17-fda810228b54', 'f537f8c5-5624-424d-ae9b-2abd9f84bc6e', 'create,read,update,delete,list', 0, '2022-12-11 08:22:23', '2022-12-17 17:35:48'),
 ('9bbeb77e-8b21-4133-a3c8-497adc6f2f7c', '8b61213d-9521-40a4-8b17-fda810228b54', '7e32dfaa-8113-4829-9f5f-5a0ab29c8468', 'create,read,update,delete,list,reset', 1, '2023-02-09 12:37:00', '2023-02-09 23:06:57'),
 ('a0660bd1-0a50-4bcc-971f-e1d4bf288608', 'f87ee4f8-424e-451e-9304-7730baed289a', '943a16fa-dd82-4b26-bd35-997dda9f4cc5', NULL, 0, '2022-12-19 12:56:38', '2022-12-19 19:56:38'),
+('a5b9e064-4c17-4a42-8f26-5169c29303fe', '8b61213d-9521-40a4-8b17-fda810228b54', 'a4b58142-a3d4-45e7-b211-dcc20d007875', 'create,read,update,delete,list', 1, '2023-02-11 10:45:24', '2023-02-11 17:45:24'),
 ('ab7f94ad-eeec-49b8-a0e6-ebaaf9b049e1', '62cd5d85-4765-4481-b3db-8dc85f2f9061', '28bfa6ea-3aa1-404a-abb7-6272ad2d72e2', NULL, 0, '2023-01-28 10:13:13', '2023-01-28 17:13:13'),
 ('af0a1b22-eb63-4ab8-b52d-1f9ed7efdd4c', '8b61213d-9521-40a4-8b17-fda810228b54', '28bfa6ea-3aa1-404a-abb7-6272ad2d72e2', 'create,read,update,delete,list', 0, '2022-12-11 08:22:23', '2022-12-17 17:35:48'),
 ('b2ccda67-0e90-4dcc-a6bc-c14b19905d05', 'f87ee4f8-424e-451e-9304-7730baed289a', 'c2d7cd25-4fd0-4885-98b2-649e7a10aa09', NULL, 0, '2022-12-19 12:56:38', '2022-12-19 19:56:38'),
@@ -412,39 +434,39 @@ INSERT INTO `user_menu_authorizations` (`id_user_menu_authorizations`, `roles_id
 --
 
 --
--- Indeks untuk tabel `customers`
+-- Indexes for table `customers`
 --
 ALTER TABLE `customers`
   ADD PRIMARY KEY (`id_customers`);
 
 --
--- Indeks untuk tabel `failed_jobs`
+-- Indexes for table `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`);
 
 --
--- Indeks untuk tabel `menus`
+-- Indexes for table `menus`
 --
 ALTER TABLE `menus`
   ADD PRIMARY KEY (`id_menus`),
   ADD KEY `upid_menus` (`upid_menus`);
 
 --
--- Indeks untuk tabel `migrations`
+-- Indexes for table `migrations`
 --
 ALTER TABLE `migrations`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `password_resets`
+-- Indexes for table `password_resets`
 --
 ALTER TABLE `password_resets`
   ADD KEY `password_resets_email_index` (`email`);
 
 --
--- Indeks untuk tabel `personal_access_tokens`
+-- Indexes for table `personal_access_tokens`
 --
 ALTER TABLE `personal_access_tokens`
   ADD PRIMARY KEY (`id`),
@@ -452,31 +474,37 @@ ALTER TABLE `personal_access_tokens`
   ADD KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`);
 
 --
--- Indeks untuk tabel `profile_companys`
+-- Indexes for table `price_settings`
+--
+ALTER TABLE `price_settings`
+  ADD PRIMARY KEY (`id_price_settings`);
+
+--
+-- Indexes for table `profile_companys`
 --
 ALTER TABLE `profile_companys`
   ADD PRIMARY KEY (`id_profile_companys`);
 
 --
--- Indeks untuk tabel `profile_company_banks`
+-- Indexes for table `profile_company_banks`
 --
 ALTER TABLE `profile_company_banks`
   ADD PRIMARY KEY (`id_profile_company_banks`);
 
 --
--- Indeks untuk tabel `profile_company_contact_details`
+-- Indexes for table `profile_company_contact_details`
 --
 ALTER TABLE `profile_company_contact_details`
   ADD PRIMARY KEY (`id_profile_company_contact_details`);
 
 --
--- Indeks untuk tabel `roles`
+-- Indexes for table `roles`
 --
 ALTER TABLE `roles`
   ADD PRIMARY KEY (`id_roles`);
 
 --
--- Indeks untuk tabel `users`
+-- Indexes for table `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
@@ -484,30 +512,30 @@ ALTER TABLE `users`
   ADD UNIQUE KEY `username` (`username`);
 
 --
--- Indeks untuk tabel `user_menu_authorizations`
+-- Indexes for table `user_menu_authorizations`
 --
 ALTER TABLE `user_menu_authorizations`
   ADD PRIMARY KEY (`id_user_menu_authorizations`),
   ADD KEY `roles_id` (`roles_id`,`menus_id`);
 
 --
--- AUTO_INCREMENT untuk tabel yang dibuang
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT untuk tabel `failed_jobs`
+-- AUTO_INCREMENT for table `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT untuk tabel `migrations`
+-- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT untuk tabel `personal_access_tokens`
+-- AUTO_INCREMENT for table `personal_access_tokens`
 --
 ALTER TABLE `personal_access_tokens`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;

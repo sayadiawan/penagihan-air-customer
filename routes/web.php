@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\MenuController;
+use App\Http\Controllers\Admin\PriceSettingController;
 use App\Http\Controllers\Admin\ProfileCompanyController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserAccountController;
@@ -86,5 +87,9 @@ Route::group(['middleware' => ['web']], function () {
     Route::resource("data-customer", CustomerController::class);
     Route::get('/data-customer-destroy/{id}', [CustomerController::class, 'destroy']);
     Route::post('/data-customer/get-customers-by-select2', [CustomerController::class, 'getCustomersBySelect2'])->name('data-customer.get-customers-by-select2');
+
+    // Route Price Settings
+    Route::resource("price-settings", PriceSettingController::class);
+    Route::get('/price-settings-destroy/{id}', [PriceSettingController::class, 'destroy']);
   });
 });
