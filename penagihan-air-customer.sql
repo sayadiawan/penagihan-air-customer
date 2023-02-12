@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 11, 2023 at 03:13 PM
--- Server version: 10.4.22-MariaDB
--- PHP Version: 7.4.27
+-- Waktu pembuatan: 12 Feb 2023 pada 16.16
+-- Versi server: 10.4.25-MariaDB
+-- Versi PHP: 7.4.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,7 +24,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `customers`
+-- Struktur dari tabel `customers`
 --
 
 CREATE TABLE `customers` (
@@ -40,7 +40,7 @@ CREATE TABLE `customers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `customers`
+-- Dumping data untuk tabel `customers`
 --
 
 INSERT INTO `customers` (`id_customers`, `users_id`, `norumah_customers`, `rt_customers`, `rw_customers`, `address_customers`, `created_at`, `updated_at`, `deleted_at`) VALUES
@@ -49,7 +49,7 @@ INSERT INTO `customers` (`id_customers`, `users_id`, `norumah_customers`, `rt_cu
 -- --------------------------------------------------------
 
 --
--- Table structure for table `failed_jobs`
+-- Struktur dari tabel `failed_jobs`
 --
 
 CREATE TABLE `failed_jobs` (
@@ -68,7 +68,7 @@ CREATE TABLE `failed_jobs` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `menus`
+-- Struktur dari tabel `menus`
 --
 
 CREATE TABLE `menus` (
@@ -86,7 +86,7 @@ CREATE TABLE `menus` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `menus`
+-- Dumping data untuk tabel `menus`
 --
 
 INSERT INTO `menus` (`id_menus`, `upid_menus`, `code_menus`, `name_menus`, `link_menus`, `description_menus`, `icon_menus`, `action_menus`, `created_at`, `updated_at`, `deleted_at`) VALUES
@@ -104,7 +104,7 @@ INSERT INTO `menus` (`id_menus`, `upid_menus`, `code_menus`, `name_menus`, `link
 -- --------------------------------------------------------
 
 --
--- Table structure for table `migrations`
+-- Struktur dari tabel `migrations`
 --
 
 CREATE TABLE `migrations` (
@@ -114,7 +114,7 @@ CREATE TABLE `migrations` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `migrations`
+-- Dumping data untuk tabel `migrations`
 --
 
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
@@ -132,7 +132,7 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `password_resets`
+-- Struktur dari tabel `password_resets`
 --
 
 CREATE TABLE `password_resets` (
@@ -144,7 +144,7 @@ CREATE TABLE `password_resets` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `personal_access_tokens`
+-- Struktur dari tabel `personal_access_tokens`
 --
 
 CREATE TABLE `personal_access_tokens` (
@@ -162,7 +162,7 @@ CREATE TABLE `personal_access_tokens` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `price_settings`
+-- Struktur dari tabel `price_settings`
 --
 
 CREATE TABLE `price_settings` (
@@ -177,10 +177,17 @@ CREATE TABLE `price_settings` (
   `deleted_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data untuk tabel `price_settings`
+--
+
+INSERT INTO `price_settings` (`id_price_settings`, `minimum_value_per_cubic_price_settings`, `increase_in_price_per_cubic_price_settings`, `type_ref_doc_price_settings`, `ref_doc_price_settings`, `is_active_price_settings`, `created_at`, `updated_at`, `deleted_at`) VALUES
+('c653fa52-6a05-4609-bc09-c1ca5dcea021', '25000', '1050', 'LINK', 'https://kastara.id/05/09/2021/tarif-air-pam-di-dki-turun-dari-rp-25-000-menjadi-rp-1-050/#:~:text=Hal%20itu%20tertuang%20dalam%20Peraturan,jadi%20Rp%201.050%20per%20m3.', 1, '2023-02-12 14:58:35', '2023-02-12 21:58:35', NULL);
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `profile_companys`
+-- Struktur dari tabel `profile_companys`
 --
 
 CREATE TABLE `profile_companys` (
@@ -202,7 +209,7 @@ CREATE TABLE `profile_companys` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `profile_companys`
+-- Dumping data untuk tabel `profile_companys`
 --
 
 INSERT INTO `profile_companys` (`id_profile_companys`, `name_profile_companys`, `penanggungjawab_profile_companys`, `logo_profile_companys`, `type_kop_profile_companys`, `kop_image_profile_companys`, `kop_text_profile_companys`, `address_profile_companys`, `kelurahan_profile_companys`, `kecamataan_profile_companys`, `kota_profile_companys`, `provinsi_profile_companys`, `created_at`, `updated_at`, `deleted_at`) VALUES
@@ -211,7 +218,7 @@ INSERT INTO `profile_companys` (`id_profile_companys`, `name_profile_companys`, 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `profile_company_banks`
+-- Struktur dari tabel `profile_company_banks`
 --
 
 CREATE TABLE `profile_company_banks` (
@@ -226,7 +233,7 @@ CREATE TABLE `profile_company_banks` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `profile_company_banks`
+-- Dumping data untuk tabel `profile_company_banks`
 --
 
 INSERT INTO `profile_company_banks` (`id_profile_company_banks`, `profile_companys_id`, `bankname_profile_company_banks`, `accountname_profile_company_banks`, `accountnumber_profile_company_banks`, `created_at`, `updated_at`, `deleted_at`) VALUES
@@ -236,7 +243,7 @@ INSERT INTO `profile_company_banks` (`id_profile_company_banks`, `profile_compan
 -- --------------------------------------------------------
 
 --
--- Table structure for table `profile_company_contact_details`
+-- Struktur dari tabel `profile_company_contact_details`
 --
 
 CREATE TABLE `profile_company_contact_details` (
@@ -252,7 +259,7 @@ CREATE TABLE `profile_company_contact_details` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `roles`
+-- Struktur dari tabel `roles`
 --
 
 CREATE TABLE `roles` (
@@ -265,7 +272,7 @@ CREATE TABLE `roles` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `roles`
+-- Dumping data untuk tabel `roles`
 --
 
 INSERT INTO `roles` (`id_roles`, `code_roles`, `name_roles`, `created_at`, `updated_at`, `deleted_at`) VALUES
@@ -276,7 +283,7 @@ INSERT INTO `roles` (`id_roles`, `code_roles`, `name_roles`, `created_at`, `upda
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users`
+-- Struktur dari tabel `users`
 --
 
 CREATE TABLE `users` (
@@ -300,7 +307,7 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `users`
+-- Dumping data untuk tabel `users`
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `username`, `phone`, `email_verified_at`, `password`, `avatar`, `avatar_originalfile`, `avatar_originalmimetype`, `avatar_mimetype`, `remember_token`, `roles_id`, `is_publish`, `created_at`, `updated_at`, `deleted_at`) VALUES
@@ -310,7 +317,7 @@ INSERT INTO `users` (`id`, `name`, `email`, `username`, `phone`, `email_verified
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user_menu_authorizations`
+-- Struktur dari tabel `user_menu_authorizations`
 --
 
 CREATE TABLE `user_menu_authorizations` (
@@ -324,7 +331,7 @@ CREATE TABLE `user_menu_authorizations` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `user_menu_authorizations`
+-- Dumping data untuk tabel `user_menu_authorizations`
 --
 
 INSERT INTO `user_menu_authorizations` (`id_user_menu_authorizations`, `roles_id`, `menus_id`, `action_user_menu_authorizations`, `publish_user_menu_authorizations`, `created_at`, `updated_at`) VALUES
@@ -434,39 +441,39 @@ INSERT INTO `user_menu_authorizations` (`id_user_menu_authorizations`, `roles_id
 --
 
 --
--- Indexes for table `customers`
+-- Indeks untuk tabel `customers`
 --
 ALTER TABLE `customers`
   ADD PRIMARY KEY (`id_customers`);
 
 --
--- Indexes for table `failed_jobs`
+-- Indeks untuk tabel `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`);
 
 --
--- Indexes for table `menus`
+-- Indeks untuk tabel `menus`
 --
 ALTER TABLE `menus`
   ADD PRIMARY KEY (`id_menus`),
   ADD KEY `upid_menus` (`upid_menus`);
 
 --
--- Indexes for table `migrations`
+-- Indeks untuk tabel `migrations`
 --
 ALTER TABLE `migrations`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `password_resets`
+-- Indeks untuk tabel `password_resets`
 --
 ALTER TABLE `password_resets`
   ADD KEY `password_resets_email_index` (`email`);
 
 --
--- Indexes for table `personal_access_tokens`
+-- Indeks untuk tabel `personal_access_tokens`
 --
 ALTER TABLE `personal_access_tokens`
   ADD PRIMARY KEY (`id`),
@@ -474,37 +481,37 @@ ALTER TABLE `personal_access_tokens`
   ADD KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`);
 
 --
--- Indexes for table `price_settings`
+-- Indeks untuk tabel `price_settings`
 --
 ALTER TABLE `price_settings`
   ADD PRIMARY KEY (`id_price_settings`);
 
 --
--- Indexes for table `profile_companys`
+-- Indeks untuk tabel `profile_companys`
 --
 ALTER TABLE `profile_companys`
   ADD PRIMARY KEY (`id_profile_companys`);
 
 --
--- Indexes for table `profile_company_banks`
+-- Indeks untuk tabel `profile_company_banks`
 --
 ALTER TABLE `profile_company_banks`
   ADD PRIMARY KEY (`id_profile_company_banks`);
 
 --
--- Indexes for table `profile_company_contact_details`
+-- Indeks untuk tabel `profile_company_contact_details`
 --
 ALTER TABLE `profile_company_contact_details`
   ADD PRIMARY KEY (`id_profile_company_contact_details`);
 
 --
--- Indexes for table `roles`
+-- Indeks untuk tabel `roles`
 --
 ALTER TABLE `roles`
   ADD PRIMARY KEY (`id_roles`);
 
 --
--- Indexes for table `users`
+-- Indeks untuk tabel `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
@@ -512,30 +519,30 @@ ALTER TABLE `users`
   ADD UNIQUE KEY `username` (`username`);
 
 --
--- Indexes for table `user_menu_authorizations`
+-- Indeks untuk tabel `user_menu_authorizations`
 --
 ALTER TABLE `user_menu_authorizations`
   ADD PRIMARY KEY (`id_user_menu_authorizations`),
   ADD KEY `roles_id` (`roles_id`,`menus_id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT untuk tabel yang dibuang
 --
 
 --
--- AUTO_INCREMENT for table `failed_jobs`
+-- AUTO_INCREMENT untuk tabel `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `migrations`
+-- AUTO_INCREMENT untuk tabel `migrations`
 --
 ALTER TABLE `migrations`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT for table `personal_access_tokens`
+-- AUTO_INCREMENT untuk tabel `personal_access_tokens`
 --
 ALTER TABLE `personal_access_tokens`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;

@@ -91,5 +91,7 @@ Route::group(['middleware' => ['web']], function () {
     // Route Price Settings
     Route::resource("price-settings", PriceSettingController::class);
     Route::get('/price-settings-destroy/{id}', [PriceSettingController::class, 'destroy']);
+    Route::get('/price-settings-active/{id}', [PriceSettingController::class, 'activePriceSetting']);
+    Route::get('/price-settings-nonactive/{id}', [PriceSettingController::class, 'nonactivePriceSetting']);
   });
 });
