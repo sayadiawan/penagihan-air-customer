@@ -73,7 +73,7 @@
                         <label class="form-label" for="type_ref_doc_price_settings">Tipe Referensi Dokumen Acuan Kenaikan
                           Harga</label>
 
-                        <select class="form-control" name="type_ref_doc_price_settings" id="type_ref_doc_price_settings">
+                        <select class="form-select" name="type_ref_doc_price_settings" id="type_ref_doc_price_settings">
                           <option value="TEXT" selected>Text</option>
                           <option value="LINK">Link</option>
                         </select>
@@ -101,7 +101,7 @@
                 <label class="form-label" for="status_default_awal_kode_trackings">Jadikan Kode Default Awal Proses atau
                   Akhir Proses</label>
 
-                <select class="form-control" name="status_default_awal_kode_trackings"
+                <select class="form-select" name="status_default_awal_kode_trackings"
                   id="status_default_awal_kode_trackings">
                   <option value="0">Harga Tidak Aktif</option>
                   <option value="1" selected>Harga Aktif</option>

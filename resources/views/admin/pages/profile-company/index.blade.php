@@ -61,7 +61,7 @@
               <div class="mb-3">
                 <label for="email">Penanggungjawab Perusahaan</label>
 
-                <select class="form-control" name="penanggungjawab_profile_companys" id="penanggungjawab_profile_companys"
+                <select class="form-select" name="penanggungjawab_profile_companys" id="penanggungjawab_profile_companys"
                   style="width: 100%">
                   <option value=""></option>
                 </select>
@@ -128,7 +128,7 @@
               <div class="mb-3">
                 <label for="type_kop_profile_companys">Type KOP Laporan</label>
 
-                <select class="form-control" name="type_kop_profile_companys" id="type_kop_profile_companys">
+                <select class="form-select" name="type_kop_profile_companys" id="type_kop_profile_companys">
                   <option value="text"
                     {{ isset($item->type_kop_profile_companys) ? ($item->type_kop_profile_companys == 'TEXT' ? 'selected' : 'selected') : '' }}>
                     Text

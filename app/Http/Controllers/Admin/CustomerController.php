@@ -118,7 +118,7 @@ class CustomerController extends Controller
           return $data->customer->norumah_customers;
         })
         ->addColumn('address_customers', function ($data) {
-          return $data->customer->address_customers;
+          return mb_strimwidth($data->customer->address_customers, 0, 100, "...");;
         })
         ->rawColumns([
           'action',
@@ -153,12 +153,27 @@ class CustomerController extends Controller
       'username' => 'required|string',
       'email' => 'required|email:rfc,dns',
       'phone' => 'required|numeric|digits_between:10,12',
+      'second_phone_customers' => 'nullable|numeric|digits_between:10,12',
+      'owner_status_customers' => 'required|string',
+      'norumah_customers' => 'required|string',
+      'rt_customers' => 'required|string',
+      'rw_customers' => 'required|string',
+      'address_customers' => 'required|string',
     ];
     $pesan = [
       'name.required' => 'Nama pengguna wajib diisi!',
       'username.required' => 'Username wajib diisi!',
       'email.required' => 'Email pengguna wajib diisi!',
+      'email.email' => 'Pastikan penulisan email benar dan email aktif!',
       'phone.required' => 'Nomor telepon pengguna wajib diisi!',
+      'phone.numeric' => 'Nomor telepon pengguna wajib diisi dengan angka!',
+      'phone.digits_between' => 'Nomor telepon pengguna harus berisikan minimal 10 angka dan maksima 12 angka!',
+      'second_phone_customers.numeric' => 'Nomor telepon cadangan pengguna wajib diisi dengan angka!',
+      'second_phone_customers.digits_between' => 'Nomor telepon cadangan pengguna harus berisikan minimal 10 angka dan maksima 12 angka!',
+      'norumah_customers.required' => 'No rumah pengguna wajib diisi!',
+      'rt_customers.required' => 'Kolom RT pengguna wajib diisi!',
+      'rw_customers.required' => 'Kolom RW pengguna wajib diisi!',
+      'address_customers.required' => 'Alamat penggun wajib diisi!',
     ];
 
     return Validator::make($request, $rule, $pesan);
@@ -210,6 +225,8 @@ class CustomerController extends Controller
           // store ke pelanggan
           $customer = new Customer();
           $customer->users_id = $post->id;
+          $customer->second_phone_customers = $request->second_phone_customers;
+          $customer->owner_status_customers = $request->owner_status_customers;
           $customer->norumah_customers = $request->norumah_customers;
           $customer->rt_customers = $request->rt_customers;
           $customer->rw_customers = $request->rw_customers;

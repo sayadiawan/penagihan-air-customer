@@ -11,7 +11,7 @@
     <div class="navbar-nav align-items-center d-none d-sm-block">
       <div class="nav-item d-flex align-items-center" style="width: 600px !important; z-index: 100 !important;">
 
-        <select class="form-control border-0 shadow-none laravel-select2" id="laravel_navigation"
+        <select class="form-select border-0 shadow-none laravel-select2" id="laravel_navigation"
           style="z-index: 100 !important; width: 100%">
           @foreach ($menus as $menu)
             @php

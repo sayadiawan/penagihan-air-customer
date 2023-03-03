@@ -20,7 +20,7 @@ In addition to a prepopulated menu of options, Select2 can dynamically create ne
 </div>
 
 ```
-<select class="form-control">
+<select class="form-select">
   <option selected="selected">orange</option>
   <option>white</option>
   <option>purple</option>
@@ -48,7 +48,7 @@ Tagging can also be used in multi-value select boxes. In the example below, we s
 </div>
 
 ```
-<select class="form-control" multiple="multiple">
+<select class="form-select" multiple="multiple">
   <option selected="selected">orange</option>
   <option>white</option>
   <option selected="selected">purple</option>

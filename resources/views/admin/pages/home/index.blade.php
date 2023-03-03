@@ -170,7 +170,7 @@
                 <div class="row mb-3">
                   <label class="col-sm-2 col-form-label" for="basic-default-name">Jenis</label>
                   <div class="col-sm-10">
-                    <select class="form-control laravel-select2" id="basic-default-name" placeholder="John Doe">
+                    <select class="form-select laravel-select2" id="basic-default-name" placeholder="John Doe">
                       <option value="">Lokal</option>
                       <option value="">Internasional</option>
                     </select>

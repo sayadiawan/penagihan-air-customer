@@ -69,7 +69,7 @@
               <div class="mb-3">
                 <label class="form-label" for="roles_id">Hak Akses</label>
 
-                <select class="form-control select2" name="roles_id" id="roles_id" style="width: 100%">
+                <select class="form-select select2" name="roles_id" id="roles_id" style="width: 100%">
                   <option value="">Pilih Hak Akses</option>
                   @foreach ($roles as $item)
                     <option value="{{ $item->id_roles }}">{{ $item->name_roles }}</option>

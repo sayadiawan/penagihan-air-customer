@@ -64,10 +64,18 @@
             </div>
 
             <div class="row mb-3">
-              <label class="col-sm-2 col-form-label" for="area">No. Telepon</label>
+              <label class="col-sm-2 col-form-label" for="area">No. Telepon/WhatsApp Aktif</label>
 
               <div class="col-sm-10">
                 <label class="col-form-label">: {{ $item->phone }}</label>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <label class="col-sm-2 col-form-label" for="area">No. Telepon/WhatsApp Cadangan</label>
+
+              <div class="col-sm-10">
+                <label class="col-form-label">: {{ $item->customer->second_phone_customers ?? '-' }}</label>
               </div>
             </div>
 
@@ -93,6 +101,22 @@
 
               <div class="col-sm-10">
                 <label class="col-form-label">: {{ $item->customer->address_customers }}</label>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <label class="col-sm-2 col-form-label" for="area">Status Kepemilikan Rumah</label>
+
+              <div class="col-sm-10">
+                <label class="col-form-label">:
+                  @if ($item->customer->owner_status_customers == 'owner')
+                    <span class="badge bg-info">Pemilik</span>
+                  @elseif($item->customer->owner_status_customers == 'dikontrakkan')
+                    <span class="badge bg-warning">Dikontrakkan</span>
+                  @else
+                    <span class="badge bg-danger">Kosong</span>
+                  @endif
+                </label>
               </div>
             </div>
           </div>

@@ -45,20 +45,20 @@
               @method('PUT')
 
               <div class="mb-3">
-                <label class="form-label" for="name">Nama Lengkap</label>
+                <label class="form-label" for="name">Nama Lengkap<span style="color:red;">*</span></label>
 
                 <input type="text" class="form-control" id="name" name="name"
                   placeholder="Masukkan nama pelanggan" value="{{ $item->name ?? old('name') }}" />
               </div>
 
               <div class="mb-3">
-                <label class="form-label" for="username">Username</label>
+                <label class="form-label" for="username">Username<span style="color:red;">*</span></label>
                 <input type="text" class="form-control" id="username" name="username"
                   placeholder="Masukkan username pelanggan" value="{{ $item->username ?? old('username') }}" />
               </div>
 
               <div class="mb-3">
-                <label class="form-label" for="email">Email Aktif</label>
+                <label class="form-label" for="email">Email Aktif<span style="color:red;">*</span></label>
                 <input type="email" class="form-control" id="email" name="email"
                   placeholder="Masukkan email pelanggan" value="{{ $item->email ?? old('email') }}" />
               </div>
@@ -69,8 +69,36 @@
                   placeholder="Masukkan nomor telepon pelanggan" value="{{ $item->phone ?? old('phone') }}" />
               </div>
 
+              <div class="row mb-3">
+                <div class="col-md-6 col-sm-12">
+                  <label class="form-label" for="phone">No. WhatsApp Pemilik Aktif<span
+                      style="color:red;">*</span><span style="color:red;">*</span></label>
+                  <input type="tel" class="form-control" id="phone" name="phone"
+                    placeholder="Masukkan nomor telepon pelanggan" value="{{ $item->phone ?? old('phone') }}" />
+                </div>
+
+                <div class="col-md-6 col-sm-12">
+                  <label class="form-label" for="second_phone_customers">No. WhatsApp Cadangan</label>
+                  <input type="tel" class="form-control" id="second_phone_customers" name="second_phone_customers"
+                    placeholder="Masukkan nomor telepon pelanggan"
+                    value="{{ $item->customer->second_phone_customers ?? old('second_phone_customers') }}" />
+                </div>
+              </div>
+
               <div class="mb-3">
-                <label class="form-label" for="norumah_customers">No. Rumah</label>
+                <label class="form-label" for="owner_status_customers">Status Kepemilikan Rumah<span
+                    style="color:red;">*</span></label>
+
+                <select class="form-select" id="owner_status_customers" name="owner_status_customers" style="width: 100%">
+                  <option value="">Pilih Status Kepemilikan Rumah</option>
+                  <option value="kosong" {!! $item->customer->owner_status_customers == 'kosong' ? 'selected' : '' !!}>Kosong</option>
+                  <option value="owner" {!! $item->customer->owner_status_customers == 'owner' ? 'selected' : '' !!}>Dihuni Sendiri</option>
+                  <option value="dikontrakkan" {!! $item->customer->owner_status_customers == 'dikontrakkan' ? 'selected' : '' !!}>Dikontrakkan</option>
+                </select>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label" for="norumah_customers">No. Rumah<span style="color:red;">*</span></label>
                 <input type="text" class="form-control" id="norumah_customers" name="norumah_customers"
                   placeholder="Masukkan nomor rumah pelanggan"
                   value="{{ $item->customer->norumah_customers ?? old('norumah_customers') }}" />
@@ -79,12 +107,13 @@
               <div class="row">
                 <div class="col-md-6">
                   <div class="mb-3">
-                    <label class="form-label" for="rt_customers">RT</label>
+                    <label class="form-label" for="rt_customers">RT<span style="color:red;">*</span></label>
 
-                    <select class="form-control select2" id="rt_customers" name="rt_customers" style="width: 100%">
+                    <select class="form-select select2" id="rt_customers" name="rt_customers" style="width: 100%">
                       <option value="">Pilih RT</option>
                       @for ($i = 0; $i <= 20; $i++)
-                        <option value="{{ $i }}" {{ $item->customer->rt_customers == $i ? 'selected' : '' }}>
+                        <option value="{{ $i }}"
+                          {{ $item->customer->rt_customers == $i ? 'selected' : '' }}>
                           {{ $i }}</option>
                       @endfor
                     </select>
@@ -93,12 +122,13 @@
 
                 <div class="col-md-6">
                   <div class="mb-3">
-                    <label class="form-label" for="rw_customers">RW</label>
+                    <label class="form-label" for="rw_customers">RW<span style="color:red;">*</span></label>
 
-                    <select class="form-control select2" id="rw_customers" name="rw_customers" style="width: 100%">
+                    <select class="form-select select2" id="rw_customers" name="rw_customers" style="width: 100%">
                       <option value="">Pilih RW</option>
                       @for ($i = 0; $i <= 20; $i++)
-                        <option value="{{ $i }}" {{ $item->customer->rw_customers == $i ? 'selected' : '' }}>
+                        <option value="{{ $i }}"
+                          {{ $item->customer->rw_customers == $i ? 'selected' : '' }}>
                           {{ $i }}</option>
                       @endfor
                     </select>
@@ -108,7 +138,8 @@
 
 
               <div class="mb-3">
-                <label class="form-label" for="address_customers">Alamat Lengkap</label>
+                <label class="form-label" for="address_customers">Alamat Lengkap<span
+                    style="color:red;">*</span></label>
 
                 <textarea class="form-control" id="address_customers" name="address_customers"
                   placeholder="Masukkan alamat lengkap pelanggan" cols="30" rows="5">{{ $item->customer->address_customers ?? old('address_customers') }}</textarea>
