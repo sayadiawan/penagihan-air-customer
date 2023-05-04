@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\CustomerBillController;
+
 use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\PriceSettingController;
@@ -46,6 +48,8 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/master-data', [DashboardController::class, 'masterdata']);
     Route::get('/user-management', [DashboardController::class, 'usermanagement']);
     Route::get('/public-page', [DashboardController::class, 'publicpage']);
+
+
 
     // Route Menu
     Route::resource("menus", MenuController::class);
@@ -93,5 +97,9 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/price-settings-destroy/{id}', [PriceSettingController::class, 'destroy']);
     Route::get('/price-settings-active/{id}', [PriceSettingController::class, 'activePriceSetting']);
     Route::get('/price-settings-nonactive/{id}', [PriceSettingController::class, 'nonactivePriceSetting']);
+
+
+    // Route Customer Bill          
+    Route::resource("customer-bill", CustomerBillController::class);
   });
 });
