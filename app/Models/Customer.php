@@ -26,4 +26,8 @@ class Customer extends Model
   {
     return $this->belongsTo(User::class, 'users_id', 'id')->withDefault();
   }
+  public function dataAwal()
+  {
+    return $this->hasOne(DataAwal::class);
+  }
 }

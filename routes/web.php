@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\Admin\CustomerController;
+use App\Http\Controllers\Admin\DataAwalController2;
+use App\Http\Controllers\Admin\DataAwalController;
 use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\CustomerBillController;
+use App\Http\Controllers\Admin\CustumerBillController;
 
 use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\MenuController;
@@ -99,7 +101,12 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/price-settings-nonactive/{id}', [PriceSettingController::class, 'nonactivePriceSetting']);
 
 
-    // Route Customer Bill          
-    Route::resource("customer-bill", CustomerBillController::class);
+    // Route Customer Bill
+    Route::resource("customer-bill", CustumerBillController::class);
+
+    // Route::resource("data-awal-pelanggan", DataAwalController2::class);
+    Route::resource("data-awal-pelanggan", DataAwalController::class);
+    Route::put("data-awal-pelanggan/{id_data_awal}/{id_customers}", [DataAwalController::class, 'update'])->name('data-awal-pelanggan.rubah');
+    Route::delete('/data-awal-pelanggan-destroy/{id_data_awal}', [DataAwalController::class, 'destroy']);
   });
 });

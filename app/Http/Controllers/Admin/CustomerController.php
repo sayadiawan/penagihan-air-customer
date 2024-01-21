@@ -225,8 +225,8 @@ class CustomerController extends Controller
           // store ke pelanggan
           $customer = new Customer();
           $customer->users_id = $post->id;
-          $customer->second_phone_customers = $request->second_phone_customers;
-          $customer->owner_status_customers = $request->owner_status_customers;
+          // $customer->second_phone_customers = $request->second_phone_customers;
+          // $customer->owner_status_customers = $request->owner_status_customers;
           $customer->norumah_customers = $request->norumah_customers;
           $customer->rt_customers = $request->rt_customers;
           $customer->rw_customers = $request->rw_customers;

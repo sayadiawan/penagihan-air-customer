@@ -87,7 +87,12 @@ if (!function_exists('get_menu_id')) {
 
     // dd($menu);
 
-    return $menuData->id_menus;
+      if ($menuData !== null) {
+        return $menuData->id_menus;
+    } else {
+        // Handle kasus ketika data menu tidak ditemukan
+        return null;
+    }
   }
 }
 
