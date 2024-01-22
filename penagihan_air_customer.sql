@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 21, 2024 at 11:54 PM
+-- Generation Time: Jan 22, 2024 at 03:25 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -48,8 +48,9 @@ INSERT INTO `customers` (`id_customers`, `users_id`, `norumah_customers`, `rt_cu
 ('370bd39e-2b2b-4d23-be24-de108d157b27', '5831f73d-0051-4bc9-abe8-add20f220439', '55', 4, 3, 'Batang', '2024-01-21 06:49:39', '2024-01-21 13:49:39', NULL),
 ('7e96a14c-afa4-45d9-a2ba-5b0e2ef905d3', '4c47696f-4508-4025-88c9-b97e03856ada', '30', 5, 5, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Tempus imperdiet nulla malesuada pellentesque elit eget. In iaculis nunc sed augue. Sit amet nisl suscipit adipiscing bibendum est. Netus et malesuada fames ac turpis egestas.', '2024-01-17 04:18:56', '2023-02-09 23:01:42', NULL),
 ('b33a1791-2651-43a3-aa92-be1620372465', 'abec949f-69ce-4ec2-b79a-1527bff60bf7', '70', 3, 3, 'Bulustralan, Semarang', '2024-01-21 13:51:23', '2024-01-21 20:51:23', '2024-01-21 20:51:23'),
+('e987ed1c-3bb9-4c61-99db-529bb1e8c859', 'ea996bdb-9bfe-4040-91eb-bd2fb52ed8d0', '22', 4, 3, 'Jepara', '2024-01-22 02:21:13', '2024-01-22 09:21:13', NULL),
 ('f658ef0d-ba0e-4189-baf8-bcc829b2f865', 'b954deca-c4e1-4214-95e3-5d745ee34724', '30', 3, 5, 'Kudus', '2024-01-20 16:55:28', '2024-01-20 23:55:28', NULL),
-('f7d2f2ee-761a-4666-8e10-3f32977f200b', 'ba20101e-b54f-49e6-b54f-03482f3b5f6a', '70', 5, 3, 'Sulawesi', '2024-01-21 19:01:19', '2024-01-22 02:01:19', NULL);
+('f7d2f2ee-761a-4666-8e10-3f32977f200b', 'ba20101e-b54f-49e6-b54f-03482f3b5f6a', '70', 5, 3, 'Sulawesi', '2024-01-22 02:15:08', '2024-01-22 09:15:08', '2024-01-22 09:15:08');
 
 -- --------------------------------------------------------
 
@@ -74,11 +75,14 @@ CREATE TABLE `data_awals` (
 --
 
 INSERT INTO `data_awals` (`id_data_awal`, `customer_id`, `tunggakan`, `denda`, `lain_lain`, `awal`, `created_at`, `updated_at`, `deleted_at`) VALUES
-('4dcfec4e-889d-4347-9adb-158f7afffca9', 'f7d2f2ee-761a-4666-8e10-3f32977f200b', '15000', '10000', '0', '30000', '2024-01-21 19:02:05', '2024-01-21 19:02:05', NULL),
-('686895e4-f693-47b9-8be7-e1689e81729f', '177951e8-5eb8-4105-9603-aa31866a84f7', '50000', '10000', '0', '10000', '2024-01-21 18:30:27', '2024-01-21 18:30:27', NULL),
-('6d6b3756-2388-4985-8f32-33544c2967fb', 'f658ef0d-ba0e-4189-baf8-bcc829b2f865', '15000', '5000', '0', '2000', '2024-01-21 18:28:06', '2024-01-21 18:28:06', NULL),
+('376d1343-957e-40a5-a23f-6a536442e252', 'e987ed1c-3bb9-4c61-99db-529bb1e8c859', '30000', '5000', '1000', '1200', '2024-01-22 02:23:30', '2024-01-22 02:23:30', NULL),
+('4dcfec4e-889d-4347-9adb-158f7afffca9', 'f7d2f2ee-761a-4666-8e10-3f32977f200b', '15000', '10000', '0', '30000', '2024-01-22 02:02:44', '2024-01-22 02:02:44', '2024-01-22 02:02:44'),
+('686895e4-f693-47b9-8be7-e1689e81729f', '177951e8-5eb8-4105-9603-aa31866a84f7', '50000', '10000', '0', '10000', '2024-01-22 02:03:21', '2024-01-22 02:03:21', '2024-01-22 02:03:21'),
+('6d6b3756-2388-4985-8f32-33544c2967fb', 'f658ef0d-ba0e-4189-baf8-bcc829b2f865', '15000', '5000', '0', '2000', '2024-01-22 02:07:14', '2024-01-22 02:07:14', '2024-01-22 02:07:14'),
 ('84d7aee3-24d2-4dbe-92d8-2246d811d918', '370bd39e-2b2b-4d23-be24-de108d157b27', '12000', '5000', '0', '1000', '2024-01-21 06:50:22', '2024-01-21 06:50:22', NULL),
-('96a737b1-f567-4a42-afed-ad17529b564b', '7e96a14c-afa4-45d9-a2ba-5b0e2ef905d3', '10000', '5000', '0', '1000', '2024-01-20 16:30:40', '2024-01-20 16:30:40', NULL);
+('95c6a8dd-0d0c-457d-847b-589ac014d459', 'f658ef0d-ba0e-4189-baf8-bcc829b2f865', '15000', '2000', '1000', '3500', '2024-01-22 02:18:34', '2024-01-22 02:18:34', '2024-01-22 02:18:34'),
+('96a737b1-f567-4a42-afed-ad17529b564b', '7e96a14c-afa4-45d9-a2ba-5b0e2ef905d3', '10000', '5000', '0', '1000', '2024-01-20 16:30:40', '2024-01-20 16:30:40', NULL),
+('fad0d31c-bb9f-47f8-9ca6-d5f77ab371d0', '177951e8-5eb8-4105-9603-aa31866a84f7', '10000', '100000', '2000', '1030', '2024-01-22 02:23:03', '2024-01-22 02:23:03', '2024-01-22 02:23:03');
 
 -- --------------------------------------------------------
 
@@ -371,11 +375,11 @@ INSERT INTO `users` (`id`, `name`, `email`, `username`, `phone`, `second_phone_c
 ('5831f73d-0051-4bc9-abe8-add20f220439', 'syafiq', 'syafiq@gmail.com', 'syafiqqq', '082322345597', NULL, NULL, '$2y$10$xpBb8kbVvAwaR7sGJigRUu2pFhRMaTiN9/kTPgmWcxdnoqXcdwAqa', NULL, NULL, NULL, NULL, NULL, '587c9ce1-0ac5-457a-8524-2f69fe161fea', 1, '2024-01-21 06:49:39', '2024-01-21 06:49:39', NULL),
 ('9bad792e-cfdb-4fb8-aefc-7e06bf861c46', 'vian', 'vian@gmail.com', 'viannn', '087987678567', NULL, NULL, '$2y$10$6pnbxvBRGMBNeDHqqcvUneslm6zwz2VQPxMgcbdGMP4IBDnHr/Bn6', NULL, NULL, NULL, NULL, NULL, '587c9ce1-0ac5-457a-8524-2f69fe161fea', 1, '2024-01-21 03:17:00', '2024-01-21 03:17:00', NULL),
 ('b954deca-c4e1-4214-95e3-5d745ee34724', 'Alim', 'alim@gmail.com', 'alimmm', '081224345675', NULL, NULL, '$2y$10$SjJuZWvjiPFOgOmfBFv5ju79DtI6YxZyMeiLQVWcjg57M1KBucQF6', NULL, NULL, NULL, NULL, NULL, '587c9ce1-0ac5-457a-8524-2f69fe161fea', 1, '2024-01-20 16:55:28', '2024-01-20 16:55:28', NULL),
-('ba20101e-b54f-49e6-b54f-03482f3b5f6a', 'Agung Laksono', 'agung3@gmail.com', 'agunggg', '081224345675', NULL, NULL, '$2y$10$yPQNdp/rbp1KcdIqYP4gq.FOLec8CQxUTXtF/B3ScrGOCa.mW3LTm', NULL, NULL, NULL, NULL, NULL, '587c9ce1-0ac5-457a-8524-2f69fe161fea', 1, '2024-01-21 19:01:19', '2024-01-21 19:01:19', NULL),
 ('bba6d06d-64c4-4ec8-89af-aeeed1799e1e', 'raka', 'raka@gmail.com', 'rakaaa', '087987678567', NULL, NULL, '$2y$10$7X6eBiqAd7pk6uljjILOBuWazggmhIbTu.OVn.83IzSQIJ.EZOjla', NULL, NULL, NULL, NULL, NULL, '587c9ce1-0ac5-457a-8524-2f69fe161fea', 1, '2024-01-20 16:31:32', '2024-01-20 16:31:32', NULL),
 ('ca768106-6a30-49f0-9b13-b983dcfb5193', 'Agung Laksono', 'agung@gmail.com', 'agunglaksono', '089789678567', NULL, NULL, '$2y$10$Z5wGNAqS99dwxkHgiDptluH5MjmhGDEw2ZE62XKLjmLdT92ysgRzu', NULL, NULL, NULL, NULL, NULL, '587c9ce1-0ac5-457a-8524-2f69fe161fea', 1, '2024-01-19 04:19:01', '2024-01-19 04:19:01', NULL),
 ('ce6c6103-7ccc-4e17-b453-8415b3d9908b', 'Super Admin', 'pinginresign@gmail.com', 'superadmin', '081362867034', NULL, NULL, '$2y$10$RwDwoFpzc99JpZvho0eBpuqzuBe2dzNHB58DkUP3YljGQkWfRGtXK', 'user-avatar/1pdhQoB4ElBmXsKGkomwgg6CZojUDLixB9685r8l.jpg', '32745128.jfif', 'jfif', 'image/jpeg', 'rzqYCI6R6E0VsREu4uqxtFnQq0zYIL6xWC3rblCWIJ8st7nAKf5qnXnKv8Qk', '8b61213d-9521-40a4-8b17-fda810228b54', 1, NULL, '2023-02-06 16:04:28', NULL),
-('dc2e926c-5a14-43ae-9915-d9d5570bae91', 'Dimas Wahyu Ardhana', 'dimas@gmail.com', 'dimasardhana', '082322345597', NULL, NULL, '$2y$10$obqO5btAuwK7iv3rNadbW.PaLPAq5/7zb61gYES53NC4Sa0OKCGEW', NULL, NULL, NULL, NULL, NULL, '587c9ce1-0ac5-457a-8524-2f69fe161fea', 1, '2024-01-19 03:33:13', '2024-01-19 03:33:13', NULL);
+('dc2e926c-5a14-43ae-9915-d9d5570bae91', 'Dimas Wahyu Ardhana', 'dimas@gmail.com', 'dimasardhana', '082322345597', NULL, NULL, '$2y$10$obqO5btAuwK7iv3rNadbW.PaLPAq5/7zb61gYES53NC4Sa0OKCGEW', NULL, NULL, NULL, NULL, NULL, '587c9ce1-0ac5-457a-8524-2f69fe161fea', 1, '2024-01-19 03:33:13', '2024-01-19 03:33:13', NULL),
+('ea996bdb-9bfe-4040-91eb-bd2fb52ed8d0', 'Agung Laksono', 'agung10@gmail.com', 'agunggg', '087987678567', NULL, NULL, '$2y$10$aDeewouFa2b8VPXbrB3zWeQdOV4c1Azvk235dn.Dz8V5fvcz/eDS2', NULL, NULL, NULL, NULL, NULL, '587c9ce1-0ac5-457a-8524-2f69fe161fea', 1, '2024-01-22 02:21:13', '2024-01-22 02:21:13', NULL);
 
 -- --------------------------------------------------------
 

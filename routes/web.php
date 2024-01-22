@@ -104,9 +104,9 @@ Route::group(['middleware' => ['web']], function () {
     // Route Customer Bill
     Route::resource("customer-bill", CustumerBillController::class);
 
-    // Route::resource("data-awal-pelanggan", DataAwalController2::class);
+    // Route Data wal
     Route::resource("data-awal-pelanggan", DataAwalController::class);
     Route::put("data-awal-pelanggan/{id_data_awal}/{id_customers}", [DataAwalController::class, 'update'])->name('data-awal-pelanggan.rubah');
-    Route::delete('/data-awal-pelanggan-destroy/{id_data_awal}', [DataAwalController::class, 'destroy']);
+    Route::get('/data-awal-pelanggan-hapus/{id_data_awal}', [DataAwalController::class, 'destroy'])->name('data-awal-pelanggan-hapus');
   });
 });

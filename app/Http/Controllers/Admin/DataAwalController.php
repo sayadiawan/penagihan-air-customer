@@ -253,7 +253,7 @@ class DataAwalController extends Controller
   /**
    * Display the specified resource.
    *
-   * @param  \App\Models\Customer  $customer
+   * @param  \App\Models\DataAwal  $customer
    * @return \Illuminate\Http\Response
    */
   public function show($id_data_awal)
@@ -266,7 +266,7 @@ class DataAwalController extends Controller
   /**
    * Show the form for editing the specified resource.
    *
-   * @param  \App\Models\Customer  $customer
+   * @param  \App\Models\DataAwal  $customer
    * @return \Illuminate\Http\Response
    */
   public function edit($id_data_awal)
@@ -280,7 +280,7 @@ class DataAwalController extends Controller
    * Update the specified resource in storage.
    *
    * @param  \Illuminate\Http\Request  $request
-   * @param  \App\Models\Customer  $customer
+   * @param  \App\Models\DataAwal  $customer
    * @return \Illuminate\Http\Response
    */
 
@@ -356,23 +356,24 @@ class DataAwalController extends Controller
   /**
    * Remove the specified resource from storage.
    *
-   * @param  \App\Models\Customer  $customer
+   * @param  \App\Models\DataAwal  $customer
    * @return \Illuminate\Http\Response
    */
-  public function destroy(Request $request)
-  {
-    $record = DataAwal::find($id_data_awal);
 
-    if (!$record) {
-        return response()->json(['status' => false, 'pesan' => 'Data tidak ditemukan']);
-    }
 
-    $hapus = $record->delete();
+  public function destroy($id_data_awal){
+    $dataAwal = DataAwal::find($id_data_awal);
 
-    if ($hapus) {
-        return response()->json(['status' => true, 'pesan' => 'Data berhasil dihapus']);
+    if ($dataAwal) {
+        $deleted = $dataAwal->delete();
+
+        if ($deleted) {
+            return response()->json(['status' => true, 'pesan' => "Data pelanggan berhasil dihapus!"], 200);
+        } else {
+            return response()->json(['status' => false, 'pesan' => "Data pelanggan tidak berhasil dihapus!"], 400);
+        }
     } else {
-        return response()->json(['status' => false, 'pesan' => 'Hapus data gagal']);
+        return response()->json(['status' => false, 'pesan' => "Data pelanggan tidak ditemukan!"], 404);
     }
   }
 }

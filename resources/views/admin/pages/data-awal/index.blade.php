@@ -241,11 +241,8 @@
             if (willDelete) {
               $.ajax({
                 type: 'ajax',
-                method: 'delete',
-                data: {
-                    id_data_awal: kode
-                },
-                url: '/data-awal-pelanggan-destroy/' + kode,
+                method: 'get',
+                url: '/data-awal-pelanggan-hapus/' + kode,
                 async: true,
                 dataType: 'json',
                 success: function(response) {
