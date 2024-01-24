@@ -26,4 +26,10 @@ class DataAwal extends Model
   {
       return $this->belongsTo(Customer::class, 'customer_id');
   }
+
+  public function tagihan()
+  {
+      return $this->hasOne(Tagihan::class, 'id_data_awal', 'data_awal_id')->withDefault();
+  }
+
 }

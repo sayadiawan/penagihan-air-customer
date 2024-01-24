@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\DataAwalController2;
 use App\Http\Controllers\Admin\DataAwalController;
+use App\Http\Controllers\Admin\TagihanController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\CustumerBillController;
 
@@ -104,9 +105,14 @@ Route::group(['middleware' => ['web']], function () {
     // Route Customer Bill
     Route::resource("customer-bill", CustumerBillController::class);
 
-    // Route Data wal
+    // Route Data Awal
     Route::resource("data-awal-pelanggan", DataAwalController::class);
     Route::put("data-awal-pelanggan/{id_data_awal}/{id_customers}", [DataAwalController::class, 'update'])->name('data-awal-pelanggan.rubah');
     Route::get('/data-awal-pelanggan-hapus/{id_data_awal}', [DataAwalController::class, 'destroy'])->name('data-awal-pelanggan-hapus');
+
+    //Route Data Tagihan
+    Route::resource("data-tagihan", TagihanController::class);
+    Route::put("data-tagihan/{id_tagihan}/{id_data_awal}", [TagihanController::class, 'update'])->name('data-tagihan.rubah');
+    Route::get('/data-tagihan-hapus/{id_tagihan}', [TagihanController::class, 'destroy'])->name('data-tagihan-hapus');
   });
 });

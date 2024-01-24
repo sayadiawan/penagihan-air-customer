@@ -52,4 +52,9 @@ class User extends Authenticatable
   {
     return $this->belongsTo(Customer::class, 'id', 'users_id')->withDefault();
   }
+
+  public function tagihan()
+  {
+    return $this->belongsTo(Tagihan::class, 'id', 'user_id')->withDefault();
+  }
 }
