@@ -105,6 +105,14 @@
             </div>
 
             <div class="row mb-3">
+              <label class="col-sm-2 col-form-label" for="area">Tarif</label>
+
+              <div class="col-sm-10">
+                <label class="col-form-label">: {{ $item->customer->tarif }}</label>
+              </div>
+            </div>
+
+            <div class="row mb-3">
               <label class="col-sm-2 col-form-label" for="area">Status Kepemilikan Rumah</label>
 
               <div class="col-sm-10">

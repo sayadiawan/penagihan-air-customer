@@ -42,8 +42,7 @@ class TagihanController extends Controller
       ])->get();
 
       //dd($datas);
-
-
+      
       return DataTables::of($datas)
         ->filter(function ($instance) use ($request) {
           if (!empty($request->get('search'))) {
@@ -177,6 +176,22 @@ class TagihanController extends Controller
    *
    * @return \Illuminate\Http\Response
    */
+  public function getTunggakan($userId)
+  {
+    $dataAwal = DataAwal::whereHas('customer', function ($query) use ($userId) {
+      $query->where('users_id', $userId);
+  })->first();
+
+  $result = [
+      'tunggakan' => $dataAwal ? $dataAwal->tunggakan : null,
+      'denda' => $dataAwal ? $dataAwal->denda : null,
+      'lain_lain' => $dataAwal ? $dataAwal->lain_lain : null,
+      'awal' => $dataAwal ? $dataAwal->awal : null,
+      'tarif' => $dataAwal && $dataAwal->customer ? $dataAwal->customer->tarif : null,
+  ];
+
+  return response()->json($result);
+  }
   public function create()
   {
       // $datas = DataAwal::all(); // Modify this query based on your needs

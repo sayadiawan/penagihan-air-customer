@@ -47,9 +47,11 @@
               <div class="mb-3">
                 <label class="form-label" for="name">Nama Lengkap<span style="color:red;">*</span></label>
 
-                <input type="text" class="form-control" id="name" name="name"
+                <input type="text"  disabled class="form-control" id="name" name="name"
                   placeholder="Masukkan nama pelanggan" value="{{ $item->dataAwal->customer->user->name ?? old('name') }}" />
+                  <input type="hidden" name="name" value="{{ $item->dataAwal->customer->user->name ?? old('name') }}" />
               </div>
+
 
               <div class="mb-3">
                 <label class="form-label" for="akhir">Akhir<span style="color:red;">*</span></label>
