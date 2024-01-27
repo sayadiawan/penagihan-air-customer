@@ -20,6 +20,7 @@ class Customer extends Model
     'rt_customers',
     'rw_customers',
     'address_customers',
+    'tarif',
   ];
 
   public function user()

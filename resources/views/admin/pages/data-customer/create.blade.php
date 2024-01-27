@@ -130,6 +130,11 @@
                   placeholder="Masukkan alamat lengkap pelanggan" cols="30" rows="5">{{ old('address_customers') }}</textarea>
               </div>
 
+              <div class="mb-3">
+                <label class="form-label" for="tarif">Tarif<span style="color:red;">*</span></label>
+                <input type="text" class="form-control" id="tarif" name="tarif"
+                  placeholder="Masukkan tarif pelanggan" value="{{ old('tarif') }}" />
+              </div>
 
               <button type="submit" class="btn btn-primary btn-simpan">Simpan</button>
             </form>

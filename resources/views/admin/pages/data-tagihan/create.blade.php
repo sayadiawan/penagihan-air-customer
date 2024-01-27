@@ -51,21 +51,59 @@
                   @endforeach
                 </select>
               </div>
-              
+
+              <div class="row mb-3">
+                <label class="col-sm-2 col-form-label" for="area">Tunggakan</label>
+
+                <div class="col-sm-10">
+                  <label class="col-form-label" id="tunggakan-label">: </label>
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <label class="col-sm-2 col-form-label" for="area">Denda</label>
+
+                <div class="col-sm-10">
+                  <label class="col-form-label" id="denda-label">: </label>
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <label class="col-sm-2 col-form-label" for="area">Lain-Lain</label>
+
+                <div class="col-sm-10">
+                  <label class="col-form-label" id="lain_lain-label">: </label>
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <label class="col-sm-2 col-form-label" for="area">Awal</label>
+
+                <div class="col-sm-10">
+                  <label class="col-form-label" id="awal-label">: </label>
+                </div>
+              </div>
+
               <div class="mb-3">
                 <label class="form-label" for="akhir">Akhir<span style="color:red;">*</span></label>
                 <input type="text" class="form-control" id="akhir" name="akhir"
                   placeholder="Masukkan Meteran Akhir" value="{{ old('akhir') }}" />
               </div>
 
-              <div class="row mb-3">
+              <div class="mb-3">
+                <label class="form-label" for="tarif">Tarif<span style="color:red;">*</span></label>
+                <input type="text" class="form-control" id="tarif" name="tarif"
+                  placeholder="Masukkan Meteran tarif" value="{{ old('tarif') }}" />
+              </div>
+
+              {{-- <div class="row mb-3">
                 <div class="col-md-6 col-sm-12">
                   <label class="form-label" for="tarif">Tarif<span
                       style="color:red;">*</span></label>
                   <input type="text" class="form-control" id="tarif" name="tarif"
                     placeholder="Masukkan Lain-lain" value="{{ old('tarif') }}" />
                 </div>
-              </div>
+              </div> --}}
 
               <button type="submit" class="btn btn-primary btn-simpan">Simpan</button>
             </form>
@@ -78,6 +116,35 @@
 
 @push('after-script')
   <script>
+    $(document).ready(function () {
+    $('#name').on('change', function () {
+        var userId = $(this).val();
+
+        if (userId != 0) {
+            $.ajax({
+                type: 'GET',
+                url: '/get-tunggakan/' + userId,
+                success: function (data) {
+                    if (data.tunggakan !== null) {
+                        $('#tunggakan-label').text(': ' + data.tunggakan);
+                        $('#denda-label').text(': ' + data.denda);
+                        $('#lain_lain-label').text(': ' + data.lain_lain);
+                        $('#awal-label').text(': ' + data.awal);
+                        $('#tarif').val(data.tarif); // Set the value of the tarif input
+                    } else {
+                        $('#tunggakan-label, #denda-label, #lain_lain-label, #awal-label, #tarif').text(': Tidak ada data');
+                    }
+                },
+                error: function (error) {
+                    console.log('Error:', error);
+                }
+            });
+        } else {
+            // Reset labels and input if the user selects the default option
+            $('#tunggakan-label, #denda-label, #lain_lain-label, #awal-label, #tarif').text(': ');
+        }
+    });
+});
     $(function() {
       $('.select2').select2({
         theme: "bootstrap-5"

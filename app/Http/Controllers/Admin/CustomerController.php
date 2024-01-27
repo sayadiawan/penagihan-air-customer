@@ -120,6 +120,9 @@ class CustomerController extends Controller
         ->addColumn('address_customers', function ($data) {
           return mb_strimwidth($data->customer->address_customers, 0, 100, "...");;
         })
+        ->addColumn('tarif', function ($data) {
+          return $data->customer->tarif;
+        })
         ->rawColumns([
           'action',
           'no_rumah',
@@ -127,6 +130,7 @@ class CustomerController extends Controller
           'phone',
           'rt_rw',
           'address_customers',
+          'tarif',
         ])
         ->addIndexColumn() //increment
         ->make(true);
@@ -154,11 +158,12 @@ class CustomerController extends Controller
       'email' => 'required|email:rfc,dns',
       'phone' => 'required|numeric|digits_between:10,12',
       'second_phone_customers' => 'nullable|numeric|digits_between:10,12',
-      'owner_status_customers' => 'required|string',
+      'owner_status_customers' => 'string',
       'norumah_customers' => 'required|string',
       'rt_customers' => 'required|string',
       'rw_customers' => 'required|string',
       'address_customers' => 'required|string',
+      'tarif' => 'required|string',
     ];
     $pesan = [
       'name.required' => 'Nama pengguna wajib diisi!',
@@ -174,6 +179,7 @@ class CustomerController extends Controller
       'rt_customers.required' => 'Kolom RT pengguna wajib diisi!',
       'rw_customers.required' => 'Kolom RW pengguna wajib diisi!',
       'address_customers.required' => 'Alamat penggun wajib diisi!',
+      'tarif.required' => 'Tarif wajib diisi!',
     ];
 
     return Validator::make($request, $rule, $pesan);
@@ -201,7 +207,8 @@ class CustomerController extends Controller
         $check_customer = Customer::where('norumah_customers', $request->norumah_customers)
           ->where('rt_customers', $request->rt_customers)
           ->where('rw_customers', $request->rw_customers)
-          ->orwhere('address_customers', $request->address_customers)
+          ->where('address_customers', $request->address_customers)
+          ->orwhere('tarif', $request->tarif)
           ->first();
 
         if ($check != null) {
@@ -231,6 +238,7 @@ class CustomerController extends Controller
           $customer->rt_customers = $request->rt_customers;
           $customer->rw_customers = $request->rw_customers;
           $customer->address_customers = $request->address_customers;
+          $customer->tarif = $request->tarif;
 
           $simpan_customer = $customer->save();
 
@@ -323,19 +331,21 @@ class CustomerController extends Controller
           $check_customer = Customer::where('norumah_customers', $request->norumah_customers)
             ->where('rt_customers', $request->rt_customers)
             ->where('rw_customers', $request->rw_customers)
-            ->orwhere('address_customers', $request->address_customers)
+            ->where('address_customers', $request->address_customers)
+            ->orwhere('tarif', $request->tarif)
             ->first();
 
           if ($check_customer == null) {
             $customer->norumah_customers = $request->norumah_customers;
             $customer->rt_customers = $request->rt_customers;
             $customer->rw_customers = $request->rw_customers;
+            $customer->address_customers = $request->address_customers;
           } else {
             return response()->json(['status' => false, 'pesan' => "Data pelanggan sudah pernah dibuat silahkan buat pelanggan yang berbeda!"], 200);
           }
         }
 
-        $customer->address_customers = $request->address_customers;
+        $customer->tarif = $request->tarif;
 
         $simpan = $post->save();
         $simpan_customer = $customer->save();
@@ -367,15 +377,30 @@ class CustomerController extends Controller
    * @param  \App\Models\Customer  $customer
    * @return \Illuminate\Http\Response
    */
-  public function destroy($id)
-  {
-    Customer::where('users_id', $id)->delete();
-    $hapus = User::where('id', $id)->delete();
+  // public function destroy($id)
+  // {
+  //   Customer::where('users_id', $id)->delete();
+  //   $hapus = User::where('id', $id)->delete();
 
-    if ($hapus == true) {
-      return response()->json(['status' => true, 'pesan' => "Data pelanggan berhasil dihapus!"], 200);
+  //   if ($hapus == true) {
+  //     return response()->json(['status' => true, 'pesan' => "Data pelanggan berhasil dihapus!"], 200);
+  //   } else {
+  //     return response()->json(['status' => false, 'pesan' => "Data pelanggan tidak berhasil dihapus!"], 400);
+  //   }
+  // }
+  public function destroy($id_customers){
+    $customer = Tagihan::find($id_customers);
+
+    if ($customer) {
+        $deleted = $customer->delete();
+
+        if ($deleted) {
+            return response()->json(['status' => true, 'pesan' => "Data pelanggan berhasil dihapus!"], 200);
+        } else {
+            return response()->json(['status' => false, 'pesan' => "Data pelanggan tidak berhasil dihapus!"], 400);
+        }
     } else {
-      return response()->json(['status' => false, 'pesan' => "Data pelanggan tidak berhasil dihapus!"], 400);
+        return response()->json(['status' => false, 'pesan' => "Data pelanggan tidak ditemukan!"], 404);
     }
   }
 }

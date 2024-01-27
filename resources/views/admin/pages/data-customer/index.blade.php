@@ -48,6 +48,7 @@
                     <th>Nomor Rumah</th>
                     <th>RT/RW</th>
                     <th>Alamat Lengkap</th>
+                    <th>Tarif</th>
                     <th>Actions</th>
                   </tr>
                 </thead>
@@ -109,6 +110,10 @@
           {
             data: 'address_customers',
             name: 'address_customers'
+          },
+          {
+            data: 'tarif',
+            name: 'tarif'
           },
           {
             data: 'action',
@@ -237,7 +242,7 @@
               $.ajax({
                 type: 'ajax',
                 method: 'get',
-                url: '/data-customer-destroy/' + kode,
+                url: '/data-customer-hapus/' + kode,
                 async: true,
                 dataType: 'json',
                 success: function(response) {
