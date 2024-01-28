@@ -158,7 +158,7 @@ class CustomerController extends Controller
       'email' => 'required|email:rfc,dns',
       'phone' => 'required|numeric|digits_between:10,12',
       'second_phone_customers' => 'nullable|numeric|digits_between:10,12',
-      'owner_status_customers' => 'string',
+      // 'owner_status_customers' => 'string',
       'norumah_customers' => 'required|string',
       'rt_customers' => 'required|string',
       'rw_customers' => 'required|string',
@@ -208,7 +208,7 @@ class CustomerController extends Controller
           ->where('rt_customers', $request->rt_customers)
           ->where('rw_customers', $request->rw_customers)
           ->where('address_customers', $request->address_customers)
-          ->orwhere('tarif', $request->tarif)
+          ->where('tarif', $request->tarif)
           ->first();
 
         if ($check != null) {
@@ -388,8 +388,8 @@ class CustomerController extends Controller
   //     return response()->json(['status' => false, 'pesan' => "Data pelanggan tidak berhasil dihapus!"], 400);
   //   }
   // }
-  public function destroy($id_customers){
-    $customer = Tagihan::find($id_customers);
+  public function destroy($id){
+    $customer = User::find($id);
 
     if ($customer) {
         $deleted = $customer->delete();

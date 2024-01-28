@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Yajra\DataTables\Facades\DataTables;
+use Carbon\Carbon;
 
 class TagihanController extends Controller
 {
@@ -36,13 +37,28 @@ class TagihanController extends Controller
   public function index(Request $request)
   {
     if (request()->ajax()) {
-      $datas = Tagihan::with([
-        'user',
-        'dataAwal'
-      ])->get();
+      $query = Tagihan::with(['user', 'dataAwal']);
+
+        // Check if 'month_filter' is filled and not '00' (All)
+        if ($request->filled('month_filter') && $request->input('month_filter') !== '00') {
+            $query->whereMonth('created_at', $request->input('month_filter'))
+                ->whereYear('created_at', Carbon::now()->year); // Assuming you want to filter by the current year
+        }
+
+        $datas = $query->get();
+
+      // Add filter by created_at
+      // $monthFilter = $request->get('month_filter');
+
+    //   if ($monthFilter) {
+    //     $datas = $datas->filter(function ($tagihan) use ($monthFilter) {
+    //         $createdAtMonth = Carbon::parse($tagihan->created_at)->format('m');
+    //         return $createdAtMonth == $monthFilter;
+    //     });
+    // }
 
       //dd($datas);
-      
+
       return DataTables::of($datas)
         ->filter(function ($instance) use ($request) {
           if (!empty($request->get('search'))) {

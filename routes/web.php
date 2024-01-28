@@ -93,7 +93,7 @@ Route::group(['middleware' => ['web']], function () {
     // Route Customer
     Route::resource("data-customer", CustomerController::class);
     // Route::get('/data-customer-destroy/{id}', [CustomerController::class, 'destroy']);
-    Route::get('/data-customer-hapus/{id_customers}', [CustomerController::class, 'destroy'])->name('data-customer-hapus');
+    Route::get('/data-customer-hapus/{id}', [CustomerController::class, 'destroy'])->name('data-customer-hapus');
     Route::post('/data-customer/get-customers-by-select2', [CustomerController::class, 'getCustomersBySelect2'])->name('data-customer.get-customers-by-select2');
 
     // Route Price Settings
