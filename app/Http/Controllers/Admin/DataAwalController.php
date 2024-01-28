@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Yajra\DataTables\Facades\DataTables;
+use Carbon\Carbon;
 
 class DataAwalController extends Controller
 {
@@ -35,9 +36,14 @@ class DataAwalController extends Controller
   public function index(Request $request)
   {
     if (request()->ajax()) {
-      $datas = DataAwal::with([
+      $query = DataAwal::with([
         'customer'
-      ])->get();
+      ]);
+      if ($request->filled('month_filter') && $request->input('month_filter') !== '00') {
+        $query->whereMonth('created_at', $request->input('month_filter'))
+            ->whereYear('created_at', Carbon::now()->year); // Assuming you want to filter by the current year
+    }
+    $datas = $query->get();
 
       //dd($datas);
 
@@ -173,10 +179,10 @@ class DataAwalController extends Controller
     ];
     $pesan = [
       'name.required' => 'Nama pengguna wajib diisi!',
-      'tunggakan.required' => 'Jika tidak ada tunggakan berikan 0',
-      'denda' => 'Isi 0 pada denda jika tidak memiliki denda',
-      'lain_lain' => 'jika tidak ada lain-lain maka isi 0',
-      'awal' => 'Isi awal meteran'
+      'tunggakan.required' => 'Jika tidak ada tunggakan berikan inputan 0',
+      'denda.required' => 'Jika tidak ada denda berikan inputan 0',
+      'lain_lain.required' => 'Jika tidak ada lain-lain berikan inputan 0',
+      'awal.required' => 'Isi awal meteran'
     ];
 
     return Validator::make($request, $rule, $pesan);
