@@ -44,7 +44,7 @@ class TagihanController extends Controller
       if((int)$tahun_now== (int)$tahun_select && (int)$bulan_now== (int)$bulan_select ){
 
             $all_customer = Customer::leftjoin('tagihans', function ($join) use ($bulan_select, $tahun_select) {
-              $join->on('tagihans.user_id', '=', 'customers.id_customers')
+              $join->on('tagihans.user_id', '=', 'customers.users_id')
                   ->whereMonth('tagihans.created_at', '=', (int)$bulan_select)
                   ->whereYear('tagihans.created_at', '=', (int)$tahun_select)
                   ->whereNull('tagihans.deleted_at')
@@ -60,9 +60,11 @@ class TagihanController extends Controller
             $datas = $all_customer;
 
 
+
+
       }else{
                 $all_customer = Customer::leftjoin('tagihans', function ($join) use ($bulan_select, $tahun_select) {
-                  $join->on('tagihans.user_id', '=', 'customers.id_customers')
+                  $join->on('tagihans.user_id', '=', 'customers.users_id')
                     ->whereMonth('tagihans.created_at', (int)$bulan_select)
                     ->whereYear('tagihans.created_at', (int)$tahun_select)
                     ->whereNull('tagihans.deleted_at')
@@ -83,6 +85,10 @@ class TagihanController extends Controller
               })
               ->selectRaw("users.*, tagihans.*, customers.* ,CONCAT(rt_customers, '/', rw_customers) as rt_rw")
               ->get();
+
+              // dd($bulan_select);
+
+              // dd($all_customer);
 
               $datas = $all_customer;
               // dd($bulan_select);
@@ -202,11 +208,11 @@ class TagihanController extends Controller
           return $data->norumah_customers;
         })
         ->addColumn('pakai', function ($data) {
-          return $data->user->tagihan->pakai;
+          return $data->pakai;
         })
 
         ->addColumn('total_tagihan', function ($data) {
-          return $data->user->tagihan->total_tagihan;
+          return $data->total_tagihan;
         })
         ->rawColumns([
           'action',
