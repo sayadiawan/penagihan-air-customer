@@ -37,15 +37,73 @@ class TagihanController extends Controller
   public function index(Request $request)
   {
     if (request()->ajax()) {
-      $query = Tagihan::with(['user', 'dataAwal']);
+      $tahun_now =  Carbon::now()->year;
+      $bulan_now =  Carbon::now()->month;
+      $bulan_select = $request->month_filter;
+      $tahun_select=  $request->year_filter;
+      if((int)$tahun_now== (int)$tahun_select && (int)$bulan_now== (int)$bulan_select ){
 
-        // Check if 'month_filter' is filled and not '00' (All)
-        if ($request->filled('month_filter') && $request->input('month_filter') !== '00') {
-            $query->whereMonth('created_at', $request->input('month_filter'))
-                ->whereYear('created_at', Carbon::now()->year); // Assuming you want to filter by the current year
-        }
+            $all_customer = Customer::leftjoin('tagihans', function ($join) use ($bulan_select, $tahun_select) {
+              $join->on('tagihans.user_id', '=', 'customers.id_customers')
+                  ->whereMonth('tagihans.created_at', '=', (int)$bulan_select)
+                  ->whereYear('tagihans.created_at', '=', (int)$tahun_select)
+                  ->whereNull('tagihans.deleted_at')
+                  ->whereNull('customers.deleted_at');
+            })
+            ->join('users', function ($join) use ($bulan_select, $tahun_select) {
+              $join->on('users.id', '=', 'customers.users_id')
+                  ->whereNull('users.deleted_at')
+                  ->whereNull('customers.deleted_at');
+            })
+            ->selectRaw("users.*, tagihans.*, customers.* ,CONCAT(rt_customers, '/', rw_customers) as rt_rw")
+            ->get();
+            $datas = $all_customer;
 
-        $datas = $query->get();
+
+      }else{
+                $all_customer = Customer::leftjoin('tagihans', function ($join) use ($bulan_select, $tahun_select) {
+                  $join->on('tagihans.user_id', '=', 'customers.id_customers')
+                    ->whereMonth('tagihans.created_at', (int)$bulan_select)
+                    ->whereYear('tagihans.created_at', (int)$tahun_select)
+                    ->whereNull('tagihans.deleted_at')
+                    ->whereNull('customers.deleted_at');
+                })
+                ->where(function ($query) use ($tahun_select, $bulan_select) {
+                   $query->whereYear('customers.created_at', '<', $tahun_select)
+                      ->orWhere(function ($query) use ($tahun_select, $bulan_select) {
+                          $query->whereYear('customers.created_at', '=', $tahun_select)
+                              ->whereMonth('customers.created_at', '<=', $bulan_select);
+                      });
+              })
+
+              ->join('users', function ($join) use ($bulan_select, $tahun_select) {
+                $join->on('users.id', '=', 'customers.users_id')
+                    ->whereNull('users.deleted_at')
+                    ->whereNull('customers.deleted_at');
+              })
+              ->selectRaw("users.*, tagihans.*, customers.* ,CONCAT(rt_customers, '/', rw_customers) as rt_rw")
+              ->get();
+
+              $datas = $all_customer;
+              // dd($bulan_select);
+              // dd($all_customer);
+
+
+      }
+
+      // $datas->load(['tagihan' => function ($query) use ($bulan_select, $tahun_select) {
+      //     $query->whereMonth('created_at', '=', (int)$bulan_select)
+      //         ->whereYear('created_at', '=', (int)$tahun_select);
+      // }]);
+      // $query = Tagihan::with(['user', 'dataAwal']);
+
+      //   // Check if 'month_filter' is filled and not '00' (All)
+      //   if ($request->filled('month_filter') && $request->input('month_filter') !== '00') {
+      //       $query->whereMonth('created_at', $request->input('month_filter'))
+      //           ->whereYear('created_at', Carbon::now()->year); // Assuming you want to filter by the current year
+      //   }
+
+      //   $datas = $query->get();
 
       // Add filter by created_at
       // $monthFilter = $request->get('month_filter');
@@ -57,7 +115,7 @@ class TagihanController extends Controller
     //     });
     // }
 
-      //dd($datas);
+      // dd($datas);
 
       return DataTables::of($datas)
         ->filter(function ($instance) use ($request) {
@@ -71,38 +129,54 @@ class TagihanController extends Controller
           }
         })
         ->addColumn('action', function ($data) {
-          //get module akses
-          $id_menu = get_menu_id('data-tagihan');
 
-          $dataAwal = DataAwal::FindOrFail($data->data_awal_id);
+
+
+          //get module akses
+          // $id_menu = get_menu_id('data-tagihan');
+
+          // $dataAwal = DataAwal::FindOrFail($data->data_awal_id);
+
+          $btn_detail = '';
+          if (isset($data->user->tagihan->pakai) && isset($data->user->tagihan->total_tagihan)) {
+              $btn_detail = '<a class="dropdown-item" href="' . route('data-tagihan.show', $data->id) . '"><i class="fas fa-info me-1"></i> Detail</a>';
+          }
+          // dd($btn_detail);
+
+          $btn_input = '';
+          if (empty($data->user->tagihan->pakai) || empty($data->user->tagihan->total_tagihan)) {
+            // dd($data->id_customers);
+            $btn_input = '<a class="dropdown-item" href="' . route('input-action-route', $data->id) . '"><i class="fas fa-pencil-alt me-1"></i> Input</a>';
+          }
+          // dd($btn_input);
 
           //detail
-          $btn_detail = '';
-          if (isAccess('read', $id_menu, Auth::user()->roles_id)) {
-            $btn_detail = '<a class="dropdown-item" href="' . route('data-tagihan.show', $data->id_tagihan) . '"><i class="fas fa-info me-1"></i> Detail</a>';
-            // $btn_detail = '<a class="dropdown-item" href="' . 'test' . '"><i class="fas fa-info me-1"></i> Detail</a>';
-          }
+          // $btn_detail = '';
+          // if (isAccess('read', $id_menu, Auth::user()->roles_id)) {
+          //   $btn_detail = '<a class="dropdown-item" href="' . route('data-tagihan.show', $data->id_tagihan) . '"><i class="fas fa-info me-1"></i> Detail</a>';
+          //   // $btn_detail = '<a class="dropdown-item" href="' . 'test' . '"><i class="fas fa-info me-1"></i> Detail</a>';
+          // }
 
           //edit
-          $btn_edit = '';
-          if (isAccess('update', $id_menu, Auth::user()->roles_id)) {
-            $btn_edit = '<a class="dropdown-item" href="' . route('data-tagihan.edit', $data->id_tagihan) . '"><i class="fas fa-pencil-alt me-1"></i> Edit</a>';
-            // $btn_edit = '<a class="dropdown-item" href="' . 'test' . '"><i class="fas fa-pencil-alt me-1"></i> Edit</a>';
-          }
+          // $btn_edit = '';
+          // if (isAccess('update', $id_menu, Auth::user()->roles_id)) {
+          //   $btn_edit = '<a class="dropdown-item" href="' . route('data-tagihan.edit', $data->id_tagihan) . '"><i class="fas fa-pencil-alt me-1"></i> Edit</a>';
+          //   // $btn_edit = '<a class="dropdown-item" href="' . 'test' . '"><i class="fas fa-pencil-alt me-1"></i> Edit</a>';
+          // }
 
           //delete
-          $btn_hapus = '';
-          if (isAccess('delete', $id_menu, Auth::user()->roles_id)) {
-            // $btn_hapus = '<a class="dropdown-item btn-hapus" href="javascript:void(0)" data-id="' . $data->id_data_awal . '" data-nama="' . $data->customer->user->name . '"><i class="fas fa-trash-alt me-1"></i> Hapus</a>';
-            $btn_hapus = '<a class="dropdown-item btn-hapus" href="javascript:void(0)" data-id="' . $data->id_tagihan. '" data-name="' . $data->user->name . '"><i class="fas fa-trash-alt me-1"></i> Hapus</a>';
-          }
+          // $btn_hapus = '';
+          // if (isAccess('delete', $id_menu, Auth::user()->roles_id)) {
+          //   // $btn_hapus = '<a class="dropdown-item btn-hapus" href="javascript:void(0)" data-id="' . $data->id_data_awal . '" data-nama="' . $data->customer->user->name . '"><i class="fas fa-trash-alt me-1"></i> Hapus</a>';
+          //   $btn_hapus = '<a class="dropdown-item btn-hapus" href="javascript:void(0)" data-id="' . $data->id_tagihan. '" data-name="' . $data->user->name . '"><i class="fas fa-trash-alt me-1"></i> Hapus</a>';
+          // }
 
           //reset passwrod
-          $btn_reset = '';
-          if (isAccess('reset', $id_menu, Auth::user()->roles_id)) {
-            // $btn_reset = '<a class="dropdown-item btn-reset" href="javascript:void(0)" data-id="' . $data->id_data_awal . '" data-nama="' . $data->customer->user->name . '"><i class="fas fa-undo-alt me-1"></i> Reset Password</a>';
-            $btn_reset = '<a class="dropdown-item btn-reset" href="javascript:void(0)" data-id="' . $data->id . '" data-name="' . $data->name . '"><i class="fas fa-undo-alt me-1"></i> Reset Password</a>';
-          }
+          // $btn_reset = '';
+          // if (isAccess('reset', $id_menu, Auth::user()->roles_id)) {
+          //   // $btn_reset = '<a class="dropdown-item btn-reset" href="javascript:void(0)" data-id="' . $data->id_data_awal . '" data-nama="' . $data->customer->user->name . '"><i class="fas fa-undo-alt me-1"></i> Reset Password</a>';
+          //   $btn_reset = '<a class="dropdown-item btn-reset" href="javascript:void(0)" data-id="' . $data->id . '" data-name="' . $data->name . '"><i class="fas fa-undo-alt me-1"></i> Reset Password</a>';
+          // }
 
           return '
               <div class="d-inline-block">
@@ -113,71 +187,34 @@ class TagihanController extends Controller
 
                 <div class="dropdown-menu dropdown-menu-end m-0" style="">
                   ' . $btn_detail . '
-                  ' . $btn_edit . '
-                  ' . $btn_hapus . '
-                  ' . $btn_reset . '
+                  ' . $btn_input . '
                 </div>
               </div>
           ';
         })
         ->addColumn('name', function ($data) {
-          return $data->user->name;
+          return $data->name;
         })
         ->addColumn('rt_rw', function ($data) {
-          return $data->dataAwal->customer->rt_customers . '/' . $data->dataAwal->customer->rw_customers;
+          return $data->rt_rw;
         })
-        ->addColumn('no_rumah', function ($data) {
-          return $data->dataAwal->customer->norumah_customers;
-        })
-        ->addColumn('address_customers', function ($data) {
-          return mb_strimwidth($data->dataAwal->customer->address_customers, 0, 100, "...");;
-        })
-        ->addColumn('tunggakan', function ($data) {
-          return $data->dataAwal->tunggakan;
-        })
-        ->addColumn('denda', function ($data) {
-          return $data->dataAwal->denda;
-        })
-        ->addColumn('lain_lain', function ($data) {
-          return $data->dataAwal->lain_lain;
-        })
-        ->addColumn('awal', function ($data) {
-          return $data->dataAwal->awal;
-        })
-        ->addColumn('akhir', function ($data) {
-          return $data->akhir;
+        ->addColumn('norumah_customers', function ($data) {
+          return $data->norumah_customers;
         })
         ->addColumn('pakai', function ($data) {
-          return $data->pakai;
+          return $data->user->tagihan->pakai;
         })
-        ->addColumn('tarif', function ($data) {
-          return $data->tarif;
-        })
-        ->addColumn('tagihan', function ($data) {
-          return $data->tagihan;
-        })
+
         ->addColumn('total_tagihan', function ($data) {
-          return $data->total_tagihan;
-        })
-        ->addColumn('bayar', function ($data) {
-          return $data->bayar;
+          return $data->user->tagihan->total_tagihan;
         })
         ->rawColumns([
           'action',
           'name',
-          'rt_customers',
-          'rw_customers',
+          'rt_rw',
           'norumah_customers',
-          'tunggakan',
-          'denda',
-          'lain-lain',
-          'awal',
-          'akhir',
           'pakai',
-          'tarif',
-          'tagihan',
-          'total_tagihan',
-          'bayar'
+          'total_tagihan'
         ])
         ->addIndexColumn() //increment
         ->make(true);
@@ -199,6 +236,10 @@ class TagihanController extends Controller
   })->first();
 
   $result = [
+      'phone' => $dataAwal ? $dataAwal->customer->user->phone : null,
+      'rt_customers' => $dataAwal ? $dataAwal->customer->rt_customers : null,
+      'rw_customers' => $dataAwal ? $dataAwal->customer->rw_customers : null,
+      'address_customers' => $dataAwal ? $dataAwal->customer->address_customers : null,
       'tunggakan' => $dataAwal ? $dataAwal->tunggakan : null,
       'denda' => $dataAwal ? $dataAwal->denda : null,
       'lain_lain' => $dataAwal ? $dataAwal->lain_lain : null,
@@ -274,23 +315,19 @@ class TagihanController extends Controller
           return response()->json(['status' => false, 'pesan' => "Username sudah tersedia silahkan gunakan username yang berbeda!"], 200);
         } else {
 
-          $user_id = $request->name;
-          $customer = Customer::where([
-            'users_id' => $user_id,
-          ])->first();
+          $user_name = $request->name;
+          $customer = Customer::whereHas('user', function ($query) use ($user_name) {
+              $query->where('name', $user_name);
+          })->first();
 
           if ($customer == null) {
-            return response()->json(['status' => false, 'pesan' => "Id customer tidak ditemukan"], 400);
+              return response()->json(['status' => false, 'pesan' => "Id customer tidak ditemukan"], 400);
           }
 
-          $dataAwal = DataAwal::with([
-            'customer'
-          ])->where([
-            'customer_id' => $customer->id_customers,
-          ])->first();
+          $dataAwal = DataAwal::with('customer')->where('customer_id', $customer->id_customers)->first();
 
           if ($dataAwal == null) {
-            return response()->json(['status' => false, 'pesan' => "Id data awal tidak ditemukan"], 400);
+              return response()->json(['status' => false, 'pesan' => "Id data awal tidak ditemukan"], 400);
           }
 
           $awal = intval($dataAwal->awal);
@@ -311,7 +348,7 @@ class TagihanController extends Controller
 
           // store ke pelanggan
           $dataTagihan = new Tagihan();
-          $dataTagihan->user_id = $request->name;
+          $dataTagihan->user_id = $customer->user->id; // Make sure 'id' is the correct column in the 'users' table
           $dataTagihan->data_awal_id = $dataAwal->id_data_awal;
           $dataTagihan->akhir = $request->akhir;
           $dataTagihan->tarif = $request->tarif;
@@ -349,9 +386,9 @@ class TagihanController extends Controller
    * @param  \App\Models\DataAwal  $customer
    * @return \Illuminate\Http\Response
    */
-  public function show($id_tagihan)
+  public function show($id)
   {
-    $item = Tagihan::findOrFail($id_tagihan);
+    $item = User::with('customer.dataAwal')->findOrFail($id);
 
     return view('admin.pages.data-tagihan.show', compact('item'));
   }
@@ -487,5 +524,13 @@ class TagihanController extends Controller
     } else {
         return response()->json(['status' => false, 'pesan' => "Data pelanggan tidak ditemukan!"], 404);
     }
+  }
+
+  public function inputAction($id)
+  {
+      $datasuser = User::get();
+      $data = User::with('customer.dataAwal')->findOrFail($id);
+
+      return view('admin.pages.data-tagihan.create', compact('datasuser', 'data'));
   }
 }
