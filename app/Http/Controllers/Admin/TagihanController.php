@@ -45,8 +45,8 @@ class TagihanController extends Controller
 
             $all_customer = Customer::leftjoin('tagihans', function ($join) use ($bulan_select, $tahun_select) {
               $join->on('tagihans.user_id', '=', 'customers.users_id')
-                  ->whereMonth('tagihans.created_at', '=', (int)$bulan_select)
-                  ->whereYear('tagihans.created_at', '=', (int)$tahun_select)
+                  ->where('tagihans.bulan', '=', (int)$bulan_select)
+                  ->where('tagihans.tahun', '=', (int)$tahun_select)
                   ->whereNull('tagihans.deleted_at')
                   ->whereNull('customers.deleted_at');
             })
@@ -59,14 +59,15 @@ class TagihanController extends Controller
             ->get();
             $datas = $all_customer;
 
+            // dd($all_customer);
 
 
 
       }else{
                 $all_customer = Customer::leftjoin('tagihans', function ($join) use ($bulan_select, $tahun_select) {
                   $join->on('tagihans.user_id', '=', 'customers.users_id')
-                    ->whereMonth('tagihans.created_at', (int)$bulan_select)
-                    ->whereYear('tagihans.created_at', (int)$tahun_select)
+                    ->where('tagihans.bulan', (int)$bulan_select)
+                    ->where('tagihans.tahun', (int)$tahun_select)
                     ->whereNull('tagihans.deleted_at')
                     ->whereNull('customers.deleted_at');
                 })
@@ -144,13 +145,13 @@ class TagihanController extends Controller
           // $dataAwal = DataAwal::FindOrFail($data->data_awal_id);
 
           $btn_detail = '';
-          if (isset($data->user->tagihan->pakai) && isset($data->user->tagihan->total_tagihan)) {
+          if (isset($data->pakai) && isset($data->total_tagihan)) {
               $btn_detail = '<a class="dropdown-item" href="' . route('data-tagihan.show', $data->id) . '"><i class="fas fa-info me-1"></i> Detail</a>';
           }
           // dd($btn_detail);
 
           $btn_input = '';
-          if (empty($data->user->tagihan->pakai) || empty($data->user->tagihan->total_tagihan)) {
+          if (empty($data->pakai) || empty($data->total_tagihan)) {
             // dd($data->id_customers);
             $btn_input = '<a class="dropdown-item" href="' . route('input-action-route', $data->id) . '"><i class="fas fa-pencil-alt me-1"></i> Input</a>';
           }
@@ -214,13 +215,13 @@ class TagihanController extends Controller
         ->addColumn('total_tagihan', function ($data) {
           return $data->total_tagihan;
         })
-        ->addColumn('bulan', function ($data) {
-          return $data->bulan;
-        })
+        // ->addColumn('bulan', function ($data) {
+        //   return $data->bulan;
+        // })
 
-        ->addColumn('tahun', function ($data) {
-          return $data->tahun;
-        })
+        // ->addColumn('tahun', function ($data) {
+        //   return $data->tahun;
+        // })
         ->rawColumns([
           'action',
           'name',
