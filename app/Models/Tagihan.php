@@ -22,7 +22,9 @@ class Tagihan extends Model
     'tarif',
     'tagihan',
     'total_tagihan',
-    'bayar'
+    'bayar',
+    'bulan',
+    'tahun'
   ];
 
   public function user()

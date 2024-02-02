@@ -125,6 +125,8 @@
                     <th>Nomor Rumah</th>
                     <th>Pakai</th>
                     <th>Total Tagihan</th>
+                    <th>Bulan</th>
+                    <th>Tahun</th>
                     <th>Actions</th>
                   </tr>
                 </thead>
@@ -189,6 +191,14 @@
           {
             data: 'total_tagihan',
             name: 'total_tagihan'
+          },
+          {
+            data: 'bulan',
+            name: 'bulan'
+          },
+          {
+            data: 'tahun',
+            name: 'tahun'
           },
           // {
           //   data: 'lain_lain',

@@ -214,13 +214,22 @@ class TagihanController extends Controller
         ->addColumn('total_tagihan', function ($data) {
           return $data->total_tagihan;
         })
+        ->addColumn('bulan', function ($data) {
+          return $data->bulan;
+        })
+
+        ->addColumn('tahun', function ($data) {
+          return $data->tahun;
+        })
         ->rawColumns([
           'action',
           'name',
           'rt_rw',
           'norumah_customers',
           'pakai',
-          'total_tagihan'
+          'total_tagihan',
+          'bulan',
+          'tahun'
         ])
         ->addIndexColumn() //increment
         ->make(true);
@@ -361,6 +370,8 @@ class TagihanController extends Controller
           $dataTagihan->tagihan = $tagihan;
           $dataTagihan->total_tagihan = $total_tagihan;
           $dataTagihan->pakai = $pakai;
+          $dataTagihan->bulan = $request->bulan;
+          $dataTagihan->tahun = $request->tahun;
 
           $simpan_dataTagihan = $dataTagihan->save();
 
