@@ -29,6 +29,6 @@ class Customer extends Model
   }
   public function dataAwal()
   {
-    return $this->hasOne(DataAwal::class);
+    return $this->hasOne(DataAwal::class, 'customer_id');
   }
 }

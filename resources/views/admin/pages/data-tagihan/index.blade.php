@@ -29,33 +29,90 @@
                 print_r($get_menu);
                 dd((isAccess('list', $get_menu, auth()->user()->roles_id)));
             @endphp --}}
-            @if (isAccess('create', $get_menu, auth()->user()->roles_id))
+            {{-- @if (isAccess('create', $get_menu, auth()->user()->roles_id))
               <a href="{{ route('data-tagihan.create') }}">
                 <button type="button" class="btn btn-primary btn-icon-text">
                   <i class="fa fa-plus btn-icon-prepend"></i>
                   Tambah
                 </button>
               </a>
-            @endif
+            @endif --}}
           </div>
           <div class="row mb-1 mx-2">
             <div class="col-md-2">
                 <select class="form-select" id="bulan" name="bulan" onchange="reloadDataTable()">
-                    <option value="00">All Months</option>
-                    <option value="01">Januari</option>
-                    <option value="02">Februari</option>
-                    <option value="03">Maret</option>
-                    <option value="04">April</option>
-                    <option value="05">Mei</option>
-                    <option value="06">Juni</option>
-                    <option value="07">Juli</option>
-                    <option value="08">Agustus</option>
-                    <option value="09">September</option>
-                    <option value="10">Oktober</option>
-                    <option value="11">November</option>
-                    <option value="12">Desember</option>
+                    {{-- <option value="00">All Months</option> --}}
+                    <option value="01"  @php
+                    echo (Carbon\Carbon::now()->month ==1)? "selected":"";
+                @endphp>Januari</option>
+                    <option value="02"
+                    @php
+                    echo (Carbon\Carbon::now()->month ==2)? "selected":"";
+                @endphp
+                    >Februari</option>
+                    <option value="03"  @php
+                    echo (Carbon\Carbon::now()->month ==3)? "selected":"";
+                @endphp>Maret</option>
+                    <option value="04"
+                    @php
+                    echo (Carbon\Carbon::now()->month ==4)? "selected":"";
+                @endphp
+                    >April</option>
+                    <option value="05"
+                    @php
+                    echo (Carbon\Carbon::now()->month ==5)? "selected":"";
+                @endphp
+                    >Mei</option>
+                    <option value="06"
+                    @php
+                    echo (Carbon\Carbon::now()->month ==6)? "selected":"";
+                @endphp
+                    >Juni</option>
+                    <option value="07"
+                    @php
+                    echo (Carbon\Carbon::now()->month ==7)? "selected":"";
+                @endphp
+                    >Juli</option>
+                    <option value="08"
+                    @php
+                    echo (Carbon\Carbon::now()->month ==8)? "selected":"";
+                @endphp
+                    >Agustus</option>
+                    <option value="09"
+                    @php
+                    echo (Carbon\Carbon::now()->month ==9)? "selected":"";
+                @endphp
+                    >September</option>
+                    <option value="10"
+                    @php
+                    echo (Carbon\Carbon::now()->month ==10)? "selected":"";
+                @endphp
+                    >Oktober</option>
+                    <option value="11"
+                    @php
+                    echo (Carbon\Carbon::now()->month ==11)? "selected":"";
+                @endphp
+                    >November</option>
+                    <option value="12"
+                    @php
+                    echo (Carbon\Carbon::now()->month ==12)? "selected":"";
+                @endphp
+                    >Desember</option>
                 </select>
+
+
             </div>
+
+            <div class="col-md-2">
+              <select class="form-select" id="tahun" name="tahun" onchange="reloadDataTable()">
+                  @php
+                      $currentYear = Carbon\Carbon::now()->year;
+                  @endphp
+                  @for ($year = $currentYear; $year >= $currentYear - 10; $year--)
+                      <option value="{{ $year }}" @php echo ($year == $currentYear) ? "selected" : ""; @endphp>{{ $year }}</option>
+                  @endfor
+              </select>
+          </div>
         </div>
           <div class="card-body">
             <div class="table-responsive text-nowrap">
@@ -66,16 +123,8 @@
                     <th>Nama Pelanggan</th>
                     <th>RT/RW</th>
                     <th>Nomor Rumah</th>
-                    <th>Tunggakan</th>
-                    <th>Denda</th>
-                    <th>Lain-Lain</th>
-                    <th>Awal</th>
-                    <th>Akhir</th>
                     <th>Pakai</th>
-                    <th>tarif</th>
-                    <th>tagihan</th>
-                    <th>total_tagihan</th>
-                    <th>Bayar</th>
+                    <th>Total Tagihan</th>
                     <th>Actions</th>
                   </tr>
                 </thead>
@@ -112,6 +161,7 @@
           data: function(d) {
             d.search = $('input[type="search"]').val(),
             d.month_filter = $('#bulan').val();
+            d.year_filter = $('#tahun').val();
           }
         },
         columns: [{
@@ -129,49 +179,49 @@
             name: 'rt_rw'
           },
           {
-            data: 'no_rumah',
-            name: 'no_rumah'
-          },
-          {
-            data: 'tunggakan',
-            name: 'tunggakan'
-          },
-          {
-            data: 'denda',
-            name: 'denda'
-          },
-          {
-            data: 'lain_lain',
-            name: 'lain_lain'
-          },
-          {
-            data: 'awal',
-            name: 'awal'
-          },
-          {
-            data: 'akhir',
-            name: 'akhir'
+            data: 'norumah_customers',
+            name: 'norumah_customers'
           },
           {
             data: 'pakai',
             name: 'pakai'
           },
           {
-            data: 'tarif',
-            name: 'tarif'
-          },
-          {
-            data: 'tagihan',
-            name: 'tagihan'
-          },
-          {
             data: 'total_tagihan',
             name: 'total_tagihan'
           },
-          {
-            data: 'bayar',
-            name: 'bayar'
-          },
+          // {
+          //   data: 'lain_lain',
+          //   name: 'lain_lain'
+          // },
+          // {
+          //   data: 'awal',
+          //   name: 'awal'
+          // },
+          // {
+          //   data: 'akhir',
+          //   name: 'akhir'
+          // },
+          // {
+          //   data: 'pakai',
+          //   name: 'pakai'
+          // },
+          // {
+          //   data: 'tarif',
+          //   name: 'tarif'
+          // },
+          // {
+          //   data: 'tagihan',
+          //   name: 'tagihan'
+          // },
+          // {
+          //   data: 'total_tagihan',
+          //   name: 'total_tagihan'
+          // },
+          // {
+          //   data: 'bayar',
+          //   name: 'bayar'
+          // },
           {
             data: 'action',
             name: 'action',

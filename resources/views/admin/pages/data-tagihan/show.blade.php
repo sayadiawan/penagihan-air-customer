@@ -43,7 +43,7 @@
               <label class="col-sm-2 col-form-label" for="area">Nama Pelanggan</label>
 
               <div class="col-sm-10">
-                <label class="col-form-label">: {{ $item->user->name }}</label>
+                <label class="col-form-label">: {{ $item->name }}</label>
               </div>
             </div>
 
@@ -51,7 +51,7 @@
               <label class="col-sm-2 col-form-label" for="area">No. Rumah</label>
 
               <div class="col-sm-10">
-                <label class="col-form-label">: {{ $item->dataAwal->customer->norumah_customers }}</label>
+                <label class="col-form-label">: {{ $item->customer->norumah_customers }}</label>
               </div>
             </div>
 
@@ -60,7 +60,7 @@
 
               <div class="col-sm-10">
                 <label class="col-form-label">:
-                  {{ $item->dataAwal->customer->rt_customers }}/{{ $item->dataAwal->customer->rw_customers }}</label>
+                  {{ $item->customer->rt_customers }}/{{ $item->customer->rw_customers }}</label>
               </div>
             </div>
 
@@ -68,7 +68,7 @@
               <label class="col-sm-2 col-form-label" for="area">Alamat Lengkap</label>
 
               <div class="col-sm-10">
-                <label class="col-form-label">: {{ $item->dataAwal->customer->address_customers }}</label>
+                <label class="col-form-label">: {{ $item->customer->address_customers }}</label>
               </div>
             </div>
 
@@ -76,7 +76,7 @@
               <label class="col-sm-2 col-form-label" for="area">Tunggakan</label>
 
               <div class="col-sm-10">
-                <label class="col-form-label">: {{ $item->dataAwal->tunggakan }}</label>
+                <label class="col-form-label">: {{ $item->customer->dataAwal->tunggakan }}</label>
               </div>
             </div>
 
@@ -84,7 +84,7 @@
               <label class="col-sm-2 col-form-label" for="area">Denda</label>
 
               <div class="col-sm-10">
-                <label class="col-form-label">: {{ $item->dataAwal->denda }}</label>
+                <label class="col-form-label">: {{ $item->customer->dataAwal->denda }}</label>
               </div>
             </div>
 
@@ -92,7 +92,7 @@
               <label class="col-sm-2 col-form-label" for="area">Lain-Lain</label>
 
               <div class="col-sm-10">
-                <label class="col-form-label">: {{ $item->dataAwal->lain_lain }}</label>
+                <label class="col-form-label">: {{ $item->customer->dataAwal->lain_lain }}</label>
               </div>
             </div>
 
@@ -100,7 +100,7 @@
               <label class="col-sm-2 col-form-label" for="area">Awal</label>
 
               <div class="col-sm-10">
-                <label class="col-form-label">: {{ $item->dataAwal->awal }}</label>
+                <label class="col-form-label">: {{ $item->customer->dataAwal->awal }}</label>
               </div>
             </div>
 
@@ -108,7 +108,7 @@
               <label class="col-sm-2 col-form-label" for="area">Akhir</label>
 
               <div class="col-sm-10">
-                <label class="col-form-label">: {{ $item->akhir }}</label>
+                <label class="col-form-label">: {{ $item->tagihan->akhir }}</label>
               </div>
             </div>
 
@@ -116,7 +116,7 @@
               <label class="col-sm-2 col-form-label" for="area">Pakai</label>
 
               <div class="col-sm-10">
-                <label class="col-form-label">: {{ $item->pakai }}</label>
+                <label class="col-form-label">: {{ $item->tagihan->pakai }}</label>
               </div>
             </div>
 
@@ -124,7 +124,7 @@
               <label class="col-sm-2 col-form-label" for="area">Tarif</label>
 
               <div class="col-sm-10">
-                <label class="col-form-label">: {{ $item->tarif }}</label>
+                <label class="col-form-label">: {{ $item->tagihan->tarif }}</label>
               </div>
             </div>
 
@@ -132,7 +132,7 @@
               <label class="col-sm-2 col-form-label" for="area">Tagihan</label>
 
               <div class="col-sm-10">
-                <label class="col-form-label">: {{ $item->tagihan }}</label>
+                <label class="col-form-label">: {{ $item->tagihan->tagihan }}</label>
               </div>
             </div>
 
@@ -140,7 +140,7 @@
               <label class="col-sm-2 col-form-label" for="area">Total Tagihan</label>
 
               <div class="col-sm-10">
-                <label class="col-form-label">: {{ $item->total_tagihan }}</label>
+                <label class="col-form-label">: {{ $item->tagihan->total_tagihan }}</label>
               </div>
             </div>
 
@@ -149,9 +149,9 @@
 
               <div class="col-sm-10">
                 <label class="col-form-label">:
-                  @if ($item->dataAwal->customer->owner_status_customers == 'owner')
+                  @if ($item->customer->owner_status_customers == 'owner')
                     <span class="badge bg-info">Pemilik</span>
-                  @elseif($item->dataAwal->customer->owner_status_customers == 'dikontrakkan')
+                  @elseif($item->customer->owner_status_customers == 'dikontrakkan')
                     <span class="badge bg-warning">Dikontrakkan</span>
                   @else
                     <span class="badge bg-danger">Kosong</span>
