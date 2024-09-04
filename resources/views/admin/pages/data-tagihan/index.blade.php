@@ -95,21 +95,32 @@ echo (Carbon\Carbon::now()->month ==12)? "selected":""; @endphp>Desember</option
                                 @endfor
                             </select>
                         </div>
+
                     </div>
                     <div class="card-body">
                         <div class="table-responsive text-nowrap">
                             <table class="table" id="table-daftar-tagihan" style="width: 100%">
                                 <thead>
                                     <tr>
-                                        <th>No</th>
-                                        <th>Nama Pelanggan</th>
-                                        <th>RT/RW</th>
-                                        <th>Nomor Rumah</th>
-                                        <th>Pakai</th>
-                                        <th>Total Tagihan</th>
-                                        {{-- <th>Bulan</th>
-                    <th>Tahun</th> --}}
-                                        <th>Actions</th>
+                                        @auth
+                                            @if (auth()->user()->role->code_roles === 'ADM' || auth()->user()->role->code_roles === 'SAS')
+                                                <th>No</th>
+                                                <th>Nama Pelanggan</th>
+                                                <th>RT/RW</th>
+                                                <th>Nomor Rumah</th>
+                                                <th>Pakai</th>
+                                                <th>Total Tagihan</th>
+                                                <th>Bulan</th>
+                                                <th>Tahun</th>
+                                                <th>Status Tagihan</th>
+                                                <th>Actions</th>
+                                            @else
+                                                <th>Total Tagihan</th>
+                                                <th>Bulan</th>
+                                                <th>Tahun</th>
+                                                <th>Actions</th>
+                                            @endif
+                                        @endauth
                                     </tr>
                                 </thead>
 
@@ -133,7 +144,126 @@ echo (Carbon\Carbon::now()->month ==12)? "selected":""; @endphp>Desember</option
             var table = $('#table-daftar-tagihan').DataTable();
             table.ajax.url("{{ route('data-tagihan.index') }}?month_filter=" + selectedMonth).draw();
         }
+
+        function formatRupiah(angka, prefix) {
+            var number_string = angka.replace(/[^,\d]/g, '').toString(), // Menghilangkan Karakter Selain Angka
+                split = number_string.split(','), //Memisahkan Angka dan Desimal
+                sisa = split[0].length % 3, // Menentukan Sisa Karakter untuk Pengelompokan Ribuan
+                rupiah = split[0].substr(0, sisa), // Membangun String Rupiah dari Bagian Awal
+                ribuan = split[0].substr(sisa).match(/\d{3}/gi); //Mengelompokkan Angka dalam Kelipatan Ribuan
+
+            // Menggabungkan Bagian Awal dan Ribuan
+            if (ribuan) {
+                separator = sisa ? '.' : '';
+                rupiah += separator + ribuan.join('.');
+            }
+
+            // rupiah = split[1] !== undefined ? rupiah + ',' + split[1] : rupiah;
+            return 'Rp ' + rupiah;
+        }
+
         $(function() {
+            var userRole = "{{ auth()->user()->role->code_roles }}";
+
+            var columns = [{
+                    data: 'DT_RowIndex',
+                    name: 'DT_RowIndex',
+                    orderable: false,
+                    searchable: false
+                },
+                {
+                    data: 'name',
+                    name: 'name'
+                },
+                {
+                    data: 'rt_rw',
+                    name: 'rt_rw'
+                },
+                {
+                    data: 'norumah_customers',
+                    name: 'norumah_customers'
+                },
+                {
+                    data: 'pakai',
+                    name: 'pakai',
+                    render: function(data, type, row) {
+                        return data ? data + ' m³' : '-';
+                    }
+                },
+                {
+                    data: 'total_tagihan',
+                    name: 'total_tagihan',
+                    render: function(data, type, row) {
+                        return data ? formatRupiah(data) : 'Rp 0';
+                    }
+                },
+                {
+                    data: 'bulan',
+                    name: 'bulan'
+                },
+                {
+                    data: 'tahun',
+                    name: 'tahun'
+                },
+                {
+                    data: 'statustagihan',
+                    name: 'statustagihan'
+                },
+                // {
+                //   data: 'lain_lain',
+                //   name: 'lain_lain'
+                // },
+                // {
+                //   data: 'awal',
+                //   name: 'awal'
+                // },
+                // {
+                //   data: 'akhir',
+                //   name: 'akhir'
+                // },
+                // {
+                //   data: 'pakai',
+                //   name: 'pakai'
+                // },
+                // {
+                //   data: 'tarif',
+                //   name: 'tarif'
+                // },
+                // {
+                //   data: 'tagihan',
+                //   name: 'tagihan'
+                // },
+                // {
+                //   data: 'total_tagihan',
+                //   name: 'total_tagihan'
+                // },
+                // {
+                //   data: 'bayar',
+                //   name: 'bayar'
+                // },
+                // {
+                //     data: 'bulan',
+                //     name: 'bulan'
+                // },
+                // {
+                //     data: 'tahun',
+                //     name: 'tahun'
+                // },
+                {
+                    data: 'action',
+                    name: 'action',
+                    orderable: false,
+                    searchable: false
+                }
+            ];
+
+            if (userRole !== 'ADM' && userRole !== 'SAS') {
+                columns = columns.filter(function(column) {
+                    return column.data === 'total_tagihan' || column.data === 'bulan' || column.data ===
+                        'tahun' || column.data === 'action';
+                });
+            }
+
             var table = $('#table-daftar-tagihan').DataTable({
                 processing: true,
                 serverSide: true,
@@ -143,85 +273,14 @@ echo (Carbon\Carbon::now()->month ==12)? "selected":""; @endphp>Desember</option
                     url: "{{ route('data-tagihan.index') }}",
                     type: "GET",
                     data: function(d) {
-                        d.search = $('input[type="search"]').val(),
-                            d.month_filter = $('#bulan').val();
+                        d.search = $('input[type="search"]').val();
+                        d.month_filter = $('#bulan').val();
                         d.year_filter = $('#tahun').val();
                     }
                 },
-                columns: [{
-                        data: 'DT_RowIndex',
-                        name: 'DT_RowIndex',
-                        orderable: false,
-                        searchable: false
-                    },
-                    {
-                        data: 'name',
-                        name: 'name'
-                    },
-                    {
-                        data: 'rt_rw',
-                        name: 'rt_rw'
-                    },
-                    {
-                        data: 'norumah_customers',
-                        name: 'norumah_customers'
-                    },
-                    {
-                        data: 'pakai',
-                        name: 'pakai'
-                    },
-                    {
-                        data: 'total_tagihan',
-                        name: 'total_tagihan'
-                    },
-                    // {
-                    //   data: 'bulan',
-                    //   name: 'bulan'
-                    // },
-                    // {
-                    //   data: 'tahun',
-                    //   name: 'tahun'
-                    // },
-                    // {
-                    //   data: 'lain_lain',
-                    //   name: 'lain_lain'
-                    // },
-                    // {
-                    //   data: 'awal',
-                    //   name: 'awal'
-                    // },
-                    // {
-                    //   data: 'akhir',
-                    //   name: 'akhir'
-                    // },
-                    // {
-                    //   data: 'pakai',
-                    //   name: 'pakai'
-                    // },
-                    // {
-                    //   data: 'tarif',
-                    //   name: 'tarif'
-                    // },
-                    // {
-                    //   data: 'tagihan',
-                    //   name: 'tagihan'
-                    // },
-                    // {
-                    //   data: 'total_tagihan',
-                    //   name: 'total_tagihan'
-                    // },
-                    // {
-                    //   data: 'bayar',
-                    //   name: 'bayar'
-                    // },
-                    {
-                        data: 'action',
-                        name: 'action',
-                        orderable: false,
-                        searchable: false
-                    }
-                ]
+                columns: columns
             });
+
 
             $('#bulan').on('change', function() {
                 reloadDataTable();

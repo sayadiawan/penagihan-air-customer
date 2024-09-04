@@ -118,6 +118,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/get-tunggakan/{userId}', [TagihanController::class, 'getTunggakan'])->name('get-tunggakan');
     Route::get('/get-customer-info/{userId}', [TagihanController::class, 'getCustomerInfo'])->name('get-customer-info');
     Route::get('/input-action-route/{id}', [TagihanController::class, 'inputAction'])->name('input-action-route');
-
+    Route::get('/input-payment-route/{id}', [TagihanController::class, 'inputpayment'])->name('input-payment-route');
+    Route::get('tagihan/{id}/invoice', [TagihanController::class, 'downloadInvoice'])->name('tagihan.invoice');
   });
 });

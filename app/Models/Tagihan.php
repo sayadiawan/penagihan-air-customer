@@ -24,16 +24,19 @@ class Tagihan extends Model
     'total_tagihan',
     'bayar',
     'bulan',
-    'tahun'
+    'tahun',
+    'tunggakan',
+    'denda',
+    'lain_lain'
   ];
 
   public function user()
   {
-      return $this->belongsTo(User::class, 'user_id');
+    return $this->belongsTo(User::class, 'user_id');
   }
 
   public function dataAwal()
   {
-      return $this->belongsTo(DataAwal::class, 'data_awal_id');
+    return $this->belongsTo(DataAwal::class, 'data_awal_id');
   }
 }
