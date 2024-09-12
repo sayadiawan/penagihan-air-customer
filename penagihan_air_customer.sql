@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 08, 2024 at 03:15 AM
+-- Generation Time: Sep 12, 2024 at 07:10 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.3.10
 
@@ -141,6 +141,21 @@ CREATE TABLE `failed_jobs` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `invoices`
+--
+
+CREATE TABLE `invoices` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `total_tagihan` decimal(10,2) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `kode_invoice` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `menus`
 --
 
@@ -203,7 +218,13 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (8, '2017_05_02_143454_create_villages_tables', 2),
 (16, '2022_12_11_123220_create_province_raja_ongkirs_table', 3),
 (17, '2022_12_11_123238_create_city_raja_ongkirs_table', 3),
-(18, '2024_08_29_060137_create_pembayarans_table', 4);
+(18, '2024_08_29_060137_create_pembayarans_table', 4),
+(19, '2024_09_10_141408_create_invoices_table', 5),
+(20, '2024_09_10_135528_add_kode_invoice_to_invoices_table', 6),
+(21, '2024_09_10_144109_add_kode_invoice_to_tagihans_table', 7),
+(22, '2024_09_10_171104_create_payments_table', 8),
+(23, '2024_09_10_175131_create_payments_table', 9),
+(24, '2024_09_12_142645_create_payments_table', 10);
 
 -- --------------------------------------------------------
 
@@ -232,18 +253,26 @@ CREATE TABLE `password_resets` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pembayarans`
+-- Table structure for table `payments`
 --
 
-CREATE TABLE `pembayarans` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `customer_id` char(36) NOT NULL,
-  `bulan` int(11) NOT NULL,
-  `tahun` int(11) NOT NULL,
-  `amount` decimal(10,2) NOT NULL,
+CREATE TABLE `payments` (
+  `id` char(36) NOT NULL,
+  `tagihan_id` char(36) NOT NULL,
+  `user_id` char(36) NOT NULL,
+  `jenis_pembayaran` varchar(255) DEFAULT NULL,
+  `total_pembayaran` decimal(15,2) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `payments`
+--
+
+INSERT INTO `payments` (`id`, `tagihan_id`, `user_id`, `jenis_pembayaran`, `total_pembayaran`, `created_at`, `updated_at`) VALUES
+('1384c238-ad9f-4960-bd60-7a0f2630a135', '55ba908e-655d-49a7-8716-0ab2aec635ce', 'c2a86466-3818-4ac5-80b5-50411c1c2f9c', 'transfer', 84000.00, '2024-09-12 16:31:22', '2024-09-12 16:31:22'),
+('5e5fc04a-6039-47c3-9a15-6e99eb706c6d', '55ba908e-655d-49a7-8716-0ab2aec635ce', 'c2a86466-3818-4ac5-80b5-50411c1c2f9c', 'cash', 84000.00, '2024-09-12 17:04:26', '2024-09-12 17:04:26');
 
 -- --------------------------------------------------------
 
@@ -421,31 +450,35 @@ CREATE TABLE `tagihans` (
   `deleted_at` timestamp NULL DEFAULT NULL,
   `tunggakan` varchar(20) DEFAULT NULL,
   `denda` varchar(20) DEFAULT NULL,
-  `lain_lain` varchar(20) DEFAULT NULL
+  `lain_lain` varchar(20) DEFAULT NULL,
+  `kode_invoice` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `tagihans`
 --
 
-INSERT INTO `tagihans` (`id_tagihan`, `user_id`, `data_awal_id`, `akhir`, `pakai`, `tarif`, `tagihan`, `total_tagihan`, `bayar`, `bulan`, `tahun`, `created_at`, `updated_at`, `deleted_at`, `tunggakan`, `denda`, `lain_lain`) VALUES
-('39403b24-8775-4379-a8b8-5e890970cb56', '70ea518d-f818-40f6-a099-d5e71956a82a', 'd6c4437f-e219-4250-96b8-cb9bc9896154', '12000', '11800', '3000', '35400000', '35406000', NULL, 8, 2024, '2024-09-01 12:06:05', '2024-08-17 09:47:20', NULL, NULL, NULL, NULL),
-('3ee7b8ed-7145-4448-a54d-4ab7f5aafa08', '1ec7a2f7-4635-47a5-86d3-9d6ad8b8166a', 'b9fc427c-b6be-4ccb-b6ff-bd9a885067c3', '200', '100', '2000', '200000', '251000', NULL, 8, 2024, '2024-09-01 13:14:04', '2024-08-25 10:13:49', NULL, NULL, NULL, NULL),
-('5b78a9cc-2165-4a2a-bbb3-de2a7792fea8', '70ea518d-f818-40f6-a099-d5e71956a82a', 'd6c4437f-e219-4250-96b8-cb9bc9896154', '210', '10', '3000', '30000', '36000', NULL, 2, 2024, '2024-09-01 12:06:05', '2024-02-02 15:30:38', NULL, NULL, NULL, NULL),
-('89d2cb6e-475d-42a4-96cc-24219ccf37d7', 'a3f9d1e6-940e-495c-94af-f58a662bba30', '3b309386-3915-47eb-891b-dece1e437626', '1040', '40', '12000', '480000', '494000', NULL, 9, 2024, '2024-09-01 12:15:44', '2024-09-01 12:15:44', NULL, NULL, NULL, NULL),
-('a9f30d41-c4a5-4d44-80e3-65038dd1398f', '3b14b0bc-dc9b-473f-a320-52612566d871', 'f2b417df-22f2-4bec-86da-5f6415f3c76a', '110', '5', '2000', '10000', '12000', NULL, 2, 2024, '2024-09-01 12:06:05', '2024-02-02 15:21:42', NULL, NULL, NULL, NULL),
-('b54af0db-3ae8-4d0d-97c6-55cfd83942da', 'c2a86466-3818-4ac5-80b5-50411c1c2f9c', 'b4434cc9-2ea2-464e-ad27-c2a6442f9c86', '201', '1', '1200', '1200', '13200', NULL, 8, 2024, '2024-09-01 12:06:05', '2024-08-25 00:17:10', NULL, NULL, NULL, NULL),
-('ba808eed-2b5a-4768-bbcd-532d0379eff4', 'c2a86466-3818-4ac5-80b5-50411c1c2f9c', 'b4434cc9-2ea2-464e-ad27-c2a6442f9c86', '201', '1', '1200', '1200', '13200', NULL, 8, 2024, '2024-09-01 12:06:05', '2024-08-25 00:17:09', NULL, NULL, NULL, NULL),
-('c2726cc4-c2a9-4111-bad4-6c62961782e9', '7c20d65d-b92b-454f-8e71-b6d46940801a', 'afa32b4b-cb76-4a8c-bb4a-2e16e800a42c', '120', '20', '2000', '40000', '65000', NULL, 8, 2024, '2024-09-01 12:06:05', '2024-08-23 21:15:23', NULL, NULL, NULL, NULL),
-('cf004a69-5191-4806-ba73-2b11cd4be7b6', '15e1e792-0d16-4838-a9ae-631a5d10b346', 'b6ef6b20-c002-473f-9cdd-c89b0de30a8e', '91', '1', '2000', '2000', '2000', NULL, 2, 2024, '2024-09-01 12:06:05', '2024-02-02 16:12:34', NULL, NULL, NULL, NULL),
-('d5d0d86a-08b9-42bc-b912-d3d02acf55a3', 'c2a86466-3818-4ac5-80b5-50411c1c2f9c', 'b4434cc9-2ea2-464e-ad27-c2a6442f9c86', '300', '100', '1200', '120000', '132000', NULL, 8, 2024, '2024-09-01 12:06:05', '2024-08-24 16:55:05', NULL, NULL, NULL, NULL),
-('d861311d-52fe-434c-96a0-20d987a544b8', '1ec7a2f7-4635-47a5-86d3-9d6ad8b8166a', 'b9fc427c-b6be-4ccb-b6ff-bd9a885067c3', '200', '100', '2000', '200000', '251000', NULL, 8, 2024, '2024-09-01 12:06:05', '2024-08-25 10:13:51', NULL, NULL, NULL, NULL),
-('dd4eabe5-94e7-4dc4-bcde-dbee3ef64717', 'a3f9d1e6-940e-495c-94af-f58a662bba30', '3b309386-3915-47eb-891b-dece1e437626', '10002', '9002', '12000', '108024000', '108038000', NULL, 8, 2024, '2024-09-01 12:06:05', '2024-08-24 15:14:46', NULL, NULL, NULL, NULL),
-('ded13ddb-e7d3-4740-8872-9855ab2fdc9b', '1ec7a2f7-4635-47a5-86d3-9d6ad8b8166a', 'b9fc427c-b6be-4ccb-b6ff-bd9a885067c3', '120', '20', '2000', '40000', '91000', NULL, 2, 2024, '2024-09-01 12:06:05', '2024-02-02 14:13:00', NULL, NULL, NULL, NULL),
-('e21d063b-4246-4cfe-b339-0ff927935eb8', '7c20d65d-b92b-454f-8e71-b6d46940801a', 'afa32b4b-cb76-4a8c-bb4a-2e16e800a42c', '130', '30', '2000', '60000', '85000', NULL, 2, 2024, '2024-09-01 12:06:05', '2024-02-02 15:00:07', NULL, NULL, NULL, NULL),
-('e24ec79b-e218-4f90-b785-c1333ba33192', '2c67ebd8-722d-44cf-b644-4bf4c5493e56', 'c281ea12-3052-451c-a0db-b13d722254a6', '130', '10', '4000', '40000', '45000', NULL, 2, 2024, '2024-09-01 12:06:05', '2024-02-02 15:44:43', NULL, NULL, NULL, NULL),
-('e2eac3b1-b89c-43b1-be62-b056b09568a8', 'df07cbe2-2ce3-4245-b9a6-bc9b24448edb', '5fc6815a-02e4-4f05-a74b-e5053da77b0e', '80', '10', '2000', '20000', '23000', NULL, 2, 2024, '2024-09-01 12:06:05', '2024-02-02 16:59:49', NULL, NULL, NULL, NULL),
-('fceeab04-cedf-4ecf-8614-7072e73406a3', '7c20d65d-b92b-454f-8e71-b6d46940801a', 'afa32b4b-cb76-4a8c-bb4a-2e16e800a42c', '150', '50', '2000', '100000', '125000', NULL, 2, 2024, '2024-09-01 12:06:05', '2024-02-02 15:19:07', NULL, NULL, NULL, NULL);
+INSERT INTO `tagihans` (`id_tagihan`, `user_id`, `data_awal_id`, `akhir`, `pakai`, `tarif`, `tagihan`, `total_tagihan`, `bayar`, `bulan`, `tahun`, `created_at`, `updated_at`, `deleted_at`, `tunggakan`, `denda`, `lain_lain`, `kode_invoice`) VALUES
+('39403b24-8775-4379-a8b8-5e890970cb56', '70ea518d-f818-40f6-a099-d5e71956a82a', 'd6c4437f-e219-4250-96b8-cb9bc9896154', '12000', '11800', '3000', '35400000', '35406000', NULL, 8, 2024, '2024-09-01 12:06:05', '2024-08-17 09:47:20', NULL, NULL, NULL, NULL, NULL),
+('3ee7b8ed-7145-4448-a54d-4ab7f5aafa08', '1ec7a2f7-4635-47a5-86d3-9d6ad8b8166a', 'b9fc427c-b6be-4ccb-b6ff-bd9a885067c3', '200', '100', '2000', '200000', '251000', NULL, 8, 2024, '2024-09-01 13:14:04', '2024-08-25 10:13:49', NULL, NULL, NULL, NULL, NULL),
+('4d379f54-97ac-46f1-86a6-8baacd8765f1', 'df07cbe2-2ce3-4245-b9a6-bc9b24448edb', '5fc6815a-02e4-4f05-a74b-e5053da77b0e', '200', '130', '2000', '260000', '263000', NULL, 9, 2024, '2024-09-10 07:49:40', '2024-09-10 07:49:40', NULL, '1000', '0', '2000', 'INV202409100002'),
+('55ba908e-655d-49a7-8716-0ab2aec635ce', 'c2a86466-3818-4ac5-80b5-50411c1c2f9c', 'b4434cc9-2ea2-464e-ad27-c2a6442f9c86', '250', '50', '1200', '60000', '72000', NULL, 9, 2024, '2024-09-10 07:42:52', '2024-09-10 07:42:52', NULL, '2000', '10000', '0', 'INV202409100001'),
+('5b78a9cc-2165-4a2a-bbb3-de2a7792fea8', '70ea518d-f818-40f6-a099-d5e71956a82a', 'd6c4437f-e219-4250-96b8-cb9bc9896154', '210', '10', '3000', '30000', '36000', NULL, 2, 2024, '2024-09-01 12:06:05', '2024-02-02 15:30:38', NULL, NULL, NULL, NULL, NULL),
+('89d2cb6e-475d-42a4-96cc-24219ccf37d7', 'a3f9d1e6-940e-495c-94af-f58a662bba30', '3b309386-3915-47eb-891b-dece1e437626', '1040', '40', '12000', '480000', '494000', NULL, 9, 2024, '2024-09-10 07:46:03', '2024-09-10 07:46:03', NULL, NULL, NULL, NULL, 'INV202409100001'),
+('a458309b-e05b-48cf-98c5-874717270ce8', '3b14b0bc-dc9b-473f-a320-52612566d871', 'f2b417df-22f2-4bec-86da-5f6415f3c76a', '150', '45', '2000', '90000', '92000', NULL, 9, 2024, '2024-09-10 07:50:24', '2024-09-10 07:50:24', NULL, '0', '0', '2000', NULL),
+('a9f30d41-c4a5-4d44-80e3-65038dd1398f', '3b14b0bc-dc9b-473f-a320-52612566d871', 'f2b417df-22f2-4bec-86da-5f6415f3c76a', '110', '5', '2000', '10000', '12000', NULL, 2, 2024, '2024-09-01 12:06:05', '2024-02-02 15:21:42', NULL, NULL, NULL, NULL, NULL),
+('b54af0db-3ae8-4d0d-97c6-55cfd83942da', 'c2a86466-3818-4ac5-80b5-50411c1c2f9c', 'b4434cc9-2ea2-464e-ad27-c2a6442f9c86', '201', '1', '1200', '1200', '13200', NULL, 8, 2024, '2024-09-01 12:06:05', '2024-08-25 00:17:10', NULL, NULL, NULL, NULL, NULL),
+('ba808eed-2b5a-4768-bbcd-532d0379eff4', 'c2a86466-3818-4ac5-80b5-50411c1c2f9c', 'b4434cc9-2ea2-464e-ad27-c2a6442f9c86', '201', '1', '1200', '1200', '13200', NULL, 8, 2024, '2024-09-01 12:06:05', '2024-08-25 00:17:09', NULL, NULL, NULL, NULL, NULL),
+('c2726cc4-c2a9-4111-bad4-6c62961782e9', '7c20d65d-b92b-454f-8e71-b6d46940801a', 'afa32b4b-cb76-4a8c-bb4a-2e16e800a42c', '120', '20', '2000', '40000', '65000', NULL, 8, 2024, '2024-09-01 12:06:05', '2024-08-23 21:15:23', NULL, NULL, NULL, NULL, NULL),
+('cf004a69-5191-4806-ba73-2b11cd4be7b6', '15e1e792-0d16-4838-a9ae-631a5d10b346', 'b6ef6b20-c002-473f-9cdd-c89b0de30a8e', '91', '1', '2000', '2000', '2000', NULL, 2, 2024, '2024-09-01 12:06:05', '2024-02-02 16:12:34', NULL, NULL, NULL, NULL, NULL),
+('d5d0d86a-08b9-42bc-b912-d3d02acf55a3', 'c2a86466-3818-4ac5-80b5-50411c1c2f9c', 'b4434cc9-2ea2-464e-ad27-c2a6442f9c86', '300', '100', '1200', '120000', '132000', NULL, 8, 2024, '2024-09-01 12:06:05', '2024-08-24 16:55:05', NULL, NULL, NULL, NULL, NULL),
+('d861311d-52fe-434c-96a0-20d987a544b8', '1ec7a2f7-4635-47a5-86d3-9d6ad8b8166a', 'b9fc427c-b6be-4ccb-b6ff-bd9a885067c3', '200', '100', '2000', '200000', '251000', NULL, 8, 2024, '2024-09-01 12:06:05', '2024-08-25 10:13:51', NULL, NULL, NULL, NULL, NULL),
+('dd4eabe5-94e7-4dc4-bcde-dbee3ef64717', 'a3f9d1e6-940e-495c-94af-f58a662bba30', '3b309386-3915-47eb-891b-dece1e437626', '10002', '9002', '12000', '108024000', '108038000', NULL, 8, 2024, '2024-09-01 12:06:05', '2024-08-24 15:14:46', NULL, NULL, NULL, NULL, NULL),
+('ded13ddb-e7d3-4740-8872-9855ab2fdc9b', '1ec7a2f7-4635-47a5-86d3-9d6ad8b8166a', 'b9fc427c-b6be-4ccb-b6ff-bd9a885067c3', '120', '20', '2000', '40000', '91000', NULL, 2, 2024, '2024-09-01 12:06:05', '2024-02-02 14:13:00', NULL, NULL, NULL, NULL, NULL),
+('e21d063b-4246-4cfe-b339-0ff927935eb8', '7c20d65d-b92b-454f-8e71-b6d46940801a', 'afa32b4b-cb76-4a8c-bb4a-2e16e800a42c', '130', '30', '2000', '60000', '85000', NULL, 2, 2024, '2024-09-01 12:06:05', '2024-02-02 15:00:07', NULL, NULL, NULL, NULL, NULL),
+('e24ec79b-e218-4f90-b785-c1333ba33192', '2c67ebd8-722d-44cf-b644-4bf4c5493e56', 'c281ea12-3052-451c-a0db-b13d722254a6', '130', '10', '4000', '40000', '45000', NULL, 2, 2024, '2024-09-01 12:06:05', '2024-02-02 15:44:43', NULL, NULL, NULL, NULL, NULL),
+('e2eac3b1-b89c-43b1-be62-b056b09568a8', 'df07cbe2-2ce3-4245-b9a6-bc9b24448edb', '5fc6815a-02e4-4f05-a74b-e5053da77b0e', '80', '10', '2000', '20000', '23000', NULL, 2, 2024, '2024-09-01 12:06:05', '2024-02-02 16:59:49', NULL, NULL, NULL, NULL, NULL),
+('fceeab04-cedf-4ecf-8614-7072e73406a3', '7c20d65d-b92b-454f-8e71-b6d46940801a', 'afa32b4b-cb76-4a8c-bb4a-2e16e800a42c', '150', '50', '2000', '100000', '125000', NULL, 2, 2024, '2024-09-01 12:06:05', '2024-02-02 15:19:07', NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -488,7 +521,7 @@ INSERT INTO `users` (`id`, `name`, `email`, `username`, `phone`, `second_phone_c
 ('7c20d65d-b92b-454f-8e71-b6d46940801a', 'Eka Vita Raranti', 'vita@gmail.com', 'vitaaa', '081224345675', NULL, NULL, '$2y$10$KB/d2t8xVbRtz7NT4Vy82.sZSEJv1XW4zoScQgKxZpS2wgUoTTHfW', NULL, NULL, NULL, NULL, NULL, '587c9ce1-0ac5-457a-8524-2f69fe161fea', 1, '2024-01-28 03:03:09', '2024-01-28 03:03:09', NULL),
 ('a3f9d1e6-940e-495c-94af-f58a662bba30', 'ELIT', 'elit@gmail.com', 'elit', '089898989898', NULL, NULL, '$2y$10$8B5hcqHtuUYFaREvehpbfOg/YQHsaFx6C5ke1jpkCSJprLYZLhzEG', NULL, NULL, NULL, NULL, 'oYJPbs1PxHS0FC8sCgjyLUUe3E4imQAfRGaF8QyOG3yQqx5mDQ9Er7qbqA0E', '587c9ce1-0ac5-457a-8524-2f69fe161fea', 1, '2024-08-17 10:01:55', '2024-08-23 20:51:13', NULL),
 ('c2a86466-3818-4ac5-80b5-50411c1c2f9c', 'Divan Lavianto Pamungkas', 'idsatria@gmail.com', 'divann', '081226594919', NULL, NULL, '$2y$10$rOoR6nb2Q2IFE0HNEVzI1.ACB5NFU1zTWg9wY8j.ApXA.FMHjg6Vu', NULL, NULL, NULL, NULL, 'QNbcTdyK8ae2hTRQuACvl1fLiYncBy5mI6S9EpO4bHqEb1nsDob2uBdb7j8e', '587c9ce1-0ac5-457a-8524-2f69fe161fea', 1, '2024-08-24 16:52:56', '2024-08-24 16:54:29', NULL),
-('ce6c6103-7ccc-4e17-b453-8415b3d9908b', 'Super Admin', 'pinginresign@gmail.com', 'superadmin', '081362867034', NULL, NULL, '$2y$10$RwDwoFpzc99JpZvho0eBpuqzuBe2dzNHB58DkUP3YljGQkWfRGtXK', 'user-avatar/1pdhQoB4ElBmXsKGkomwgg6CZojUDLixB9685r8l.jpg', '32745128.jfif', 'jfif', 'image/jpeg', 'DcHc9tSJZowtug65WjHzIyfQu8FQ7N8qPGtxoRCHFMVefWQYkHGZivEoo3z0', '8b61213d-9521-40a4-8b17-fda810228b54', 1, NULL, '2023-02-06 16:04:28', NULL),
+('ce6c6103-7ccc-4e17-b453-8415b3d9908b', 'Super Admin', 'pinginresign@gmail.com', 'superadmin', '081362867034', NULL, NULL, '$2y$10$RwDwoFpzc99JpZvho0eBpuqzuBe2dzNHB58DkUP3YljGQkWfRGtXK', 'user-avatar/1pdhQoB4ElBmXsKGkomwgg6CZojUDLixB9685r8l.jpg', '32745128.jfif', 'jfif', 'image/jpeg', 'uFdlUw6vE4Up8gI78Im4h3WMXbAex2jbRpF8jt2WP7ENBsumjlX0xflcAfLp', '8b61213d-9521-40a4-8b17-fda810228b54', 1, NULL, '2023-02-06 16:04:28', NULL),
 ('df07cbe2-2ce3-4245-b9a6-bc9b24448edb', 'Fardannu Bimantara', 'dannu@gmail.com', 'dannu', '087987678567', NULL, NULL, '$2y$10$.sCdph6TdpgbjVskU3Dfb.XVC30oIvMFjN/xlTs6ZdUZodS80Tufi', NULL, NULL, NULL, NULL, NULL, '587c9ce1-0ac5-457a-8524-2f69fe161fea', 1, '2024-02-02 16:21:11', '2024-02-02 16:21:11', NULL),
 ('e8b1a294-af9f-4dbe-8ce9-a9b2a6988edb', 'Divan Lavianto Pamungkas', 'idsatria12@gmail.com', 'divan', '081226594919', NULL, NULL, '$2y$10$nnasI0Y4XydTnMtUMOuIb.6FyZPo2aGzi5M.hLDlYhGwHF7.uEzBC', NULL, NULL, NULL, NULL, NULL, '587c9ce1-0ac5-457a-8524-2f69fe161fea', 1, '2024-08-24 16:49:18', '2024-08-24 16:49:18', NULL);
 
@@ -659,6 +692,12 @@ ALTER TABLE `failed_jobs`
   ADD UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`);
 
 --
+-- Indexes for table `invoices`
+--
+ALTER TABLE `invoices`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `menus`
 --
 ALTER TABLE `menus`
@@ -678,11 +717,12 @@ ALTER TABLE `password_resets`
   ADD KEY `password_resets_email_index` (`email`);
 
 --
--- Indexes for table `pembayarans`
+-- Indexes for table `payments`
 --
-ALTER TABLE `pembayarans`
+ALTER TABLE `payments`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `pembayarans_customer_id_bulan_tahun_unique` (`customer_id`,`bulan`,`tahun`);
+  ADD KEY `fk_tagihan` (`tagihan_id`),
+  ADD KEY `fk_user` (`user_id`);
 
 --
 -- Indexes for table `personal_access_tokens`
@@ -768,16 +808,16 @@ ALTER TABLE `failed_jobs`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `invoices`
+--
+ALTER TABLE `invoices`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
-
---
--- AUTO_INCREMENT for table `pembayarans`
---
-ALTER TABLE `pembayarans`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -794,6 +834,13 @@ ALTER TABLE `province_raja_ongkirs`
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `payments`
+--
+ALTER TABLE `payments`
+  ADD CONSTRAINT `fk_tagihan` FOREIGN KEY (`tagihan_id`) REFERENCES `tagihans` (`id_tagihan`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `tagihans`

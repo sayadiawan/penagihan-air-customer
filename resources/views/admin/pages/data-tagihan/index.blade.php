@@ -16,6 +16,7 @@
                 </li>
 
                 <li class="breadcrumb-item active">Data Tagihan</li>
+
             </ol>
         </nav>
 
@@ -161,6 +162,22 @@ echo (Carbon\Carbon::now()->month ==12)? "selected":""; @endphp>Desember</option
             // rupiah = split[1] !== undefined ? rupiah + ',' + split[1] : rupiah;
             return 'Rp ' + rupiah;
         }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var paymentModal = document.getElementById('paymentModal');
+            paymentModal.addEventListener('show.bs.modal', function(event) {
+                var button = event.relatedTarget; // tombol yang memicu modal
+                var tagihanId = button.getAttribute('data-id');
+
+                // Atur URL aksi form dengan ID tagihan yang dipilih
+                var form = paymentModal.querySelector('#paymentForm');
+                form.action = '/submit-payment/' + tagihanId;
+
+                // Atur ID tagihan di input hidden
+                var inputTagihanId = paymentModal.querySelector('#tagihan_id');
+                inputTagihanId.value = tagihanId;
+            });
+        });
 
         $(function() {
             var userRole = "{{ auth()->user()->role->code_roles }}";

@@ -8,6 +8,7 @@ use App\Models\DataAwal;
 use App\Models\Tagihan;
 use App\Models\Role;
 use App\Models\User;
+use App\models\Payment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -37,10 +38,6 @@ class TagihanController extends Controller
    */
   public function index(Request $request)
   {
-
-    $user = auth()->user();
-
-    $roleCode = $user->role ? $user->role->code_roles : null;
     if (request()->ajax()) {
       $tahun_now =  Carbon::now()->year;
       $bulan_now =  Carbon::now()->month;
@@ -207,30 +204,41 @@ class TagihanController extends Controller
 
           // $dataAwal = DataAwal::FindOrFail($data->data_awal_id);
 
+          $user = auth()->user();
+
+          $roleCode = $user->role ? $user->role->code_roles : null;
+
           $btn_detail = '';
-          if (isset($data->pakai) && isset($data->total_tagihan)) {
-            $btn_detail = '<a class="dropdown-item" href="' . route('data-tagihan.show', $data->id) . '"><i class="fas fa-info me-1"></i> Detail</a>';
-          }
-          // dd($btn_detail);
-
           $btn_input = '';
-          if (empty($data->pakai) || empty($data->total_tagihan)) {
-            // dd($data->id_customers);
-            $btn_input = '<a class="dropdown-item" href="' . route('input-action-route', $data->id) . '"><i class="fas fa-pencil-alt me-1"></i> Input</a>';
-          }
-          // dd($btn_input);
-
           $btn_payment = '';
-          if (isset($data->pakai) && isset($data->total_tagihan)) {
-            // dd($data->id_customers);
-            $btn_payment = '<a class="dropdown-item" href="' . route('input-payment-route', $data->id) . '"><i class="fas fa-credit-card me-1"></i> Bayar</a>';
+          $btn_invoice = '';
+
+          if ($roleCode == 'SAS' || $roleCode == 'ADM') {
+            if (isset($data->pakai) && isset($data->total_tagihan)) {
+              $btn_detail = '<a class="dropdown-item" href="' . route('data-tagihan.show', $data->id) . '"><i class="fas fa-info me-1"></i> Detail</a>';
+            }
+
+            if (empty($data->pakai) || empty($data->total_tagihan)) {
+              // dd($data->id_customers);
+              $btn_input = '<a class="dropdown-item" href="' . route('input-action-route', $data->id) . '"><i class="fas fa-pencil-alt me-1"></i> Input</a>';
+            }
+
+            if (isset($data->pakai) && isset($data->total_tagihan)) {
+              $btn_payment = '<a class="dropdown-item" href="' . route('view-payment-route', $data->id) . '"><i class="fas fa-credit-card me-1"></i> Bayar</a>';
+            }
+
+            if (isset($data->pakai) && isset($data->total_tagihan)) {
+              $btn_invoice = '<a class="dropdown-item" href="' . route('tagihan.invoice', $data->id) . '"><i class="fas fa-file-invoice me-1"></i> Invoice</a>';
+            }
+          } else {
+            if (isset($data->pakai) && isset($data->total_tagihan)) {
+              $btn_payment = '<a class="dropdown-item" href="' . route('view-payment-route', $data->id) . '"><i class="fas fa-credit-card me-1"></i> Bayar</a>';
+            }
           }
+
           // dd($btn_payment);
 
-          $btn_invoice = '';
-          if (isset($data->pakai) && isset($data->total_tagihan)) {
-            $btn_invoice = '<a class="dropdown-item" href="' . route('tagihan.invoice', $data->id) . '"><i class="fas fa-file-invoice me-1"></i> Invoice</a>';
-          }
+
 
           //detail
           // $btn_detail = '';
@@ -635,15 +643,74 @@ class TagihanController extends Controller
     return view('admin.pages.data-tagihan.create', compact('datasuser', 'data'));
   }
 
+  public function showPayment($user_id)
+  {
+    $tagihan = Tagihan::with(['dataAwal', 'user'])
+      ->where('user_id', $user_id)
+      ->firstOrFail();
+
+    return view('admin.pages.data-pembayaran.payment', compact('tagihan'));
+  }
+
+  public function storePayment(Request $request, $id)
+  {
+    // // Validasi request
+    // $request->validate([
+    //   'payment_method' => 'required|string',
+    //   'amount' => 'required|numeric',
+    // ]);
+    // Simpan data pembayaran ke dalam tabel payments
+    $payment = new Payment();
+    $payment->tagihan_id = $id;
+    $payment->user_id = auth()->user()->id;
+    $payment->jenis_pembayaran = $request->jenis_pembayaran;
+    $payment->total_pembayaran = preg_replace('/[Rp. ]/', '', $request->total_pembayaran); // Format untuk menyimpan angka
+    $payment->save();
+
+    // Redirect berdasarkan jenis pembayaran
+    if ($request->jenis_pembayaran == 'cash') {
+      return redirect()->route('data-tagihan.index')->with('success', 'Pembayaran berhasil. Silahkan menuju ke kantor terdekat.');
+    } elseif ($request->jenis_pembayaran == 'transfer') {
+      // Redirect ke halaman detail bank atau e-wallet
+      return redirect()->route('transfer.details', ['id' => $id])->with('success', 'Silahkan selesaikan pembayaran transfer.');
+    }
+  }
+
+  public function transferDetails($id)
+  {
+    $tagihan = Tagihan::findOrFail($id);
+    $bankOptions = ['BCA', 'Mandiri', 'BNI', 'OVO', 'GoPay']; // Daftar bank/e-wallet
+
+    return view('admin.pages.data-pembayaran.transfer-detail', compact('tagihan', 'bankOptions', 'id'));
+  }
+
+  public function completeTransfer($id)
+  {
+    // data pembayaran berdasarkan ID
+    $payment = Payment::findOrFail($id);
+
+    return view('admin.pages.data-pembayaran.completetransfer', compact('payment'));
+  }
+
   public function downloadInvoice($user_id)
   {
     // dd($id);
     $tagihan = Tagihan::with(['dataAwal', 'user'])
       ->where('user_id', $user_id)
       ->firstOrFail();
+
+    if (empty($tagihan->kode_invoice)) {
+      $tagihan->kode_invoice = $tagihan->generateKodeInvoice();
+      $tagihan->save();
+    }
+
     $today = \Carbon\Carbon::now()->format('F j, Y');
-    $pdf = pdf::loadView('admin.pages.invoices.invoices', compact('tagihan', 'today'));
-    return $pdf->download('invoice.pdf');
+    $week = \Carbon\Carbon::now()->format('F');
+
+    $pdf = pdf::loadView('admin.pages.invoices.invoices', compact('tagihan', 'today', 'week'));
+
+    return $pdf->download('invoice_' . $tagihan->kode_invoice . '.pdf');
+
     return view('admin.pages.invoices.invoices', compact('tagihan'));
   }
 }
