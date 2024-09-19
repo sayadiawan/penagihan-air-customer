@@ -30,6 +30,27 @@ class Tagihan extends Model
     'lain_lain'
   ];
 
+  public function generateKodeInvoice()
+  {
+    $prefix = 'INV';
+    $date = now()->format('Ymd');
+
+    // Mengambil invoice terakhir yang sudah dibuat pada hari yang sama
+    $lastInvoice = Tagihan::whereDate('created_at', now())
+      ->where('kode_invoice', 'like', $prefix . $date . '%')
+      ->orderBy('user_id', 'desc')
+      ->first();
+
+    if ($lastInvoice) {
+      $lastNumber = intval(substr($lastInvoice->kode_invoice, -4));
+      $newNumber = str_pad($lastNumber + 1, 4, '0', STR_PAD_LEFT);
+    } else {
+      $newNumber = '0001';
+    }
+
+    return $prefix .  $date . $newNumber;
+  }
+
   public function user()
   {
     return $this->belongsTo(User::class, 'user_id');

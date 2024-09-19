@@ -179,6 +179,8 @@ return [
 
     Barryvdh\DomPDF\ServiceProvider::class,
 
+    Barryvdh\DomPDF\ServiceProvider::class,
+
 
   ],
 
@@ -237,6 +239,7 @@ return [
     'PDF' => Barryvdh\DomPDF\Facade\Pdf::class,
     'SnappyPdf' => Barryvdh\Snappy\Facades\SnappyPdf::class,
     'SnappyImage' => Barryvdh\Snappy\Facades\SnappyImage::class,
+    'PDF' => Barryvdh\DomPDF\Facade::class,
   ],
 
 ];

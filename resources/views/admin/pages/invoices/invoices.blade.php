@@ -107,7 +107,7 @@
                 </td>
 
                 <td class="info">
-                    Invoice #: 123<br />
+                    Invoice #: {{ $tagihan->kode_invoice }}<br />
                     Created: {{ $today }}<br />
                 </td>
             </tr>
@@ -119,7 +119,7 @@
                 </td>
 
                 <td>
-                    Tagihan Bulan : {{ $tagihan->bulan }}
+                    Tagihan Bulan : {{ $tagihan->bulan }}, {{ $week }}
                 </td>
             </tr>
 
