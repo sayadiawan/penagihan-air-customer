@@ -9,6 +9,7 @@ use App\Models\Tagihan;
 use App\Models\Role;
 use App\Models\User;
 use App\models\Payment;
+use App\models\ProfileCompanyBank;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -232,7 +233,14 @@ class TagihanController extends Controller
             }
           } else {
             if (isset($data->pakai) && isset($data->total_tagihan)) {
+              $btn_detail = '<a class="dropdown-item" href="' . route('data-tagihan.show', $data->id) . '"><i class="fas fa-info me-1"></i> Detail</a>';
+            }
+
+            if (isset($data->pakai) && isset($data->total_tagihan)) {
               $btn_payment = '<a class="dropdown-item" href="' . route('view-payment-route', $data->id) . '"><i class="fas fa-credit-card me-1"></i> Bayar</a>';
+            }
+            if (isset($data->pakai) && isset($data->total_tagihan)) {
+              $btn_invoice = '<a class="dropdown-item" href="' . route('tagihan.invoice', $data->id) . '"><i class="fas fa-file-invoice me-1"></i> Invoice</a>';
             }
           }
 
@@ -679,7 +687,8 @@ class TagihanController extends Controller
   public function transferDetails($id)
   {
     $tagihan = Tagihan::findOrFail($id);
-    $bankOptions = ['BCA', 'Mandiri', 'BNI', 'OVO', 'GoPay']; // Daftar bank/e-wallet
+    // Ambil data bank dari tabel ProfileCompanyBank
+    $bankOptions = ProfileCompanyBank::select('bankname_profile_company_banks', 'accountname_profile_company_banks', 'accountnumber_profile_company_banks')->get();
 
     return view('admin.pages.data-pembayaran.transfer-detail', compact('tagihan', 'bankOptions', 'id'));
   }
@@ -691,6 +700,8 @@ class TagihanController extends Controller
 
     return view('admin.pages.data-pembayaran.completetransfer', compact('payment'));
   }
+
+
 
   public function downloadInvoice($user_id)
   {

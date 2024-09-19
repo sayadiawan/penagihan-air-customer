@@ -226,10 +226,7 @@ echo (Carbon\Carbon::now()->month ==12)? "selected":""; @endphp>Desember</option
                     data: 'statustagihan',
                     name: 'statustagihan'
                 },
-                // {
-                //   data: 'lain_lain',
-                //   name: 'lain_lain'
-                // },
+
                 // {
                 //   data: 'awal',
                 //   name: 'awal'

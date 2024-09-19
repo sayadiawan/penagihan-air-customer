@@ -60,4 +60,9 @@ class Tagihan extends Model
   {
     return $this->belongsTo(DataAwal::class, 'data_awal_id');
   }
+
+  public function profilecompanybank()
+  {
+    return $this->belongsTo(ProfileCompanyBank::class,  'id_profile_company_banks');
+  }
 }
