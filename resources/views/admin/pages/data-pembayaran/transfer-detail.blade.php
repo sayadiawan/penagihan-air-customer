@@ -34,7 +34,11 @@
                         <select class="form-select" id="bank" name="bank" required>
                             <option value="" disabled selected>Pilih Bank atau E-Wallet</option>
                             @foreach ($bankOptions as $bank)
-                                <option value="{{ $bank }}">{{ $bank }}</option>
+                                <option value="{{ $bank->bankname_profile_company_banks }}">
+                                    {{ $bank->bankname_profile_company_banks }} -
+                                    {{ $bank->accountname_profile_company_banks }}
+                                    ({{ $bank->accountnumber_profile_company_banks }})
+                                </option>
                             @endforeach
                         </select>
                     </div>

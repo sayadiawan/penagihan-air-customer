@@ -29,6 +29,11 @@ class Payment extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function profilecompanybank()
+    {
+        return $this->belongsTo(ProfileCompanyBank::class);
+    }
+
     protected static function boot()
     {
         parent::boot();
