@@ -19,7 +19,6 @@
 
             </ol>
         </nav>
-
         <!-- Collapse -->
         <div class="row">
             <div class="col-12">
