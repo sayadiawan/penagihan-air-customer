@@ -14,7 +14,9 @@ class Payment extends Model
         'tagihan_id',
         'user_id',
         'jenis_pembayaran',
-        'total_pembayaran'
+        'total_pembayaran',
+        'nama_bank',
+        'bukti_transfer'
     ];
 
     // Relasi dengan Tagihan
@@ -31,7 +33,7 @@ class Payment extends Model
 
     public function profilecompanybank()
     {
-        return $this->belongsTo(ProfileCompanyBank::class);
+        return $this->belongsTo(ProfileCompanyBank::class,  'id_profile_company_banks');
     }
 
     protected static function boot()

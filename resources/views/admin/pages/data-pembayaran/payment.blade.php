@@ -173,7 +173,7 @@
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
                                             data-bs-dismiss="modal">Tutup</button>
-                                        <button type="submit" class="btn btn-primary">Kirim Pembayaran</button>
+                                        <button type="submit" class="btn btn-primary btn-simpan">Kirim Pembayaran</button>
                                     </div>
                                 </form>
                             </div>
@@ -187,4 +187,67 @@
 @endsection
 
 @push('after-script')
+    <script>
+        $(function() {
+            $('.select2').select2({
+                theme: "bootstrap-5"
+            });
+
+            $('.btn-simpan').on('click', function(e) {
+                e.preventDefault();
+
+                $('#paymentType').ajaxForm({
+                    success: function(response) {
+                        if (response.success) {
+                            // Notifikasi untuk pembayaran cash atau transfer
+                            let message = response.jenis_pembayaran === 'cash' ?
+                                "Pembayaran berhasil. Silahkan menuju ke kantor terdekat." :
+                                "Silahkan selesaikan pembayaran transfer.";
+
+                            swal({
+                                title: "Success!",
+                                text: message,
+                                icon: "success",
+                            }).then(function() {
+                                // Redirect ke halaman sesuai dengan jenis pembayaran
+                                window.location.href = response.redirect_url;
+                            });
+                        } else {
+                            // Notifikasi error
+                            var pesan = "";
+                            var data_pesan = response
+                            .message; // Ganti 'pesan' menjadi 'message'
+                            const wrapper = document.createElement('div');
+
+                            if (typeof(data_pesan) === 'object') {
+                                jQuery.each(data_pesan, function(key, value) {
+                                    pesan += value + '. <br>';
+                                    wrapper.innerHTML = pesan;
+                                });
+
+                                swal({
+                                    title: "Error!",
+                                    content: wrapper,
+                                    icon: "warning"
+                                });
+                            } else {
+                                // Ubah pesan kesalahan yang ditampilkan
+                                swal({
+                                    title: "Error!",
+                                    text: response.message ||
+                                        "Silakan selesaikan tagihan sebelumnya sebelum melakukan pembayaran baru.",
+                                    icon: "warning"
+                                });
+                            }
+                        }
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        var err = JSON.parse(jqXHR.responseText);
+                        swal("Error!", err.message ||
+                            "Terjadi kesalahan saat memproses pembayaran.", "error");
+                    }
+                }).submit();
+            });
+        });
+    </script>
 @endpush

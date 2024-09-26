@@ -27,7 +27,7 @@
                 Pembayaran Transfer
             </div>
             <div class="card-body">
-                <form action="{{ route('complete.transfer', ['id' => $tagihan->id_tagihan]) }}" method="POST">
+                <form action="{{ route('payment.transfer', ['id' => $tagihan->id_tagihan]) }}" method="GET">
                     @csrf
                     <div class="mb-3">
                         <label for="bank" class="form-label">Pilih Bank/E-Wallet</label>
@@ -50,7 +50,6 @@
                     </div>
                     <button type="submit" class="btn btn-primary">Konfirmasi Pembayaran</button>
                 </form>
-
             </div>
         </div>
     </div>

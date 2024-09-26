@@ -122,8 +122,10 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/payment-view/{id}', [TagihanController::class, 'showPayment'])->name('view-payment-route');
     Route::post('/store-payment/{id}', [TagihanController::class, 'storePayment'])->name('store.payment');
     Route::get('/transfer-details/{id}', [TagihanController::class, 'transferDetails'])->name('transfer.details');
-    Route::post('/complete-transfer/{id}', [TagihanController::class, 'completeTransfer'])->name('complete.transfer');
-
+    Route::post('/complete-transfer/{id}', [TagihanController::class, 'storeTransfer'])->name('complete.transfer');
+    Route::get('/payment-transfer/{id}', [TagihanController::class, 'paymentTransfer'])->name('payment.transfer');
+    Route::post('/uploud-bukti-transfer/{id}', [TagihanController::class, 'uploadBuktiTransfer'])->name('upload.bukti.transfer');
+    Route::get('/tranksaksi-success', [TagihanController::class, 'transferSukses'])->name('transfer.sukses');
 
     Route::get('tagihan/{id}/invoice', [TagihanController::class, 'downloadInvoice'])->name('tagihan.invoice');
   });

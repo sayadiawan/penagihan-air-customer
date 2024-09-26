@@ -662,46 +662,108 @@ class TagihanController extends Controller
 
   public function storePayment(Request $request, $id)
   {
-    // // Validasi request
-    // $request->validate([
-    //   'payment_method' => 'required|string',
-    //   'amount' => 'required|numeric',
-    // ]);
-    // Simpan data pembayaran ke dalam tabel payments
+
+    //cek jika customer sudah pernah input cash/transfer
+    $existingPayment = Payment::where('tagihan_id', $id)
+      ->where('user_id', auth()->user()->id) // Pastikan hanya cek untuk user yang sama
+      ->first();
+
+    if ($existingPayment) {
+      return response()->json([
+        'success' => false,
+        'message' => 'Silakan selesaikan tagihan sebelumnya sebelum melakukan pembayaran baru.'
+      ], 400);
+    }
+
     $payment = new Payment();
     $payment->tagihan_id = $id;
     $payment->user_id = auth()->user()->id;
     $payment->jenis_pembayaran = $request->jenis_pembayaran;
-    $payment->total_pembayaran = preg_replace('/[Rp. ]/', '', $request->total_pembayaran); // Format untuk menyimpan angka
+    $payment->total_pembayaran = preg_replace('/[Rp. ]/', '', $request->total_pembayaran);
     $payment->save();
 
-    // Redirect berdasarkan jenis pembayaran
-    if ($request->jenis_pembayaran == 'cash') {
-      return redirect()->route('data-tagihan.index')->with('success', 'Pembayaran berhasil. Silahkan menuju ke kantor terdekat.');
-    } elseif ($request->jenis_pembayaran == 'transfer') {
-      // Redirect ke halaman detail bank atau e-wallet
-      return redirect()->route('transfer.details', ['id' => $id])->with('success', 'Silahkan selesaikan pembayaran transfer.');
-    }
+
+    return response()->json([
+      'success' => true,
+      'jenis_pembayaran' => $request->jenis_pembayaran,
+      'message' => $request->jenis_pembayaran == 'cash'
+        ? 'Pembayaran berhasil. Silahkan menuju ke kantor terdekat.'
+        : 'Silahkan selesaikan pembayaran transfer.',
+      'redirect_url' => $request->jenis_pembayaran == 'transfer'
+        ? route('transfer.details', ['id' => $id])
+        : route('data-tagihan.index')
+    ]);
   }
 
   public function transferDetails($id)
   {
     $tagihan = Tagihan::findOrFail($id);
-    // Ambil data bank dari tabel ProfileCompanyBank
+
     $bankOptions = ProfileCompanyBank::select('bankname_profile_company_banks', 'accountname_profile_company_banks', 'accountnumber_profile_company_banks')->get();
 
     return view('admin.pages.data-pembayaran.transfer-detail', compact('tagihan', 'bankOptions', 'id'));
   }
 
-  public function completeTransfer($id)
+  public function storeTransfer(Request $request, $id)
   {
-    // data pembayaran berdasarkan ID
-    $payment = Payment::findOrFail($id);
+    $bankOptions = ProfileCompanyBank::where('bankname_profile_company_banks', $request->bank)->first();
 
-    return view('admin.pages.data-pembayaran.completetransfer', compact('payment'));
+    // Simpan data pembayaran
+    $payment = new Payment();
+    $payment->tagihan_id = $id;
+    $payment->user_id = auth()->user()->id;
+    $payment->jenis_pembayaran = 'transfer';
+    $payment->total_pembayaran = preg_replace('/[Rp. ]/', '', $request->total_pembayaran);
+    $payment->bank_id = $bankOptions->id_profile_company_banks;
+    $payment->save();
+
+    return redirect()->route('payment.transfer', ['id' => $payment->id]);
   }
 
+  public function paymentTransfer($id, Request $request)
+  {
+    $tagihan = Tagihan::findOrFail($id);
 
+    $bankName = $request->input('bank');
+
+    $bank = ProfileCompanyBank::where('bankname_profile_company_banks', $bankName)->first();
+
+    $totalPembayaran = $tagihan->total_tagihan + $tagihan->tunggakan + $tagihan->denda + $tagihan->lain_lain;
+
+    return view('admin.pages.data-pembayaran.completertransfer', [
+      'tagihan' => $tagihan,
+      'totalPembayaran' => $totalPembayaran,
+      'bank' => $bank,
+    ]);
+  }
+
+  public function uploadBuktiTransfer(Request $request, $id)
+  {
+    $request->validate([
+      'bukti_transfer' => 'required|file|mimes:jpg,jpeg,png,pdf|max:2048', // Anda bisa menyesuaikan tipe file dan ukuran
+    ]);
+
+    $payment = Payment::where('tagihan_id', $id)->where('user_id', auth()->user()->id)->first();
+
+    if (!$payment) {
+      return redirect()->back()->with('error', 'Pembayaran tidak ditemukan.');
+    }
+
+    if ($request->hasFile('bukti_transfer')) {
+      $file = $request->file('bukti_transfer');
+      $filepath = $file->store('bukti_transfer', 'public');
+
+      $payment->bukti_transfer = $filepath;
+      $payment->save();
+
+      return redirect()->route('transfer.sukses')->with('success', 'Bukti transfer berhasil di-upload.');
+    }
+  }
+
+  public function transferSukses()
+  {
+    return view('admin.pages.data-pembayaran.transfer-sukses');
+  }
 
   public function downloadInvoice($user_id)
   {

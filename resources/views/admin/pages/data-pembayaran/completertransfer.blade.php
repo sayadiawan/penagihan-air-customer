@@ -18,38 +18,34 @@
             </ol>
         </nav>
 
-        <!-- Detail Pembayaran Transfer -->
         <div class="card">
             <div class="card-header">
-                Detail Pembayaran Transfer
+                Informasi Pembayaran
             </div>
             <div class="card-body">
-                <div class="row mb-3">
-                    <div class="col-sm-3">
-                        <strong>ID Pembayaran:</strong>
+                <p><strong>ID Tagihan:</strong> {{ $tagihan->id_tagihan }}</p>
+                <p><strong>Nama Pemohon:</strong> {{ $tagihan->user->name }}</p>
+                <p><strong>Total Tagihan:</strong> {{ formatRupiah($tagihan->total_tagihan) }}</p>
+                <p><strong>Denda:</strong> {{ formatRupiah($tagihan->denda) }}</p>
+                <p><strong>Tunggakan:</strong> {{ formatRupiah($tagihan->tunggakan) }}</p>
+                <p><strong>Lain-lain:</strong> {{ formatRupiah($tagihan->lain_lain) }}</p>
+                <p><strong>Jenis Pembayaran:</strong> Transfer</p>
+                <p><strong>Bank: </strong>{{ $bank->bankname_profile_company_banks }}</p>
+                <p><strong>Nama Rekening: </strong>{{ $bank->accountname_profile_company_banks }}</p>
+                <p><strong>Nomor Rekening: </strong>{{ $bank->accountnumber_profile_company_banks }}</p>
+                <p><strong>Total Pembayaran:</strong></strong> {{ formatRupiah($totalPembayaran) }}</p>
+
+                <form action="{{ route('upload.bukti.transfer', ['id' => $tagihan->id_tagihan]) }}" method="POST"
+                    enctype="multipart/form-data" id="uploadForm">
+                    @csrf
+                    <div class="mb-3">
+                        <label for="bukti_transfer" class="form-label">Upload Bukti Transfer</label>
+                        <input type="file" class="form-control" id="bukti_transfer" name="bukti_transfer" required>
                     </div>
-                    <div class="col-sm-9">
-                        {{ $payment->id }}
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <div class="col-sm-3">
-                        <strong>Jenis Pembayaran:</strong>
-                    </div>
-                    <div class="col-sm-9">
-                        {{ $payment->jenis_pembayaran }}
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <div class="col-sm-3">
-                        <strong>Total Pembayaran:</strong>
-                    </div>
-                    <div class="col-sm-9">
-                        {{ formatRupiah($payment->total_pembayaran) }}
-                    </div>
-                </div>
-                <!-- Tambahkan detail lainnya sesuai kebutuhan -->
+                    <button type="submit" class="btn btn-primary">Upload Bukti Transfer</button>
+                </form>
             </div>
         </div>
+    </div>
     </div>
 @endsection
