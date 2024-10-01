@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\CustumerBillController;
 
 use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\MenuController;
+use App\Http\Controllers\Admin\PaymentController;
 use App\Http\Controllers\Admin\PriceSettingController;
 use App\Http\Controllers\Admin\ProfileCompanyController;
 use App\Http\Controllers\Admin\RoleController;
@@ -119,13 +120,10 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/get-customer-info/{userId}', [TagihanController::class, 'getCustomerInfo'])->name('get-customer-info');
     Route::get('/input-action-route/{id}', [TagihanController::class, 'inputAction'])->name('input-action-route');
 
-    Route::get('/payment-view/{id}', [TagihanController::class, 'showPayment'])->name('view-payment-route');
-    Route::post('/store-payment/{id}', [TagihanController::class, 'storePayment'])->name('store.payment');
-    Route::get('/transfer-details/{id}', [TagihanController::class, 'transferDetails'])->name('transfer.details');
-    Route::post('/complete-transfer/{id}', [TagihanController::class, 'storeTransfer'])->name('complete.transfer');
-    Route::get('/payment-transfer/{id}', [TagihanController::class, 'paymentTransfer'])->name('payment.transfer');
-    Route::post('/uploud-bukti-transfer/{id}', [TagihanController::class, 'uploadBuktiTransfer'])->name('upload.bukti.transfer');
-    Route::get('/tranksaksi-success', [TagihanController::class, 'transferSukses'])->name('transfer.sukses');
+    //Route Pembayaran
+    Route::resource("data-pembayaran", PaymentController::class);
+    Route::get('/payment-view/{id}', [PaymentController::class, 'index'])->name('view-payment-route');
+    Route::post('/store-payment/{id}', [PaymentController::class, 'storePayment'])->name('store.payment');
 
     Route::get('tagihan/{id}/invoice', [TagihanController::class, 'downloadInvoice'])->name('tagihan.invoice');
   });

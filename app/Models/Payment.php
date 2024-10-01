@@ -4,19 +4,22 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Str; //
 
 class Payment extends Model
 {
     use HasFactory;
 
+    protected $table = 'payments';
+
+    protected $primaryKey = 'id';
+
     protected $fillable = [
+        'id',
         'tagihan_id',
         'user_id',
         'jenis_pembayaran',
         'total_pembayaran',
-        'nama_bank',
-        'bukti_transfer'
+        'kode_tagihan'
     ];
 
     // Relasi dengan Tagihan
@@ -25,25 +28,19 @@ class Payment extends Model
         return $this->belongsTo(Tagihan::class);
     }
 
-    // Relasi dengan User (customer)
-    public function user()
+    private function generateSequentialNumber()
     {
-        return $this->belongsTo(User::class);
-    }
+        // Mengambil nomor urut terakhir dari kode_tagihan
+        $lastPayment = Payment::orderBy('id', 'desc')->first();
 
-    public function profilecompanybank()
-    {
-        return $this->belongsTo(ProfileCompanyBank::class,  'id_profile_company_banks');
-    }
+        // Jika tidak ada pembayaran, mulai dari 1
+        if (!$lastPayment) {
+            return 1;
+        }
 
-    protected static function boot()
-    {
-        parent::boot();
+        // Mengambil bagian angka dari kode_tagihan dan menambahkannya
+        $lastNumber = (int) filter_var($lastPayment->kode_tagihan, FILTER_SANITIZE_NUMBER_INT);
 
-        static::creating(function ($model) {
-            if (empty($model->id)) {
-                $model->id = (string) Str::uuid(); // Menggunakan UUID untuk id
-            }
-        });
+        return $lastNumber + 1;
     }
 }
