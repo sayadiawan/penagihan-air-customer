@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 24, 2024 at 08:55 PM
+-- Generation Time: Oct 01, 2024 at 03:16 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.3.10
 
@@ -94,14 +94,14 @@ CREATE TABLE `data_awals` (
 --
 
 INSERT INTO `data_awals` (`id_data_awal`, `customer_id`, `tunggakan`, `denda`, `lain_lain`, `awal`, `created_at`, `updated_at`, `deleted_at`) VALUES
-('3b309386-3915-47eb-891b-dece1e437626', '14b4cb87-d0ab-47b6-b230-086e620ddd04', '12000', '2000', '0', '1000', '2024-08-17 10:02:39', '2024-08-17 10:02:39', NULL),
+('3b309386-3915-47eb-891b-dece1e437626', '14b4cb87-d0ab-47b6-b230-086e620ddd04', '0', '0', '0', '1000', '2024-09-27 09:32:33', '2024-09-27 09:32:33', NULL),
 ('5fc6815a-02e4-4f05-a74b-e5053da77b0e', '7a4099e6-5e8e-4652-8336-12889301805f', '1000', '0', '2000', '70', '2024-02-02 16:21:47', '2024-02-02 16:21:47', NULL),
 ('afa32b4b-cb76-4a8c-bb4a-2e16e800a42c', '56ac447a-a535-48d3-b917-e68c4e582cd5', '10000', '15000', '0', '100', '2024-01-28 03:40:05', '2024-01-28 03:40:05', NULL),
 ('b4434cc9-2ea2-464e-ad27-c2a6442f9c86', '99551344-2aaf-4bc7-b689-37db9d05adc5', '2000', '10000', '0', '200', '2024-08-24 16:53:48', '2024-08-24 16:53:48', NULL),
 ('b6ef6b20-c002-473f-9cdd-c89b0de30a8e', 'b96de30b-07e5-41b8-8816-315f5cdc4097', '0', '0', '0', '90', '2024-02-02 16:06:26', '2024-02-02 16:06:26', NULL),
 ('b9fc427c-b6be-4ccb-b6ff-bd9a885067c3', '60900d5b-808b-484b-b39c-86b6a47f1745', '50000', '1000', '0', '100', '2024-01-26 10:01:37', '2024-01-26 10:01:37', NULL),
 ('c281ea12-3052-451c-a0db-b13d722254a6', 'a5fd9b72-5107-45a0-afd9-1e117ecc0088', '5000', '0', '0', '120', '2024-01-26 09:42:44', '2024-01-26 09:42:44', NULL),
-('d6c4437f-e219-4250-96b8-cb9bc9896154', '36aeae35-499a-45ef-881c-7d6bf1d79a78', '1000', '2000', '3000', '200', '2024-01-28 02:53:28', '2024-01-28 02:53:28', NULL),
+('d6c4437f-e219-4250-96b8-cb9bc9896154', '36aeae35-499a-45ef-881c-7d6bf1d79a78', '1000', '0', '3000', '200', '2024-09-27 09:22:18', '2024-09-27 09:22:18', NULL),
 ('f2b417df-22f2-4bec-86da-5f6415f3c76a', 'c01d6aa2-56b3-4d37-86db-7f944bf4a5c9', '0', '0', '2000', '105', '2024-01-28 07:48:17', '2024-01-28 07:48:17', NULL);
 
 --
@@ -257,23 +257,51 @@ CREATE TABLE `password_resets` (
 --
 
 CREATE TABLE `payments` (
-  `id` char(36) NOT NULL,
+  `id` int(11) NOT NULL,
   `tagihan_id` char(36) NOT NULL,
   `user_id` char(36) NOT NULL,
   `jenis_pembayaran` varchar(255) DEFAULT NULL,
   `total_pembayaran` decimal(15,2) DEFAULT NULL,
-  `bukti_transfer` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `bank_id` varchar(255) DEFAULT NULL
+  `kode_tagihan` varchar(255) DEFAULT NULL,
+  `bulan` varchar(20) DEFAULT NULL,
+  `tahun` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `payments`
 --
 
-INSERT INTO `payments` (`id`, `tagihan_id`, `user_id`, `jenis_pembayaran`, `total_pembayaran`, `bukti_transfer`, `created_at`, `updated_at`, `bank_id`) VALUES
-('8590aedd-beb7-44ed-968b-3dfeb3dd6499', '55ba908e-655d-49a7-8716-0ab2aec635ce', 'c2a86466-3818-4ac5-80b5-50411c1c2f9c', 'transfer', 84000.00, 'bukti_transfer/J41eDX9pmHXRfztSFfWzBzSxAJqNPHgEcyurzWtg.png', '2024-09-24 18:49:21', '2024-09-24 18:49:38', NULL);
+INSERT INTO `payments` (`id`, `tagihan_id`, `user_id`, `jenis_pembayaran`, `total_pembayaran`, `created_at`, `updated_at`, `kode_tagihan`, `bulan`, `tahun`) VALUES
+(8, 'fa534e7a-5f55-4920-8cfb-16694bb95d8d', 'ce6c6103-7ccc-4e17-b453-8415b3d9908b', 'transfer', 155000.00, '2024-09-28 11:18:46', '2024-09-28 11:18:46', 'Payment-1', 'September', 2024),
+(9, '31913adc-9dfb-4550-a520-a11413fc9292', 'ce6c6103-7ccc-4e17-b453-8415b3d9908b', 'transfer', 480000.00, '2024-09-28 11:35:03', '2024-09-28 11:35:03', 'Payment-2', 'September', 2024);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `payment_detail`
+--
+
+CREATE TABLE `payment_detail` (
+  `id_payments_detail` char(36) NOT NULL,
+  `payments_id` int(11) NOT NULL,
+  `payments_detail_type` enum('T','D') NOT NULL,
+  `tagihan_id` char(36) NOT NULL,
+  `bulan` int(11) NOT NULL,
+  `tahun` int(11) NOT NULL,
+  `total` decimal(15,2) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `deleted_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `payment_detail`
+--
+
+INSERT INTO `payment_detail` (`id_payments_detail`, `payments_id`, `payments_detail_type`, `tagihan_id`, `bulan`, `tahun`, `total`, `created_at`, `updated_at`, `deleted_at`) VALUES
+('a660c3c5-60d2-465d-a118-dd6b6a3e59cf', 8, 'T', 'fa534e7a-5f55-4920-8cfb-16694bb95d8d', 9, 2024, 154000.00, '2024-09-28 11:18:46', '2024-09-28 11:18:46', NULL);
 
 -- --------------------------------------------------------
 
@@ -444,7 +472,7 @@ CREATE TABLE `tagihans` (
   `tarif` varchar(20) DEFAULT NULL,
   `tagihan` varchar(20) DEFAULT NULL,
   `total_tagihan` varchar(20) DEFAULT NULL,
-  `bayar` varchar(30) DEFAULT NULL,
+  `status` varchar(30) DEFAULT NULL,
   `bulan` int(11) DEFAULT NULL,
   `tahun` int(11) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
@@ -460,28 +488,9 @@ CREATE TABLE `tagihans` (
 -- Dumping data for table `tagihans`
 --
 
-INSERT INTO `tagihans` (`id_tagihan`, `user_id`, `data_awal_id`, `akhir`, `pakai`, `tarif`, `tagihan`, `total_tagihan`, `bayar`, `bulan`, `tahun`, `created_at`, `updated_at`, `deleted_at`, `tunggakan`, `denda`, `lain_lain`, `kode_invoice`) VALUES
-('39403b24-8775-4379-a8b8-5e890970cb56', '70ea518d-f818-40f6-a099-d5e71956a82a', 'd6c4437f-e219-4250-96b8-cb9bc9896154', '12000', '11800', '3000', '35400000', '35406000', NULL, 8, 2024, '2024-09-01 12:06:05', '2024-08-17 09:47:20', NULL, NULL, NULL, NULL, NULL),
-('3ee7b8ed-7145-4448-a54d-4ab7f5aafa08', '1ec7a2f7-4635-47a5-86d3-9d6ad8b8166a', 'b9fc427c-b6be-4ccb-b6ff-bd9a885067c3', '200', '100', '2000', '200000', '251000', NULL, 8, 2024, '2024-09-01 13:14:04', '2024-08-25 10:13:49', NULL, NULL, NULL, NULL, NULL),
-('4d379f54-97ac-46f1-86a6-8baacd8765f1', 'df07cbe2-2ce3-4245-b9a6-bc9b24448edb', '5fc6815a-02e4-4f05-a74b-e5053da77b0e', '200', '130', '2000', '260000', '263000', NULL, 9, 2024, '2024-09-10 07:49:40', '2024-09-10 07:49:40', NULL, '1000', '0', '2000', 'INV202409100002'),
-('55ba908e-655d-49a7-8716-0ab2aec635ce', 'c2a86466-3818-4ac5-80b5-50411c1c2f9c', 'b4434cc9-2ea2-464e-ad27-c2a6442f9c86', '250', '50', '1200', '60000', '72000', NULL, 9, 2024, '2024-09-10 07:42:52', '2024-09-10 07:42:52', NULL, '2000', '10000', '0', 'INV202409100001'),
-('5b78a9cc-2165-4a2a-bbb3-de2a7792fea8', '70ea518d-f818-40f6-a099-d5e71956a82a', 'd6c4437f-e219-4250-96b8-cb9bc9896154', '210', '10', '3000', '30000', '36000', NULL, 2, 2024, '2024-09-01 12:06:05', '2024-02-02 15:30:38', NULL, NULL, NULL, NULL, NULL),
-('5c36f5c8-b949-482e-b5d4-5c24b3c12ed3', '70ea518d-f818-40f6-a099-d5e71956a82a', 'd6c4437f-e219-4250-96b8-cb9bc9896154', '240', '40', '3000', '120000', '126000', NULL, 9, 2024, '2024-09-22 10:08:50', '2024-09-22 10:08:50', NULL, '1000', '2000', '3000', NULL),
-('89d2cb6e-475d-42a4-96cc-24219ccf37d7', 'a3f9d1e6-940e-495c-94af-f58a662bba30', '3b309386-3915-47eb-891b-dece1e437626', '1040', '40', '12000', '480000', '494000', NULL, 9, 2024, '2024-09-10 07:46:03', '2024-09-10 07:46:03', NULL, NULL, NULL, NULL, 'INV202409100001'),
-('a458309b-e05b-48cf-98c5-874717270ce8', '3b14b0bc-dc9b-473f-a320-52612566d871', 'f2b417df-22f2-4bec-86da-5f6415f3c76a', '150', '45', '2000', '90000', '92000', NULL, 9, 2024, '2024-09-10 07:50:24', '2024-09-10 07:50:24', NULL, '0', '0', '2000', NULL),
-('a9f30d41-c4a5-4d44-80e3-65038dd1398f', '3b14b0bc-dc9b-473f-a320-52612566d871', 'f2b417df-22f2-4bec-86da-5f6415f3c76a', '110', '5', '2000', '10000', '12000', NULL, 2, 2024, '2024-09-01 12:06:05', '2024-02-02 15:21:42', NULL, NULL, NULL, NULL, NULL),
-('b54af0db-3ae8-4d0d-97c6-55cfd83942da', 'c2a86466-3818-4ac5-80b5-50411c1c2f9c', 'b4434cc9-2ea2-464e-ad27-c2a6442f9c86', '201', '1', '1200', '1200', '13200', NULL, 8, 2024, '2024-09-01 12:06:05', '2024-08-25 00:17:10', NULL, NULL, NULL, NULL, NULL),
-('ba808eed-2b5a-4768-bbcd-532d0379eff4', 'c2a86466-3818-4ac5-80b5-50411c1c2f9c', 'b4434cc9-2ea2-464e-ad27-c2a6442f9c86', '201', '1', '1200', '1200', '13200', NULL, 8, 2024, '2024-09-01 12:06:05', '2024-08-25 00:17:09', NULL, NULL, NULL, NULL, NULL),
-('c2726cc4-c2a9-4111-bad4-6c62961782e9', '7c20d65d-b92b-454f-8e71-b6d46940801a', 'afa32b4b-cb76-4a8c-bb4a-2e16e800a42c', '120', '20', '2000', '40000', '65000', NULL, 8, 2024, '2024-09-01 12:06:05', '2024-08-23 21:15:23', NULL, NULL, NULL, NULL, NULL),
-('cf004a69-5191-4806-ba73-2b11cd4be7b6', '15e1e792-0d16-4838-a9ae-631a5d10b346', 'b6ef6b20-c002-473f-9cdd-c89b0de30a8e', '91', '1', '2000', '2000', '2000', NULL, 2, 2024, '2024-09-01 12:06:05', '2024-02-02 16:12:34', NULL, NULL, NULL, NULL, NULL),
-('d5d0d86a-08b9-42bc-b912-d3d02acf55a3', 'c2a86466-3818-4ac5-80b5-50411c1c2f9c', 'b4434cc9-2ea2-464e-ad27-c2a6442f9c86', '300', '100', '1200', '120000', '132000', NULL, 8, 2024, '2024-09-01 12:06:05', '2024-08-24 16:55:05', NULL, NULL, NULL, NULL, NULL),
-('d861311d-52fe-434c-96a0-20d987a544b8', '1ec7a2f7-4635-47a5-86d3-9d6ad8b8166a', 'b9fc427c-b6be-4ccb-b6ff-bd9a885067c3', '200', '100', '2000', '200000', '251000', NULL, 8, 2024, '2024-09-01 12:06:05', '2024-08-25 10:13:51', NULL, NULL, NULL, NULL, NULL),
-('dd4eabe5-94e7-4dc4-bcde-dbee3ef64717', 'a3f9d1e6-940e-495c-94af-f58a662bba30', '3b309386-3915-47eb-891b-dece1e437626', '10002', '9002', '12000', '108024000', '108038000', NULL, 8, 2024, '2024-09-01 12:06:05', '2024-08-24 15:14:46', NULL, NULL, NULL, NULL, NULL),
-('ded13ddb-e7d3-4740-8872-9855ab2fdc9b', '1ec7a2f7-4635-47a5-86d3-9d6ad8b8166a', 'b9fc427c-b6be-4ccb-b6ff-bd9a885067c3', '120', '20', '2000', '40000', '91000', NULL, 2, 2024, '2024-09-01 12:06:05', '2024-02-02 14:13:00', NULL, NULL, NULL, NULL, NULL),
-('e21d063b-4246-4cfe-b339-0ff927935eb8', '7c20d65d-b92b-454f-8e71-b6d46940801a', 'afa32b4b-cb76-4a8c-bb4a-2e16e800a42c', '130', '30', '2000', '60000', '85000', NULL, 2, 2024, '2024-09-01 12:06:05', '2024-02-02 15:00:07', NULL, NULL, NULL, NULL, NULL),
-('e24ec79b-e218-4f90-b785-c1333ba33192', '2c67ebd8-722d-44cf-b644-4bf4c5493e56', 'c281ea12-3052-451c-a0db-b13d722254a6', '130', '10', '4000', '40000', '45000', NULL, 2, 2024, '2024-09-01 12:06:05', '2024-02-02 15:44:43', NULL, NULL, NULL, NULL, NULL),
-('e2eac3b1-b89c-43b1-be62-b056b09568a8', 'df07cbe2-2ce3-4245-b9a6-bc9b24448edb', '5fc6815a-02e4-4f05-a74b-e5053da77b0e', '80', '10', '2000', '20000', '23000', NULL, 2, 2024, '2024-09-01 12:06:05', '2024-02-02 16:59:49', NULL, NULL, NULL, NULL, NULL),
-('fceeab04-cedf-4ecf-8614-7072e73406a3', '7c20d65d-b92b-454f-8e71-b6d46940801a', 'afa32b4b-cb76-4a8c-bb4a-2e16e800a42c', '150', '50', '2000', '100000', '125000', NULL, 2, 2024, '2024-09-01 12:06:05', '2024-02-02 15:19:07', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `tagihans` (`id_tagihan`, `user_id`, `data_awal_id`, `akhir`, `pakai`, `tarif`, `tagihan`, `total_tagihan`, `status`, `bulan`, `tahun`, `created_at`, `updated_at`, `deleted_at`, `tunggakan`, `denda`, `lain_lain`, `kode_invoice`) VALUES
+('31913adc-9dfb-4550-a520-a11413fc9292', 'a3f9d1e6-940e-495c-94af-f58a662bba30', '3b309386-3915-47eb-891b-dece1e437626', '1040', '40', '12000', '480000', '0', 'tertagih', 9, 2024, '2024-09-28 11:35:03', '2024-09-28 11:35:03', NULL, '0', '0', '0', NULL),
+('fa534e7a-5f55-4920-8cfb-16694bb95d8d', '70ea518d-f818-40f6-a099-d5e71956a82a', 'd6c4437f-e219-4250-96b8-cb9bc9896154', '250', '50', '3000', '150000', '0', 'tertagih', 9, 2024, '2024-09-28 11:18:46', '2024-09-28 11:18:46', NULL, '0', '0', '3000', NULL);
 
 -- --------------------------------------------------------
 
@@ -523,7 +532,7 @@ INSERT INTO `users` (`id`, `name`, `email`, `username`, `phone`, `second_phone_c
 ('70ea518d-f818-40f6-a099-d5e71956a82a', 'Fuat', 'fuat@gmail.com', 'fuattt', '087987678567', NULL, NULL, '$2y$10$.XeKYCwpafkFruzbbit4nev5SpekICCTSqo8QBJM/Y2yiolBj0EwK', NULL, NULL, NULL, NULL, NULL, '587c9ce1-0ac5-457a-8524-2f69fe161fea', 1, '2024-01-28 02:50:58', '2024-01-28 02:50:58', NULL),
 ('7c20d65d-b92b-454f-8e71-b6d46940801a', 'Eka Vita Raranti', 'vita@gmail.com', 'vitaaa', '081224345675', NULL, NULL, '$2y$10$KB/d2t8xVbRtz7NT4Vy82.sZSEJv1XW4zoScQgKxZpS2wgUoTTHfW', NULL, NULL, NULL, NULL, NULL, '587c9ce1-0ac5-457a-8524-2f69fe161fea', 1, '2024-01-28 03:03:09', '2024-01-28 03:03:09', NULL),
 ('a3f9d1e6-940e-495c-94af-f58a662bba30', 'ELIT', 'elit@gmail.com', 'elit', '089898989898', NULL, NULL, '$2y$10$8B5hcqHtuUYFaREvehpbfOg/YQHsaFx6C5ke1jpkCSJprLYZLhzEG', NULL, NULL, NULL, NULL, 'oYJPbs1PxHS0FC8sCgjyLUUe3E4imQAfRGaF8QyOG3yQqx5mDQ9Er7qbqA0E', '587c9ce1-0ac5-457a-8524-2f69fe161fea', 1, '2024-08-17 10:01:55', '2024-08-23 20:51:13', NULL),
-('c2a86466-3818-4ac5-80b5-50411c1c2f9c', 'Divan Lavianto Pamungkas', 'idsatria@gmail.com', 'divann', '081226594919', NULL, NULL, '$2y$10$rOoR6nb2Q2IFE0HNEVzI1.ACB5NFU1zTWg9wY8j.ApXA.FMHjg6Vu', NULL, NULL, NULL, NULL, 'MFqFvf7kNptLGjPZpjowKQsmPbxdfvV4mUGKCZD7647mPflCqFUWyw4Su4XA', '587c9ce1-0ac5-457a-8524-2f69fe161fea', 1, '2024-08-24 16:52:56', '2024-08-24 16:54:29', NULL),
+('c2a86466-3818-4ac5-80b5-50411c1c2f9c', 'Divan Lavianto Pamungkas', 'idsatria@gmail.com', 'divann', '081226594919', NULL, NULL, '$2y$10$rOoR6nb2Q2IFE0HNEVzI1.ACB5NFU1zTWg9wY8j.ApXA.FMHjg6Vu', NULL, NULL, NULL, NULL, 'vw77WaMynP5bqKvLfLtB9dPxEbq4dsczTrzCUad1BvrCgRcfrze0vaveUgDU', '587c9ce1-0ac5-457a-8524-2f69fe161fea', 1, '2024-08-24 16:52:56', '2024-08-24 16:54:29', NULL),
 ('ce6c6103-7ccc-4e17-b453-8415b3d9908b', 'Super Admin', 'pinginresign@gmail.com', 'superadmin', '081362867034', NULL, NULL, '$2y$10$RwDwoFpzc99JpZvho0eBpuqzuBe2dzNHB58DkUP3YljGQkWfRGtXK', 'user-avatar/1pdhQoB4ElBmXsKGkomwgg6CZojUDLixB9685r8l.jpg', '32745128.jfif', 'jfif', 'image/jpeg', 'Ewz6579MmaQ2gaV22LJFsfOpmvQ2YBowbhO4ZByoUeCIUPP4H151K1LXI3EO', '8b61213d-9521-40a4-8b17-fda810228b54', 1, NULL, '2023-02-06 16:04:28', NULL),
 ('df07cbe2-2ce3-4245-b9a6-bc9b24448edb', 'Fardannu Bimantara', 'dannu@gmail.com', 'dannu', '087987678567', NULL, NULL, '$2y$10$.sCdph6TdpgbjVskU3Dfb.XVC30oIvMFjN/xlTs6ZdUZodS80Tufi', NULL, NULL, NULL, NULL, NULL, '587c9ce1-0ac5-457a-8524-2f69fe161fea', 1, '2024-02-02 16:21:11', '2024-02-02 16:21:11', NULL),
 ('e8b1a294-af9f-4dbe-8ce9-a9b2a6988edb', 'Divan Lavianto Pamungkas', 'idsatria12@gmail.com', 'divan', '081226594919', NULL, NULL, '$2y$10$nnasI0Y4XydTnMtUMOuIb.6FyZPo2aGzi5M.hLDlYhGwHF7.uEzBC', NULL, NULL, NULL, NULL, NULL, '587c9ce1-0ac5-457a-8524-2f69fe161fea', 1, '2024-08-24 16:49:18', '2024-08-24 16:49:18', NULL);
@@ -723,9 +732,17 @@ ALTER TABLE `password_resets`
 -- Indexes for table `payments`
 --
 ALTER TABLE `payments`
-  ADD PRIMARY KEY (`id`),
+  ADD PRIMARY KEY (`id`) USING BTREE,
   ADD KEY `fk_tagihan` (`tagihan_id`),
   ADD KEY `fk_user` (`user_id`);
+
+--
+-- Indexes for table `payment_detail`
+--
+ALTER TABLE `payment_detail`
+  ADD PRIMARY KEY (`id_payments_detail`),
+  ADD KEY `tagihan_id` (`tagihan_id`),
+  ADD KEY `payment_detail_ibfk_1` (`payments_id`);
 
 --
 -- Indexes for table `personal_access_tokens`
@@ -823,6 +840,12 @@ ALTER TABLE `migrations`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
+-- AUTO_INCREMENT for table `payments`
+--
+ALTER TABLE `payments`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
 -- AUTO_INCREMENT for table `personal_access_tokens`
 --
 ALTER TABLE `personal_access_tokens`
@@ -844,6 +867,13 @@ ALTER TABLE `province_raja_ongkirs`
 ALTER TABLE `payments`
   ADD CONSTRAINT `fk_tagihan` FOREIGN KEY (`tagihan_id`) REFERENCES `tagihans` (`id_tagihan`) ON DELETE CASCADE,
   ADD CONSTRAINT `fk_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `payment_detail`
+--
+ALTER TABLE `payment_detail`
+  ADD CONSTRAINT `payment_detail_ibfk_1` FOREIGN KEY (`payments_id`) REFERENCES `payments` (`id`),
+  ADD CONSTRAINT `payment_detail_ibfk_2` FOREIGN KEY (`tagihan_id`) REFERENCES `tagihans` (`id_tagihan`);
 
 --
 -- Constraints for table `tagihans`
