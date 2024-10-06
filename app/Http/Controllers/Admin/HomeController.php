@@ -35,12 +35,12 @@ class HomeController extends Controller
     $tahun_now = Carbon::now()->year;
     $bulan_now = Carbon::now()->month;
 
-    $totalBelumTerbayar = Tagihan::whereNull('bayar')
+    $totalBelumTerbayar = Tagihan::whereNull('status')
       ->where('bulan', $bulan_now)
       ->where('tahun', $tahun_now)
       ->sum('total_tagihan');
 
-    $totalSudahTerbayar = Tagihan::whereNotNull('bayar')
+    $totalSudahTerbayar = Tagihan::whereNotNull('status')
       ->where('bulan', $bulan_now)
       ->where('tahun', $tahun_now)
       ->sum('total_tagihan');
@@ -49,7 +49,7 @@ class HomeController extends Controller
     $jumlahPelangganBelumTerbayar = Customer::leftJoin('tagihans', function ($join) {
       $join->on('tagihans.user_id', '=', 'customers.users_id');
     })
-      ->whereNull('tagihans.bayar')
+      ->whereNull('tagihans.status')
       ->where('tagihans.bulan', Carbon::now()->month)
       ->where('tagihans.tahun', Carbon::now()->year)
       ->distinct('customers.users_id') // Pastikan hanya menghitung pelanggan unik
@@ -59,7 +59,7 @@ class HomeController extends Controller
     $jumlahPelangganSudahTerbayar = Customer::leftJoin('tagihans', function ($join) {
       $join->on('tagihans.user_id', '=', 'customers.users_id');
     })
-      ->whereNotNull('tagihans.bayar')
+      ->whereNotNull('tagihans.status')
       ->where('tagihans.bulan', Carbon::now()->month)
       ->where('tagihans.tahun', Carbon::now()->year)
       ->distinct('customers.users_id') // Pastikan hanya menghitung pelanggan unik
