@@ -9,6 +9,7 @@
         "azishapidin/indoregion": "^3.0",
         "barryvdh/laravel-dompdf": "^2.1",
         "barryvdh/laravel-snappy": "^1.0",
+        "diskominfotik-banda-aceh/e-sign-bsre-laravel": "^0.1.0",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "h4cc/wkhtmltoimage-amd64": "0.12.x",

@@ -664,7 +664,7 @@ class TagihanController extends Controller
 
     $today = \Carbon\Carbon::now()->format('F j, Y');
     $week = \Carbon\Carbon::now()->format('F');
-    $pdf = pdf::loadView('admin.pages.invoices.invoices', compact('tagihan', 'today', 'week));
+    $pdf = pdf::loadView('admin.pages.invoices.invoices', compact('tagihan', 'today', 'week'));
     $pdf->setOption('enable-local-file-access', true);
     return $pdf->download('invoice.pdf');
     return view('admin.pages.invoices.invoices', compact('tagihan'));

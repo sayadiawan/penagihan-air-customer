@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "61af74cc26270b83b93fc56a33f09f1e",
+    "content-hash": "99cf1a32fd9f00cdf27bb216f7524b6b",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -490,6 +490,66 @@
                 "source": "https://github.com/dflydev/dflydev-dot-access-data/tree/v3.0.3"
             },
             "time": "2024-07-08T12:26:09+00:00"
+        },
+        {
+            "name": "diskominfotik-banda-aceh/e-sign-bsre-laravel",
+            "version": "v0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Diskominfotik-Banda-Aceh/E-Sign-BSrE-Laravel.git",
+                "reference": "ec7bc57137af854f35003af692c6d7ac96867775"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Diskominfotik-Banda-Aceh/E-Sign-BSrE-Laravel/zipball/ec7bc57137af854f35003af692c6d7ac96867775",
+                "reference": "ec7bc57137af854f35003af692c6d7ac96867775",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "^8.0",
+                "php": "^7.4|^8.0"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^6.0",
+                "phpunit/phpunit": "^9.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "DiskominfotikBandaAceh\\ESignBSrE\\Providers\\ESignBSrEServiceProvider"
+                    ],
+                    "aliases": {
+                        "ESignBSrE": "DiskominfotikBandaAceh\\ESignBSrE\\Facades\\EsignBSre"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "DiskominfotikBandaAceh\\ESignBSrE\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Diskominfotik Banda Aceh",
+                    "email": "diskominfotikbna@gmail.com",
+                    "role": "Company"
+                }
+            ],
+            "homepage": "https://github.com/diskominfotik-banda-aceh/e-sign-bsre",
+            "keywords": [
+                "diskominfotik-banda-aceh",
+                "e-sign-bsre"
+            ],
+            "support": {
+                "issues": "https://github.com/Diskominfotik-Banda-Aceh/E-Sign-BSrE-Laravel/issues",
+                "source": "https://github.com/Diskominfotik-Banda-Aceh/E-Sign-BSrE-Laravel/tree/v0.1.0"
+            },
+            "time": "2022-08-05T09:44:57+00:00"
         },
         {
             "name": "doctrine/inflector",
