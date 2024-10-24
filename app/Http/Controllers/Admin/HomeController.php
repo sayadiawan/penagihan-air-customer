@@ -35,12 +35,15 @@ class HomeController extends Controller
     $tahun_now = Carbon::now()->year; 
     $bulan_now = Carbon::now()->month;
 
+<<<<<<< HEAD
     $totalJumlahPelanggan = Customer::leftJoin('tagihans', function ($join){
       $join->on('tagihans.user_id', '=', 'customers.users_id');
     })
     ->distinct('customers.users_id')
     ->count('customers.users_id');
 
+=======
+>>>>>>> 2f293f0af2b12019c62d7ce3efb0b5ab561f41aa
     $totalBelumTerbayar = Tagihan::whereNull('status')
       ->where('bulan', $bulan_now)
       ->where('tahun', $tahun_now)

@@ -23,7 +23,13 @@ class PaymentController extends Controller
     {
         $bulan_now =  Carbon::now()->month;
 
+<<<<<<< HEAD
         $tagihan = Tagihan::where('user_id', $user_id)->where('tunggakan', '>', 0)->get();
+=======
+        $tagihan = Tagihan::where('tunggakan', '>', 0)
+                 ->where('user_id', $user_id)
+                 ->get();
+>>>>>>> 2f293f0af2b12019c62d7ce3efb0b5ab561f41aa
         $firstBillDate = Carbon::createFromDate(2024, 1, 1);
         $currentDate = Carbon::now();
         $allBulan = [];
@@ -79,7 +85,7 @@ class PaymentController extends Controller
             $payment->tahun = date('Y');
             $payment->save();
 
-            \Log::info('Payment ID after save: ' . $payment->id);
+            // Log::info('Payment ID after save: ' . $payment->id);
 
             if (!$payment->id) {
                 throw new \Exception('Payment ID is not valid');
