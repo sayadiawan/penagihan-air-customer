@@ -1,3 +1,4 @@
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!-- Core JS -->
 <!-- build:js assets/vendor/js/core.js -->
 <script src="{{ asset('admin-assets/assets/vendor/libs/popper/popper.js') }}"></script>
@@ -47,44 +48,44 @@
 
 {{-- custm script --}}
 <script>
-  $('.table-responsive').on('show.bs.dropdown', function() {
-    $('.table-responsive').css("overflow", "inherit");
-  });
-
-  $('.table-responsive').on('hide.bs.dropdown', function() {
-    $('.table-responsive').css("overflow", "auto");
-  })
-
-  $(document).ready(function() {
-    if ($('.laravel-select2').length) {
-      $('.laravel-select2').select2({
-        theme: "bootstrap-5",
-        width: '100%'
-      });
-    }
-
-    // bind change event to select
-    $('#laravel_navigation').on('change', function() {
-      var url = $(this).val(); // get selected value
-      if (url) { // require a URL
-        window.location = url; // redirect
-      }
-      return false;
+    $('.table-responsive').on('show.bs.dropdown', function() {
+        $('.table-responsive').css("overflow", "inherit");
     });
 
-    // check active sub parent menu
-    // check active sub parent menu
-    var listItems = $('.layout-menu ul li.menu-sub-parent ul.menu-sub .menu-item');
-
-    //Loop the listitems and check to see if any are active.
-    $.each(listItems, function(key, litem) {
-      if ($(litem).hasClass('active')) {
-        $(this).parent().parent().addClass('active');
-        return false;
-      } else {
-        $(this).parent().parent().removeClass('active');
-      }
+    $('.table-responsive').on('hide.bs.dropdown', function() {
+        $('.table-responsive').css("overflow", "auto");
     })
-  });
+
+    $(document).ready(function() {
+        if ($('.laravel-select2').length) {
+            $('.laravel-select2').select2({
+                theme: "bootstrap-5",
+                width: '100%'
+            });
+        }
+
+        // bind change event to select
+        $('#laravel_navigation').on('change', function() {
+            var url = $(this).val(); // get selected value
+            if (url) { // require a URL
+                window.location = url; // redirect
+            }
+            return false;
+        });
+
+        // check active sub parent menu
+        // check active sub parent menu
+        var listItems = $('.layout-menu ul li.menu-sub-parent ul.menu-sub .menu-item');
+
+        //Loop the listitems and check to see if any are active.
+        $.each(listItems, function(key, litem) {
+            if ($(litem).hasClass('active')) {
+                $(this).parent().parent().addClass('active');
+                return false;
+            } else {
+                $(this).parent().parent().removeClass('active');
+            }
+        })
+    });
 </script>
 {{-- /custm script --}}

@@ -113,11 +113,15 @@ echo (Carbon\Carbon::now()->month ==12)? "selected":""; @endphp>Desember</option
                                                 <th>Bulan</th>
                                                 <th>Tahun</th>
                                                 <th>Status Tagihan</th>
+                                                <th>Status Peringatan</th>
+                                                <th>Deposit</th>
                                                 <th>Actions</th>
+                                                <th>Peringatan</th>
                                             @else
                                                 <th>Total Tagihan</th>
                                                 <th>Bulan</th>
                                                 <th>Tahun</th>
+                                                <th>Status Peringatan</th>
                                                 <th>Actions</th>
                                             @endif
                                         @endauth
@@ -158,7 +162,7 @@ echo (Carbon\Carbon::now()->month ==12)? "selected":""; @endphp>Desember</option
                 rupiah += separator + ribuan.join('.');
             }
 
-            // rupiah = split[1] !== undefined ? rupiah + ',' + split[1] : rupiah;
+            rupiah = split[1] !== undefined ? rupiah + ',' + split[1] : rupiah;
             return 'Rp ' + rupiah;
         }
 
@@ -178,6 +182,59 @@ echo (Carbon\Carbon::now()->month ==12)? "selected":""; @endphp>Desember</option
             });
         });
 
+        function kirimPeringatan(id_tagihan, jenis_peringatan) {
+            Swal.fire({
+                title: 'Apakah Anda yakin?',
+                text: "Anda yakin ingin mengirim peringatan " + jenis_peringatan + "?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, kirim peringatan!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const data = {
+                        peringatan: jenis_peringatan
+                    };
+
+                    fetch(`/kirim-peringatan/${id_tagihan}`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                            },
+                            body: JSON.stringify(data)
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.message) {
+                                Swal.fire({
+                                    title: 'Berhasil!',
+                                    text: data.message,
+                                    icon: 'success',
+                                    confirmButtonText: 'OK'
+                                });
+                            } else if (data.error) {
+                                Swal.fire({
+                                    title: 'Gagal!',
+                                    text: data.error,
+                                    icon: 'error',
+                                    confirmButtonText: 'OK'
+                                });
+                            }
+                        })
+                        .catch((error) => {
+                            console.error('Error:', error);
+                            Swal.fire({
+                                title: 'Kesalahan!',
+                                text: 'Terjadi kesalahan saat mengirim peringatan.',
+                                icon: 'error',
+                                confirmButtonText: 'OK'
+                            });
+                        });
+                }
+            });
+        }
         $(function() {
             var userRole = "{{ auth()->user()->role->code_roles }}";
 
@@ -225,7 +282,21 @@ echo (Carbon\Carbon::now()->month ==12)? "selected":""; @endphp>Desember</option
                     data: 'statustagihan',
                     name: 'statustagihan'
                 },
-
+                {
+                    data: 'status_peringatan',
+                    name: 'status_peringatan'
+                },
+                // {
+                //     data: 'status_tunggakan',
+                //     name: 'status_tunggkan'
+                // },
+                {
+                    data: 'deposit',
+                    name: 'deposit',
+                    render: function(data, type, row) {
+                        return data ? formatRupiah(data) : 'Rp 0';
+                    }
+                },
                 // {
                 //   data: 'awal',
                 //   name: 'awal'
@@ -266,13 +337,21 @@ echo (Carbon\Carbon::now()->month ==12)? "selected":""; @endphp>Desember</option
                     data: 'action',
                     name: 'action',
                     orderable: false,
-                    searchable: false
+                    searchable: false,
+                },
+                {
+                    data: 'peringatan',
+                    name: 'peringatan',
+                    orderable: false,
+                    searchable: false,
                 }
             ];
 
             if (userRole !== 'ADM' && userRole !== 'SAS') {
                 columns = columns.filter(function(column) {
-                    return column.data === 'total_tagihan' || column.data === 'bulan' || column.data ===
+                    return column.data === 'total_tagihan' || column.data === 'status_peringatan' || column
+                        .data === 'bulan' || column
+                        .data ===
                         'tahun' || column.data === 'action';
                 });
             }
@@ -293,7 +372,6 @@ echo (Carbon\Carbon::now()->month ==12)? "selected":""; @endphp>Desember</option
                 },
                 columns: columns
             });
-
 
             $('#bulan').on('change', function() {
                 reloadDataTable();

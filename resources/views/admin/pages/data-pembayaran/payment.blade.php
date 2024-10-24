@@ -30,51 +30,76 @@
                 method="POST">
                 @csrf
                 <div class="card-body">
-                    <!-- Tunggakan -->
-                    <h6 class="mb-3">Tunggakan</h6>
-                    @foreach ($allBulan as $bulan)
-                        @php
-                            // Cari tagihan untuk bulan ini
-                            $item = $tagihan->firstWhere('bulan', $bulan->month);
-                        @endphp
-                        @if (!empty($item) && $item->tunggakan > 0)
-                            <div class="form-check">
-                                <input class="form-check-input tunggakan-checkbox" type="checkbox" name="tunggakan[]"
-                                    value="{{ $item->id_tagihan ?? '' }}" id="tunggakan-{{ $bulan->month }}"
-                                    data-amount="{{ $item->tunggakan ?? 0 }}" onchange="updateTotal()" checked>
-                                <label class="form-check-label" for="tunggakan-{{ $bulan->month }}">
-                                    {{ $bulan->locale('id')->translatedFormat('F Y') }} -
-                                    {{ formatRupiah($item->tunggakan) }}
-                                </label>
-                            </div>
-                        @endif
-                    @endforeach
+                    <!-- Tabel Pembayaran -->
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Deskripsi</th>
+                                <th>Jumlah</th>
+                                <th>Pilih</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Tunggakan -->
+                            @php
+                                $hasTunggakan = $tagihan->firstWhere('tunggakan', '>', 0); // Cek apakah ada tunggakan
+                            @endphp
 
-                    <!-- Denda -->
-                    <h6 class="mt-4">Denda</h6>
-                    <div class="form-check">
-                        <input class="form-check-input denda-checkbox" type="checkbox" name="denda"
-                            value="{{ $denda }}" id="denda" data-amount="{{ $denda }}"
-                            onchange="updateTotal()" checked>
-                        <label class="form-check-label" for="denda">
-                            {{ formatRupiah($denda) }}
-                        </label>
-                    </div>
+                            @if (!empty($hasTunggakan))
+                                @foreach ($allBulan as $bulan)
+                                    @php
+                                        // Cari tagihan untuk bulan ini
+                                        $item = $tagihan->firstWhere('bulan', $bulan->month);
+                                    @endphp
+                                    @if (!empty($item) && $item->tunggakan > 0)
+                                        <tr>
+                                            <td>{{ $bulan->locale('id')->translatedFormat('F Y') }} - Tunggakan</td>
+                                            <td>{{ formatRupiah($item->tunggakan) }}</td>
+                                            <td>
+                                                <input class="form-check-input tunggakan-checkbox" type="checkbox"
+                                                    name="tunggakan[]" value="{{ $item->id_tagihan ?? '' }}"
+                                                    id="tunggakan-{{ $bulan->month }}"
+                                                    data-amount="{{ $item->tunggakan ?? 0 }}" onchange="updateTotal()"
+                                                    checked>
+                                            </td>
+                                        </tr>
+                                    @endif
+                                @endforeach
+                            @endif
 
-                    <!-- Tagihan Bulan Ini -->
-                    <h6 class="mt-4">Tagihan Bulan Ini</h6>
-                    <div class="form-check">
-                        <input class="form-check-input tagihan-checkbox" type="checkbox" name="tagihan_bulan_ini"
-                            value="{{ $tagihanBulanIni->total_tagihan }}" id="tagihan-bulan-ini"
-                            data-amount="{{ $tagihanBulanIni->total_tagihan }}" onchange="updateTotal()" checked>
-                        <label class="form-check-label" for="tagihan-bulan-ini">
-                            {{ formatRupiah($tagihanBulanIni->total_tagihan) }}
-                        </label>
-                    </div>
+                            <!-- Denda -->
+                            <tr>
+                                <td>Denda</td>
+                                <td>{{ formatRupiah($denda) }}</td>
+                                <td>
+                                    <input class="form-check-input denda-checkbox" type="checkbox" name="denda"
+                                        value="{{ $denda }}" id="denda" data-amount="{{ $denda }}"
+                                        onchange="updateTotal()" checked>
+                                </td>
+                            </tr>
+
+                            <!-- Tagihan Bulan Ini -->
+                            <tr>
+                                <td>Tagihan Bulan Ini</td>
+                                <td>{{ formatRupiah($tagihanBulanIni->total_tagihan) }}</td>
+                                <td>
+                                    <input class="form-check-input tagihan-checkbox" type="checkbox"
+                                        name="tagihan_bulan_ini" value="{{ $tagihanBulanIni->total_tagihan }}"
+                                        id="tagihan-bulan-ini" data-amount="{{ $tagihanBulanIni->total_tagihan }}"
+                                        onchange="updateTotal()" checked>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
 
                     <!-- Total Pembayaran -->
                     <h6 class="mt-4">Total Pembayaran</h6>
                     <p id="totalPembayaran">{{ formatRupiah($totalPembayaran) }}</p>
+
+                    <!-- Nominal Deposit -->
+                    <h6 class="mt-4">Masukkan Nominal Deposit</h6>
+                    <input type="number" name="nominal_deposit" class="form-control" required min="1"
+                        placeholder="Masukkan nominal deposit">
 
                     <!-- Jenis Pembayaran -->
                     <h6 class="mt-4">Jenis Pembayaran</h6>
@@ -84,7 +109,7 @@
                         <option value="transfer">Transfer</option>
                     </select>
 
-                    <!-- Total Pembayaran -->
+                    <!-- Total Pembayaran (hidden input) -->
                     <input type="hidden" name="total_pembayaran" id="total_pembayaran_input"
                         value="{{ $totalPembayaran }}">
 
@@ -92,6 +117,7 @@
                     <button type="submit" class="btn btn-primary btn-simpan mt-3">Kirim Pembayaran</button>
                 </div>
             </form>
+
         </div>
     </div>
 @endsection

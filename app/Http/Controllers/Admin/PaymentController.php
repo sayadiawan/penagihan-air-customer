@@ -23,7 +23,7 @@ class PaymentController extends Controller
     {
         $bulan_now =  Carbon::now()->month;
 
-        $tagihan = Tagihan::where('tunggakan', '>', 0)->get();
+        $tagihan = Tagihan::where('user_id', $user_id)->where('tunggakan', '>', 0)->get();
         $firstBillDate = Carbon::createFromDate(2024, 1, 1);
         $currentDate = Carbon::now();
         $allBulan = [];
@@ -89,7 +89,7 @@ class PaymentController extends Controller
             $tagihan = Tagihan::findOrFail($id);
             $tagihan->status = 'tertagih';
 
-            // Proses tunggakan
+            //Proses tunggakan
             if ($request->has('tunggakan')) {
                 foreach ($request->input('tunggakan') as $id_tagihan) {
                     $tunggakan = Tagihan::findOrFail($id_tagihan);
@@ -126,6 +126,15 @@ class PaymentController extends Controller
             if ($request->has('tagihan_bulan_ini') && $request->input('tagihan_bulan_ini')) {
                 $tagihan->total_tagihan = 0;
             }
+
+            if ($request->has('nominal_deposit') && $request->input('nominal_deposit')) {
+                $depositAmount = preg_replace('/[Rp. ]/', '', $request->input('nominal_deposit'));
+                $tagihan->total_tagihan -= $depositAmount; // Mengurangi total tagihan
+
+                // Menyimpan informasi deposit ke tabel tagihan
+                $tagihan->deposit = $depositAmount;
+            }
+
 
             $tagihan->save();
 
