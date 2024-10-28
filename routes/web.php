@@ -119,6 +119,8 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/get-tunggakan/{userId}', [TagihanController::class, 'getTunggakan'])->name('get-tunggakan');
     Route::get('/get-customer-info/{userId}', [TagihanController::class, 'getCustomerInfo'])->name('get-customer-info');
     Route::get('/input-action-route/{id}', [TagihanController::class, 'inputAction'])->name('input-action-route');
+    Route::post('/kirim-peringatan/{id}', [TagihanController::class, 'KirimPeringatan'])->name('kirim-peringatan');
+
 
     //Route Pembayaran
     Route::resource("data-pembayaran", PaymentController::class);

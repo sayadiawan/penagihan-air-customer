@@ -19,7 +19,7 @@ class Payment extends Model
         'user_id',
         'jenis_pembayaran',
         'total_pembayaran',
-        'kode_tagihan'
+        'kode_tagihan',
     ];
 
     // Relasi dengan Tagihan

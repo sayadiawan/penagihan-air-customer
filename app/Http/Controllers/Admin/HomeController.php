@@ -32,9 +32,15 @@ class HomeController extends Controller
   {
     $is_akses = Auth::user()->role->code_roles;
 
-    $tahun_now = Carbon::now()->year;
+    $tahun_now = Carbon::now()->year; 
     $bulan_now = Carbon::now()->month;
 
+    $totalJumlahPelanggan = Customer::leftJoin('tagihans', function ($join){
+      $join->on('tagihans.user_id', '=', 'customers.users_id');
+    })
+    ->distinct('customers.users_id')
+    ->count('customers.users_id');
+    
     $totalBelumTerbayar = Tagihan::whereNull('status')
       ->where('bulan', $bulan_now)
       ->where('tahun', $tahun_now)
@@ -44,6 +50,7 @@ class HomeController extends Controller
       ->where('bulan', $bulan_now)
       ->where('tahun', $tahun_now)
       ->sum('total_tagihan');
+
 
     // Hitung jumlah pelanggan yang belum terbayar
     $jumlahPelangganBelumTerbayar = Customer::leftJoin('tagihans', function ($join) {
@@ -72,6 +79,6 @@ class HomeController extends Controller
     } */
 
 
-    return view('admin.pages.home.index', compact('totalBelumTerbayar', 'totalSudahTerbayar', 'jumlahPelangganBelumTerbayar', 'jumlahPelangganSudahTerbayar'));
+    return view('admin.pages.home.index', compact('totalJumlahPelanggan','totalBelumTerbayar', 'totalSudahTerbayar', 'jumlahPelangganBelumTerbayar', 'jumlahPelangganSudahTerbayar'));
   }
 }

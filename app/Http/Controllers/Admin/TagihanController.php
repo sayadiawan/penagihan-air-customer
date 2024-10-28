@@ -64,11 +64,11 @@ class TagihanController extends Controller
                 ->whereNull('users.deleted_at');
             })
             ->whereNull('customers.deleted_at')
-            ->selectRaw("users.*, tagihans.*, customers.*, CONCAT(rt_customers, '/', rw_customers) as rt_rw, 
+            ->select('users.peringatan as status_peringatan', 'users.*', 'tagihans.*', 'customers.*', \DB::raw("CONCAT(rt_customers, '/', rw_customers) as rt_rw"), \DB::raw("
             CASE 
                 WHEN tagihans.status IS NOT NULL THEN 'Tertagih' 
                 ELSE 'Belum Tertagih' 
-            END as statustagihan")
+            END as statustagihan"))
             ->get();
         } else {
           // Jika Customer, hanya tampilkan data pelanggan yang login
@@ -88,7 +88,7 @@ class TagihanController extends Controller
             })
             ->where('customers.users_id', '=', $user_id) // Batasi data hanya untuk pelanggan yang login
             ->whereNull('customers.deleted_at')
-            ->selectRaw("users.*, tagihans.*, customers.*, CONCAT(rt_customers, '/', rw_customers) as rt_rw")
+            ->select('users.peringatan as status_peringatan', 'users.*', 'tagihans.*', 'customers.*')
 
             ->get();
         }
@@ -117,7 +117,8 @@ class TagihanController extends Controller
                 });
             })
             ->whereNull('customers.deleted_at')
-            ->select('users.*', 'tagihans.*', 'customers.*', DB::raw("CONCAT(rt_customers, '/', rw_customers) as rt_rw, CASE 
+            ->select('users.peringatan as status_peringatan', 'users.*', 'tagihans.*', 'customers.*', \DB::raw("CONCAT(rt_customers, '/', rw_customers) as rt_rw"), \DB::raw("
+            CASE 
                 WHEN tagihans.status IS NOT NULL THEN 'Tertagih' 
                 ELSE 'Belum Tertagih' 
             END as statustagihan"))
@@ -288,8 +289,25 @@ class TagihanController extends Controller
                   ' . $btn_payment . '
                   ' . $btn_invoice . '
                 </div>
-              </div>
           ';
+        })
+        ->addColumn('peringatan', function ($data) {
+          // Array untuk jenis peringatan
+          $peringatanOptions = [
+            'SP1' => '<i class="fas fa-exclamation-circle me-1"></i> SP1',
+            'SP2' => '<i class="fas fa-exclamation-circle me-1"></i> SP2',
+            'SP3' => '<i class="fas fa-exclamation-circle me-1"></i> SP3',
+            'SP4' => '<i class="fas fa-exclamation-circle me-1"></i> SP4',
+            'Pemutusan' => '<i class="fas fa-times-circle me-1"></i> Pemutusan',
+          ];
+
+          // Mulai membangun konten tombol
+          $btns = '';
+          foreach ($peringatanOptions as $jenis => $icon) {
+            $btns .= '<button class="btn btn-warning btn-sm me-1" onclick="kirimPeringatan(\'' . $data->id . '\', \'' . $jenis . '\')">' . $icon . '</button>';
+          }
+
+          return '<div class="d-inline-block">' . $btns . '</div>';
         })
         ->addColumn('name', function ($data) {
           return $data->name;
@@ -307,6 +325,9 @@ class TagihanController extends Controller
         ->addColumn('total_tagihan', function ($data) {
           return $data->total_tagihan;
         })
+        ->addColumn('status_peringatan', function ($data) {
+          return $data->status_peringatan;
+        })
         // ->addColumn('bulan', function ($data) {
         //   return $data->bulan;
         // })
@@ -316,13 +337,15 @@ class TagihanController extends Controller
         // })
         ->rawColumns([
           'action',
+          'peringatan',
           'name',
           'rt_rw',
           'norumah_customers',
           'pakai',
           'total_tagihan',
           'bulan',
-          'tahun'
+          'tahun',
+          'status_peringatan'
         ])
         ->addIndexColumn() //increment
         ->make(true);
@@ -330,6 +353,31 @@ class TagihanController extends Controller
 
     $get_menu = get_menu_id('data-tagihan');
     return view('admin.pages.data-tagihan.index', compact('get_menu'));
+  }
+
+  public function kirimPeringatan(Request $request, $user_id)
+  {
+    try {
+
+      $user = User::find($user_id);
+
+      if (!$user) {
+        \Log::warning('User tidak ditemukan dengan user_id: ' . $user_id);
+        return response()->json(['error' => 'User tidak ditemukan.'], 404);
+      }
+
+      \Log::info('User ditemukan: ' . $user->id);
+
+      $user->peringatan = $request->input('peringatan');
+      $user->save();
+
+      \Log::info('Peringatan berhasil disimpan di tabel users untuk user_id: ' . $user_id);
+
+      return response()->json(['message' => 'Peringatan berhasil dikirim!'], 200);
+    } catch (\Exception $e) {
+      \Log::error('Error saat mengirim peringatan: ' . $e->getMessage());
+      return response()->json(['error' => 'Terjadi kesalahan saat memproses permintaan.'], 500);
+    }
   }
 
   /**

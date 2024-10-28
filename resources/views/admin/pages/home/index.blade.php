@@ -17,10 +17,8 @@
                             <div class="card-body">
                                 <h5 class="card-title text-primary">Hai {{ Auth::user()->name }}! 🎉</h5>
                                 <p class="mb-4">
-                                    Anda sedang memiliki <strong>4 resi</strong> aktif, yuk cek sekarang.
+                                    Jumlah pelanggan aktif <strong>{{$totalJumlahPelanggan}}</strong>,  yuk cek sekarang.
                                 </p>
-
-                                <a href="javascript:;" class="btn btn-sm btn-outline-primary">Lihat Resi</a>
                             </div>
                         </div>
                         <div class="col-sm-5 text-center text-sm-left">
@@ -36,7 +34,7 @@
             </div>
         </div>
 
-        <div class="row">
+        {{-- <div class="row">
             <div class="col-lg-4 col-md-4 col-sm-12 mb-4">
                 <div class="card">
                     <div class="card-body">
@@ -102,7 +100,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
         @auth
             @if (auth()->user()->role->code_roles === 'ADM' || auth()->user()->role->code_roles === 'SAS')
                 <div class="row" id="dashboard-data">

@@ -21,13 +21,14 @@ class Tagihan extends Model
     'pakai',
     'tarif',
     'tagihan',
-    'total_tagihan',
     'bayar',
     'bulan',
     'tahun',
     'tunggakan',
     'denda',
-    'lain_lain'
+    'lain_lain',
+    'deposit',
+    'peringatan'
   ];
 
   public function generateKodeInvoice()
@@ -59,10 +60,5 @@ class Tagihan extends Model
   public function dataAwal()
   {
     return $this->belongsTo(DataAwal::class, 'data_awal_id');
-  }
-
-  public function profilecompanybank()
-  {
-    return $this->belongsTo(ProfileCompanyBank::class,  'id_profile_company_banks');
   }
 }

@@ -21,6 +21,78 @@ Detail Tagihan
         </ol>
     </nav>
 
+<<<<<<< HEAD
+        <!-- Detail Tagihan -->
+        <div class="card">
+            <div class="card-header">
+                <h5>Detail Pembayaran</h5>
+            </div>
+            <form id="paymentForm" action="{{ route('store.payment', ['id' => $tagihanBulanIni->id_tagihan]) }}"
+                method="POST">
+                @csrf
+                <div class="card-body">
+                    <!-- Tabel Pembayaran -->
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Deskripsi</th>
+                                <th>Jumlah</th>
+                                <th>Pilih</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Tunggakan -->
+                            @php
+                                $hasTunggakan = $tagihan->firstWhere('tunggakan', '>', 0); // Cek apakah ada tunggakan
+                            @endphp
+
+                            @if (!empty($hasTunggakan))
+                                @foreach ($allBulan as $bulan)
+                                    @php
+                                        // Cari tagihan untuk bulan ini
+                                        $item = $tagihan->firstWhere('bulan', $bulan->month);
+                                    @endphp
+                                    @if (!empty($item) && $item->tunggakan > 0)
+                                        <tr>
+                                            <td>{{ $bulan->locale('id')->translatedFormat('F Y') }} - Tunggakan</td>
+                                            <td>{{ formatRupiah($item->tunggakan) }}</td>
+                                            <td>
+                                                <input class="form-check-input tunggakan-checkbox" type="checkbox"
+                                                    name="tunggakan[]" value="{{ $item->id_tagihan ?? '' }}"
+                                                    id="tunggakan-{{ $bulan->month }}"
+                                                    data-amount="{{ $item->tunggakan ?? 0 }}" onchange="updateTotal()"
+                                                    checked>
+                                            </td>
+                                        </tr>
+                                    @endif
+                                @endforeach
+                            @endif
+
+                            <!-- Denda -->
+                            <tr>
+                                <td>Denda</td>
+                                <td>{{ formatRupiah($denda) }}</td>
+                                <td>
+                                    <input class="form-check-input denda-checkbox" type="checkbox" name="denda"
+                                        value="{{ $denda }}" id="denda" data-amount="{{ $denda }}"
+                                        onchange="updateTotal()" checked>
+                                </td>
+                            </tr>
+
+                            <!-- Tagihan Bulan Ini -->
+                            <tr>
+                                <td>Tagihan Bulan Ini</td>
+                                <td>{{ formatRupiah($tagihanBulanIni->total_tagihan) }}</td>
+                                <td>
+                                    <input class="form-check-input tagihan-checkbox" type="checkbox"
+                                        name="tagihan_bulan_ini" value="{{ $tagihanBulanIni->total_tagihan }}"
+                                        id="tagihan-bulan-ini" data-amount="{{ $tagihanBulanIni->total_tagihan }}"
+                                        onchange="updateTotal()" checked>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+=======
     <!-- Detail Tagihan -->
     <div class="card">
         <div class="card-header">
@@ -88,6 +160,7 @@ Detail Tagihan
                             <td>Tagihan Bulan Ini</td>
                             <td>{{ formatRupiah($tagihanBulanIni->total_tagihan) }}</td>
                         </tr>
+>>>>>>> 2f293f0af2b12019c62d7ce3efb0b5ab561f41aa
 
                         <!-- Total Pembayaran -->
                         <tr>
@@ -98,6 +171,31 @@ Detail Tagihan
                 </table>
                 @endif
 
+<<<<<<< HEAD
+                    <!-- Nominal Deposit -->
+                    <h6 class="mt-4">Masukkan Nominal Deposit</h6>
+                    <input type="number" name="nominal_deposit" class="form-control" required min="1"
+                        placeholder="Masukkan nominal deposit">
+
+                    <!-- Jenis Pembayaran -->
+                    <h6 class="mt-4">Jenis Pembayaran</h6>
+                    <select name="jenis_pembayaran" class="form-select select2" required>
+                        <option value="" disabled selected>Pilih Jenis Pembayaran</option>
+                        <option value="cash">Cash</option>
+                        <option value="transfer">Transfer</option>
+                    </select>
+
+                    <!-- Total Pembayaran (hidden input) -->
+                    <input type="hidden" name="total_pembayaran" id="total_pembayaran_input"
+                        value="{{ $totalPembayaran }}">
+
+                    <!-- Kirim Pembayaran -->
+                    <button type="submit" class="btn btn-primary btn-simpan mt-3">Kirim Pembayaran</button>
+                </div>
+            </form>
+
+        </div>
+=======
                 <!-- Jenis Pembayaran -->
                 <h6 class="mt-4">Jenis Pembayaran</h6>
                 <select name="jenis_pembayaran" class="form-select select2" required>
@@ -113,6 +211,7 @@ Detail Tagihan
                 <button type="submit" class="btn btn-primary btn-simpan mt-3">Kirim Pembayaran</button>
             </div>
         </form>
+>>>>>>> 2f293f0af2b12019c62d7ce3efb0b5ab561f41aa
     </div>
 </div>
 @endsection

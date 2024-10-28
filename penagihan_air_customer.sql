@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 01, 2024 at 03:16 PM
+-- Generation Time: Oct 24, 2024 at 08:35 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.3.10
 
@@ -60,16 +60,7 @@ CREATE TABLE `customers` (
 --
 
 INSERT INTO `customers` (`id_customers`, `users_id`, `norumah_customers`, `rt_customers`, `rw_customers`, `address_customers`, `tarif`, `created_at`, `updated_at`, `deleted_at`) VALUES
-('14b4cb87-d0ab-47b6-b230-086e620ddd04', 'a3f9d1e6-940e-495c-94af-f58a662bba30', '12', 1, 1, '-', '12000', '2024-08-17 10:01:55', '2024-08-17 17:01:55', NULL),
-('36aeae35-499a-45ef-881c-7d6bf1d79a78', '70ea518d-f818-40f6-a099-d5e71956a82a', '55', 2, 2, 'Wonosobo', '3000', '2023-01-05 02:52:51', '2024-01-28 09:52:51', NULL),
-('56ac447a-a535-48d3-b917-e68c4e582cd5', '7c20d65d-b92b-454f-8e71-b6d46940801a', '70', 4, 2, 'Ngaliyan, Semarang', '2000', '2023-05-10 17:00:00', '2024-01-28 10:03:09', NULL),
-('60900d5b-808b-484b-b39c-86b6a47f1745', '1ec7a2f7-4635-47a5-86d3-9d6ad8b8166a', '10', 2, 5, 'Dermolo, Rt.02/05 Kembang - Jepara', '2000', '2024-01-26 10:01:03', '2024-01-26 17:01:03', NULL),
-('7a4099e6-5e8e-4652-8336-12889301805f', 'df07cbe2-2ce3-4245-b9a6-bc9b24448edb', '30', 5, 20, 'Weleri, Kendal', '2000', '2024-02-02 16:21:11', '2024-02-02 23:21:11', NULL),
-('99551344-2aaf-4bc7-b689-37db9d05adc5', 'c2a86466-3818-4ac5-80b5-50411c1c2f9c', '16', 1, 2, 'Pandak Rt, 2/3, Colo, Dawe, Kudus, Jawa Tengah', '1200', '2024-08-24 16:52:56', '2024-08-24 23:52:56', NULL),
-('a5fd9b72-5107-45a0-afd9-1e117ecc0088', '2c67ebd8-722d-44cf-b644-4bf4c5493e56', '30', 3, 2, 'Grobogan', '4000', '2024-01-26 09:14:40', '2024-01-26 16:14:40', NULL),
-('a80a7799-fa87-4ee4-89ef-13f08b4125b4', '623945d3-db4e-4026-b745-4379a8ece86d', '20', 3, 4, 'Demak', '2000', '2024-01-28 07:35:28', '2024-01-28 14:35:28', NULL),
-('b96de30b-07e5-41b8-8816-315f5cdc4097', '15e1e792-0d16-4838-a9ae-631a5d10b346', '10', 4, 2, 'Pati', '2000', '2024-02-02 16:05:28', '2024-02-02 23:05:28', NULL),
-('c01d6aa2-56b3-4d37-86db-7f944bf4a5c9', '3b14b0bc-dc9b-473f-a320-52612566d871', '10', 4, 4, 'Demak', '2000', '2024-01-28 07:42:57', '2024-01-28 14:42:57', NULL);
+('29c824bd-9b24-4232-9d6b-dfdaf21d6d2b', 'e50caa6e-0205-4482-a581-5398df478b16', '5', 12, 10, 'no 5, Perum Graha Raya 1, Sarirejo, Kaliwungu, Kendal', '2000', '2024-10-20 14:05:05', '2024-10-20 21:05:05', NULL);
 
 -- --------------------------------------------------------
 
@@ -94,15 +85,7 @@ CREATE TABLE `data_awals` (
 --
 
 INSERT INTO `data_awals` (`id_data_awal`, `customer_id`, `tunggakan`, `denda`, `lain_lain`, `awal`, `created_at`, `updated_at`, `deleted_at`) VALUES
-('3b309386-3915-47eb-891b-dece1e437626', '14b4cb87-d0ab-47b6-b230-086e620ddd04', '0', '0', '0', '1000', '2024-09-27 09:32:33', '2024-09-27 09:32:33', NULL),
-('5fc6815a-02e4-4f05-a74b-e5053da77b0e', '7a4099e6-5e8e-4652-8336-12889301805f', '1000', '0', '2000', '70', '2024-02-02 16:21:47', '2024-02-02 16:21:47', NULL),
-('afa32b4b-cb76-4a8c-bb4a-2e16e800a42c', '56ac447a-a535-48d3-b917-e68c4e582cd5', '10000', '15000', '0', '100', '2024-01-28 03:40:05', '2024-01-28 03:40:05', NULL),
-('b4434cc9-2ea2-464e-ad27-c2a6442f9c86', '99551344-2aaf-4bc7-b689-37db9d05adc5', '2000', '10000', '0', '200', '2024-08-24 16:53:48', '2024-08-24 16:53:48', NULL),
-('b6ef6b20-c002-473f-9cdd-c89b0de30a8e', 'b96de30b-07e5-41b8-8816-315f5cdc4097', '0', '0', '0', '90', '2024-02-02 16:06:26', '2024-02-02 16:06:26', NULL),
-('b9fc427c-b6be-4ccb-b6ff-bd9a885067c3', '60900d5b-808b-484b-b39c-86b6a47f1745', '50000', '1000', '0', '100', '2024-01-26 10:01:37', '2024-01-26 10:01:37', NULL),
-('c281ea12-3052-451c-a0db-b13d722254a6', 'a5fd9b72-5107-45a0-afd9-1e117ecc0088', '5000', '0', '0', '120', '2024-01-26 09:42:44', '2024-01-26 09:42:44', NULL),
-('d6c4437f-e219-4250-96b8-cb9bc9896154', '36aeae35-499a-45ef-881c-7d6bf1d79a78', '1000', '0', '3000', '200', '2024-09-27 09:22:18', '2024-09-27 09:22:18', NULL),
-('f2b417df-22f2-4bec-86da-5f6415f3c76a', 'c01d6aa2-56b3-4d37-86db-7f944bf4a5c9', '0', '0', '2000', '105', '2024-01-28 07:48:17', '2024-01-28 07:48:17', NULL);
+('64b3ea51-7fd0-4151-9f22-aad1a76aa987', '29c824bd-9b24-4232-9d6b-dfdaf21d6d2b', '18000', '5000', '0', '1107', '2024-10-20 14:06:12', '2024-10-20 14:06:12', NULL);
 
 --
 -- Triggers `data_awals`
@@ -269,14 +252,6 @@ CREATE TABLE `payments` (
   `tahun` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `payments`
---
-
-INSERT INTO `payments` (`id`, `tagihan_id`, `user_id`, `jenis_pembayaran`, `total_pembayaran`, `created_at`, `updated_at`, `kode_tagihan`, `bulan`, `tahun`) VALUES
-(8, 'fa534e7a-5f55-4920-8cfb-16694bb95d8d', 'ce6c6103-7ccc-4e17-b453-8415b3d9908b', 'transfer', 155000.00, '2024-09-28 11:18:46', '2024-09-28 11:18:46', 'Payment-1', 'September', 2024),
-(9, '31913adc-9dfb-4550-a520-a11413fc9292', 'ce6c6103-7ccc-4e17-b453-8415b3d9908b', 'transfer', 480000.00, '2024-09-28 11:35:03', '2024-09-28 11:35:03', 'Payment-2', 'September', 2024);
-
 -- --------------------------------------------------------
 
 --
@@ -295,13 +270,6 @@ CREATE TABLE `payment_detail` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `payment_detail`
---
-
-INSERT INTO `payment_detail` (`id_payments_detail`, `payments_id`, `payments_detail_type`, `tagihan_id`, `bulan`, `tahun`, `total`, `created_at`, `updated_at`, `deleted_at`) VALUES
-('a660c3c5-60d2-465d-a118-dd6b6a3e59cf', 8, 'T', 'fa534e7a-5f55-4920-8cfb-16694bb95d8d', 9, 2024, 154000.00, '2024-09-28 11:18:46', '2024-09-28 11:18:46', NULL);
 
 -- --------------------------------------------------------
 
@@ -481,16 +449,16 @@ CREATE TABLE `tagihans` (
   `tunggakan` varchar(20) DEFAULT NULL,
   `denda` varchar(20) DEFAULT NULL,
   `lain_lain` varchar(20) DEFAULT NULL,
-  `kode_invoice` varchar(255) DEFAULT NULL
+  `kode_invoice` varchar(255) DEFAULT NULL,
+  `deposit` varchar(30) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `tagihans`
 --
 
-INSERT INTO `tagihans` (`id_tagihan`, `user_id`, `data_awal_id`, `akhir`, `pakai`, `tarif`, `tagihan`, `total_tagihan`, `status`, `bulan`, `tahun`, `created_at`, `updated_at`, `deleted_at`, `tunggakan`, `denda`, `lain_lain`, `kode_invoice`) VALUES
-('31913adc-9dfb-4550-a520-a11413fc9292', 'a3f9d1e6-940e-495c-94af-f58a662bba30', '3b309386-3915-47eb-891b-dece1e437626', '1040', '40', '12000', '480000', '0', 'tertagih', 9, 2024, '2024-09-28 11:35:03', '2024-09-28 11:35:03', NULL, '0', '0', '0', NULL),
-('fa534e7a-5f55-4920-8cfb-16694bb95d8d', '70ea518d-f818-40f6-a099-d5e71956a82a', 'd6c4437f-e219-4250-96b8-cb9bc9896154', '250', '50', '3000', '150000', '0', 'tertagih', 9, 2024, '2024-09-28 11:18:46', '2024-09-28 11:18:46', NULL, '0', '0', '3000', NULL);
+INSERT INTO `tagihans` (`id_tagihan`, `user_id`, `data_awal_id`, `akhir`, `pakai`, `tarif`, `tagihan`, `total_tagihan`, `status`, `bulan`, `tahun`, `created_at`, `updated_at`, `deleted_at`, `tunggakan`, `denda`, `lain_lain`, `kode_invoice`, `deposit`) VALUES
+('60595c1a-aa62-4815-a0e9-2a6da035b405', 'e50caa6e-0205-4482-a581-5398df478b16', '64b3ea51-7fd0-4151-9f22-aad1a76aa987', '1500', '393', '2000', '786000', '809000', NULL, 10, 2024, '2024-10-20 14:08:04', '2024-10-20 14:08:04', NULL, '18000', '5000', '0', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -514,6 +482,7 @@ CREATE TABLE `users` (
   `remember_token` varchar(100) DEFAULT NULL,
   `roles_id` char(36) DEFAULT NULL,
   `is_publish` tinyint(1) DEFAULT 0,
+  `peringatan` varchar(30) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -523,19 +492,9 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `email`, `username`, `phone`, `second_phone_customers`, `email_verified_at`, `password`, `avatar`, `avatar_originalfile`, `avatar_originalmimetype`, `avatar_mimetype`, `remember_token`, `roles_id`, `is_publish`, `created_at`, `updated_at`, `deleted_at`) VALUES
-('15e1e792-0d16-4838-a9ae-631a5d10b346', 'Rizza Fakhrul Umam', 'rizza@gmail.com', 'rizzaaa', '081224345675', NULL, NULL, '$2y$10$7cnd3rsvl6XONhOJ3x6KxeJxjhdVULMXC8YdZodbX9p976Ayp6buW', NULL, NULL, NULL, NULL, NULL, '587c9ce1-0ac5-457a-8524-2f69fe161fea', 1, '2024-02-02 16:05:28', '2024-02-02 16:05:28', NULL),
-('1ec7a2f7-4635-47a5-86d3-9d6ad8b8166a', 'Dimas Wahyu Ardhana', 'dimasardhana29@gmail.com', 'dims', '082322345597', NULL, NULL, '$2y$10$ZVwPmpgAsHZwJOkCBGSWCuT0EBkH90U/.W9MBiTZC9u6j66uHPHf6', NULL, NULL, NULL, NULL, NULL, '587c9ce1-0ac5-457a-8524-2f69fe161fea', 1, '2024-01-26 10:01:03', '2024-01-26 10:01:03', NULL),
-('2c67ebd8-722d-44cf-b644-4bf4c5493e56', 'Dinda', 'dinda@gmail.com', 'dindaaa', '089678567456', NULL, NULL, '$2y$10$b4oIDaJVqbfFF6t5VgQhkucHum3BwsI0npyiHIh317znATcP1mSMS', NULL, NULL, NULL, NULL, NULL, '587c9ce1-0ac5-457a-8524-2f69fe161fea', 1, '2024-01-26 09:06:59', '2024-01-26 09:06:59', NULL),
-('3b14b0bc-dc9b-473f-a320-52612566d871', 'Rizal Yuli Kustanto', 'rizal@gmail.com', 'Rizalll', '087987678567', NULL, NULL, '$2y$10$jwXT8TZmubr/eq9MOy9waeBqhzO7RDQS/2BMAgZV1IPxOM9TvmjXO', NULL, NULL, NULL, NULL, NULL, '587c9ce1-0ac5-457a-8524-2f69fe161fea', 1, '2024-01-28 07:42:57', '2024-01-28 07:42:57', NULL),
-('4c47696f-4508-4025-88c9-b97e03856ada', 'Yanto Kopling T', 'rahmadianto018@gmail.com', 'yantokopling', '081362867034', NULL, NULL, '$2y$10$j.Uky9UyJkyuF5jWTAdeEuh.oIPUzs9uifDm6dDe.CNNQPvTeNGBq', NULL, NULL, NULL, NULL, NULL, '587c9ce1-0ac5-457a-8524-2f69fe161fea', 1, '2023-02-09 16:01:42', '2023-02-09 16:07:12', NULL),
-('70ea518d-f818-40f6-a099-d5e71956a82a', 'Fuat', 'fuat@gmail.com', 'fuattt', '087987678567', NULL, NULL, '$2y$10$.XeKYCwpafkFruzbbit4nev5SpekICCTSqo8QBJM/Y2yiolBj0EwK', NULL, NULL, NULL, NULL, NULL, '587c9ce1-0ac5-457a-8524-2f69fe161fea', 1, '2024-01-28 02:50:58', '2024-01-28 02:50:58', NULL),
-('7c20d65d-b92b-454f-8e71-b6d46940801a', 'Eka Vita Raranti', 'vita@gmail.com', 'vitaaa', '081224345675', NULL, NULL, '$2y$10$KB/d2t8xVbRtz7NT4Vy82.sZSEJv1XW4zoScQgKxZpS2wgUoTTHfW', NULL, NULL, NULL, NULL, NULL, '587c9ce1-0ac5-457a-8524-2f69fe161fea', 1, '2024-01-28 03:03:09', '2024-01-28 03:03:09', NULL),
-('a3f9d1e6-940e-495c-94af-f58a662bba30', 'ELIT', 'elit@gmail.com', 'elit', '089898989898', NULL, NULL, '$2y$10$8B5hcqHtuUYFaREvehpbfOg/YQHsaFx6C5ke1jpkCSJprLYZLhzEG', NULL, NULL, NULL, NULL, 'oYJPbs1PxHS0FC8sCgjyLUUe3E4imQAfRGaF8QyOG3yQqx5mDQ9Er7qbqA0E', '587c9ce1-0ac5-457a-8524-2f69fe161fea', 1, '2024-08-17 10:01:55', '2024-08-23 20:51:13', NULL),
-('c2a86466-3818-4ac5-80b5-50411c1c2f9c', 'Divan Lavianto Pamungkas', 'idsatria@gmail.com', 'divann', '081226594919', NULL, NULL, '$2y$10$rOoR6nb2Q2IFE0HNEVzI1.ACB5NFU1zTWg9wY8j.ApXA.FMHjg6Vu', NULL, NULL, NULL, NULL, 'vw77WaMynP5bqKvLfLtB9dPxEbq4dsczTrzCUad1BvrCgRcfrze0vaveUgDU', '587c9ce1-0ac5-457a-8524-2f69fe161fea', 1, '2024-08-24 16:52:56', '2024-08-24 16:54:29', NULL),
-('ce6c6103-7ccc-4e17-b453-8415b3d9908b', 'Super Admin', 'pinginresign@gmail.com', 'superadmin', '081362867034', NULL, NULL, '$2y$10$RwDwoFpzc99JpZvho0eBpuqzuBe2dzNHB58DkUP3YljGQkWfRGtXK', 'user-avatar/1pdhQoB4ElBmXsKGkomwgg6CZojUDLixB9685r8l.jpg', '32745128.jfif', 'jfif', 'image/jpeg', 'Ewz6579MmaQ2gaV22LJFsfOpmvQ2YBowbhO4ZByoUeCIUPP4H151K1LXI3EO', '8b61213d-9521-40a4-8b17-fda810228b54', 1, NULL, '2023-02-06 16:04:28', NULL),
-('df07cbe2-2ce3-4245-b9a6-bc9b24448edb', 'Fardannu Bimantara', 'dannu@gmail.com', 'dannu', '087987678567', NULL, NULL, '$2y$10$.sCdph6TdpgbjVskU3Dfb.XVC30oIvMFjN/xlTs6ZdUZodS80Tufi', NULL, NULL, NULL, NULL, NULL, '587c9ce1-0ac5-457a-8524-2f69fe161fea', 1, '2024-02-02 16:21:11', '2024-02-02 16:21:11', NULL),
-('e8b1a294-af9f-4dbe-8ce9-a9b2a6988edb', 'Divan Lavianto Pamungkas', 'idsatria12@gmail.com', 'divan', '081226594919', NULL, NULL, '$2y$10$nnasI0Y4XydTnMtUMOuIb.6FyZPo2aGzi5M.hLDlYhGwHF7.uEzBC', NULL, NULL, NULL, NULL, NULL, '587c9ce1-0ac5-457a-8524-2f69fe161fea', 1, '2024-08-24 16:49:18', '2024-08-24 16:49:18', NULL);
+INSERT INTO `users` (`id`, `name`, `email`, `username`, `phone`, `second_phone_customers`, `email_verified_at`, `password`, `avatar`, `avatar_originalfile`, `avatar_originalmimetype`, `avatar_mimetype`, `remember_token`, `roles_id`, `is_publish`, `peringatan`, `created_at`, `updated_at`, `deleted_at`) VALUES
+('ce6c6103-7ccc-4e17-b453-8415b3d9908b', 'Super Admin', 'pinginresign@gmail.com', 'superadmin', '081362867034', NULL, NULL, '$2y$10$RwDwoFpzc99JpZvho0eBpuqzuBe2dzNHB58DkUP3YljGQkWfRGtXK', 'user-avatar/1pdhQoB4ElBmXsKGkomwgg6CZojUDLixB9685r8l.jpg', '32745128.jfif', 'jfif', 'image/jpeg', 'PS0jQR6kw0hs12gDUCVKnk553zAl3vbjzgtV5mLhwTEZc3Ewt399lH4Dkte8', '8b61213d-9521-40a4-8b17-fda810228b54', 1, NULL, NULL, '2023-02-06 16:04:28', NULL),
+('e50caa6e-0205-4482-a581-5398df478b16', 'Sri Lestari', 'srilestari@gmail.com', 'srilestari12', '085228937993', NULL, NULL, '$2y$10$2ubK9eG.mVcZMa96IaSPweZMUf0dxghrHUuY.qIoOOPTUcoE9/ox6', NULL, NULL, NULL, NULL, NULL, '587c9ce1-0ac5-457a-8524-2f69fe161fea', 1, 'SP1', '2024-10-20 14:05:05', '2024-10-20 14:06:33', NULL);
 
 -- --------------------------------------------------------
 
@@ -843,7 +802,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `payments`
 --
 ALTER TABLE `payments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
