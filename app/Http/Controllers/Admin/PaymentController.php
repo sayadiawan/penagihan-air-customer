@@ -23,13 +23,9 @@ class PaymentController extends Controller
     {
         $bulan_now =  Carbon::now()->month;
 
-<<<<<<< HEAD
-        $tagihan = Tagihan::where('user_id', $user_id)->where('tunggakan', '>', 0)->get();
-=======
         $tagihan = Tagihan::where('tunggakan', '>', 0)
-                 ->where('user_id', $user_id)
-                 ->get();
->>>>>>> 2f293f0af2b12019c62d7ce3efb0b5ab561f41aa
+            ->where('user_id', $user_id)
+            ->get();
         $firstBillDate = Carbon::createFromDate(2024, 1, 1);
         $currentDate = Carbon::now();
         $allBulan = [];
