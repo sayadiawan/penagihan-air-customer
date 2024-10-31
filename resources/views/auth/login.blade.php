@@ -65,7 +65,7 @@
               <div class="app-brand justify-content-center">
                 <a href="{{ route('login') }}" class="app-brand-link gap-2">
                   <span class="app-brand-logo demo">
-                    <img src="{{ asset('admin-assets/assets/img/icons/brands/save-water.png') }}" style="width: 128px; height: 128px" alt="" />
+                    <img src="{{ asset('admin-assets/assets/img/logotirta.png') }}" style="width: 128px; height: 128px" alt="" />
                   </span>
                 </a>
               </div>
@@ -144,52 +144,52 @@
     <script src="{{ asset('admin-assets/vendor/sweetalert/sweetalert.min.js') }}"></script>
 
     <script>
-      $(document).ready(function() {
-        $('.btn-login').on('click', function() {
-          $('#form').ajaxForm({
-            success: function(response) {
-              if (response.status == true) {
-                swal({
-                    title: "Success!",
-                    text: response.pesan,
-                    icon: "success"
-                  })
-                  .then(function() {
-                    document.location = response.url_home;
-                  });
-              } else {
-                var pesan = "";
-                var data_pesan = response.pesan;
-                const wrapper = document.createElement('div');
+        $(document).ready(function() {
+            $('.btn-login').on('click', function() {
+                $('#form').ajaxForm({
+                    success: function(response) {
+                        if (response.status == true) {
+                            swal({
+                                    title: "Success!",
+                                    text: response.pesan,
+                                    icon: "success"
+                                })
+                                .then(function() {
+                                    document.location = response.url_home;
+                                });
+                        } else {
+                            var pesan = "";
+                            var data_pesan = response.pesan;
+                            const wrapper = document.createElement('div');
 
-                if (typeof(data_pesan) == 'object') {
-                  jQuery.each(data_pesan, function(key, value) {
-                    console.log(value);
-                    pesan += value + '. <br>';
-                    wrapper.innerHTML = pesan;
-                  });
+                            if (typeof(data_pesan) == 'object') {
+                                jQuery.each(data_pesan, function(key, value) {
+                                    console.log(value);
+                                    pesan += value + '. <br>';
+                                    wrapper.innerHTML = pesan;
+                                });
 
-                  swal({
-                    title: "Error!",
-                    content: wrapper,
-                    icon: "warning"
-                  });
-                } else {
-                  swal({
-                    title: "Error!",
-                    text: response.pesan,
-                    icon: "warning"
-                  });
-                }
-              }
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-              var err = eval("(" + jqXHR.responseText + ")");
-              swal("Error!", err.Message, "error");
-            }
-          })
-        })
-      });
+                                swal({
+                                    title: "Error!",
+                                    content: wrapper,
+                                    icon: "warning"
+                                });
+                            } else {
+                                swal({
+                                    title: "Error!",
+                                    text: response.pesan,
+                                    icon: "warning"
+                                });
+                            }
+                        }
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        var err = eval("(" + jqXHR.responseText + ")");
+                        swal("Error!", err.Message, "error");
+                    }
+                })
+            })
+        });
     </script>
   </body>
 </html>
