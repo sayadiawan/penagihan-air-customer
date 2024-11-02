@@ -131,7 +131,7 @@ class PaymentController extends Controller
 
             if ($request->has('nominal_deposit') && $request->input('nominal_deposit')) {
                 $depositAmount = preg_replace('/[Rp. ]/', '', $request->input('nominal_deposit'));
-                $tagihan->total_tagihan -= $depositAmount; // Mengurangi total tagihan
+                // $tagihan->total_tagihan -= $depositAmount; // Mengurangi total tagihan
 
                 // Menyimpan informasi deposit ke tabel tagihan
                 $tagihan->deposit = $depositAmount;
