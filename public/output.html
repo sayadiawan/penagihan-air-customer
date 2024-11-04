@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>Invoice {{ $tagihan->kode_invoice }}</title>
+    <title>Invoice INV202410310001</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -18,7 +18,6 @@
             padding: 30px;
             border: 1px solid #eee;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
-            text-align: center;
         }
 
         h1,
@@ -31,13 +30,13 @@
             width: 100%;
             border-collapse: collapse;
             margin: 20px 0;
-            text-align: left;
         }
 
         table th,
         table td {
             border: 1px solid #ddd;
             padding: 10px;
+            text-align: left;
         }
 
         table th {
@@ -56,27 +55,17 @@
             font-size: 12px;
             color: #777;
         }
-
-        .logo {
-            width: 150px;
-            height: auto;
-            display: block;
-            margin: 0 auto 20px auto;
-        }
     </style>
 </head>
 
 <body>
     <div class="invoice-box">
         <h1>Invoice</h1>
-        <!-- Centered logo -->
-        <img src="{{ $base64Logo }}" alt="Logo" class="logo">
-
-        <h2>Invoice #: {{ $tagihan->kode_invoice }}</h2>
-        <p>Tanggal: {{ $today }}</p>
-        <p>Nama Pelanggan: {{ $tagihan->user->name }}</p>
-        <p>ID Pelanggan: {{ $tagihan->user_id }}</p>
-        <p>Tagihan Bulan: {{ $tagihan->bulan }}, {{ $week }}</p>
+        <h2>Invoice #: INV202410310001</h2>
+        <p>Tanggal: November 1, 2024</p>
+        <p>Nama Pelanggan: Sri Lestari</p>
+        <p>ID Pelanggan: e50caa6e-0205-4482-a581-5398df478b16</p>
+        <p>Tagihan Bulan: 10, November</p>
 
         <table>
             <tr>
@@ -85,23 +74,23 @@
             </tr>
             <tr>
                 <td>Tagihan Bulan Ini</td>
-                <td>Rp. {{ number_format($tagihan->tagihan, 0, ',', '.') }}</td>
+                <td>Rp. 786.000</td>
             </tr>
             <tr>
                 <td>Tunggakan</td>
-                <td>Rp. {{ number_format($tagihan->dataAwal->tunggakan, 0, ',', '.') }}</td>
+                <td>Rp. 18.000</td>
             </tr>
             <tr>
                 <td>Denda</td>
-                <td>Rp. {{ number_format($tagihan->dataAwal->denda, 0, ',', '.') }}</td>
+                <td>Rp. 5.000</td>
             </tr>
             <tr>
                 <td>Deposit</td>
-                <td>Rp. {{ number_format($tagihan->deposit, 0, ',', '.') }}</td>
+                <td>Rp. 15.000</td>
             </tr>
             <tr class="total">
                 <td>Total Tagihan</td>
-                <td>Rp. {{ number_format($tagihan->total_tagihan, 0, ',', '.') }}</td>
+                <td>Rp. -15.000</td>
             </tr>
         </table>
 

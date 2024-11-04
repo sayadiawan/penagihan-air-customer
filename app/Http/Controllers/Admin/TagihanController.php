@@ -18,6 +18,8 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Yajra\DataTables\Facades\DataTables;
 use Carbon\Carbon;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 use PDF;
 
 class TagihanController extends Controller
@@ -700,21 +702,43 @@ class TagihanController extends Controller
 
   public function downloadInvoice($user_id)
   {
-    // dd($id);
     $tagihan = Tagihan::with(['dataAwal', 'user'])
       ->where('user_id', $user_id)
       ->firstOrFail();
 
+    // Generate invoice code if it doesn't exist
     if (empty($tagihan->kode_invoice)) {
       $tagihan->kode_invoice = $tagihan->generateKodeInvoice();
       $tagihan->save();
     }
 
-    $today = \Carbon\Carbon::now()->format('F j, Y');
-    $week = \Carbon\Carbon::now()->format('F');
-    $pdf = pdf::loadView('admin.pages.invoices.invoices', compact('tagihan', 'today', 'week'));
-    $pdf->setOption('enable-local-file-access', true);
-    return $pdf->download('invoice.pdf');
-    return view('admin.pages.invoices.invoices', compact('tagihan'));
+    // Set current date
+    $today = Carbon::now()->format('F j, Y');
+    $week = Carbon::now()->format('F');
+
+    // Load Dompdf with options
+    $options = new Options();
+    $options->set('defaultFont', 'Courier');
+    $options->set('isRemoteEnabled', true); // Allow loading remote content
+    $pdf = new Dompdf($options);
+
+    // Convert image to base64
+    $logoPath = public_path('images/logotirta.png');
+    $base64Logo = '';
+    if (file_exists($logoPath)) {
+      $type = pathinfo($logoPath, PATHINFO_EXTENSION);
+      $data = file_get_contents($logoPath);
+      $base64Logo = 'data:image/' . $type . ';base64,' . base64_encode($data);
+    }
+
+    // Render HTML with compact variables
+    $html = view('admin.pages.invoices.invoices', compact('tagihan', 'today', 'week', 'base64Logo'))->render();
+
+    $pdf->loadHtml($html);
+    $pdf->setPaper('A4', 'portrait');
+    $pdf->render();
+
+    // Stream the PDF to the browser for download
+    return $pdf->stream('invoice_' . $tagihan->kode_invoice . '.pdf', ['Attachment' => true]);
   }
 }
