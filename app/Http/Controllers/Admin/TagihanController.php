@@ -739,6 +739,6 @@ class TagihanController extends Controller
     $pdf->render();
 
     // Stream the PDF to the browser for download
-    return $pdf->stream('invoice_' . $tagihan->kode_invoice . '.pdf', ['Attachment' => true]);
+    return $pdf->stream('invoice_' . $tagihan->kode_invoice . '.pdf', ['Attachment' => false]);
   }
 }
